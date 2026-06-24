@@ -27,28 +27,17 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-[85vh] flex flex-col items-center justify-center pt-32 pb-12 overflow-hidden px-6 transition-colors duration-700 bg-zinc-950"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-12 overflow-hidden px-6 transition-colors duration-700 bg-zinc-950"
     >
-      {/* Cinematic Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`w-full h-full object-cover transition-opacity duration-2000 ${isDarkMode ? 'opacity-70' : 'opacity-40'}`}
-        >
-          <source src={backgroundVideoUrl} type="video/mp4" />
-        </video>
-        
-        <div className={`absolute inset-0 ${
-          isDarkMode 
-            ? 'bg-gradient-to-b from-zinc-950/40 via-zinc-950/80 to-zinc-950' 
-            : 'bg-gradient-to-b from-zinc-950/60 via-zinc-950/90 to-zinc-950'
-        }`} />
-        
-        <div className={`absolute inset-0 backdrop-blur-[1px] ${isDarkMode ? 'opacity-100' : 'opacity-50'}`} />
+      {/* Full Screen Cinematic Background Image */}
+      <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
+        <img 
+          src="/IMG_6279.jpg" 
+          alt="Hero Background" 
+          className="w-full h-full object-cover opacity-95 scale-100 transition-opacity duration-1000"
+        />
+        {/* Soft overlay gradient to ensure high readability of text while keeping background fully visible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/50 via-zinc-950/20 to-zinc-950/70" />
       </div>
 
       <motion.div 
@@ -62,7 +51,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="text-6xl md:text-9xl lg:text-[10rem] font-medium tracking-[-0.04em] leading-[0.8] font-Ariel text-white">
+              <h1 className="text-6xl md:text-9xl lg:text-[10rem] font-medium tracking-[-0.04em] leading-[0.8] font-Ariel text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
                 Grow
               </h1>
             </motion.div>
@@ -72,7 +61,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="text-6xl md:text-9xl lg:text-[10rem] font-medium tracking-[-0.04em] leading-[0.8] font-serif-brand text-white">
+              <h1 className="text-6xl md:text-9xl lg:text-[10rem] font-medium tracking-[-0.04em] leading-[0.8] font-serif-brand text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
                 Brand
               </h1>
             </motion.div>
@@ -81,7 +70,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, delay: 1 }}
-              className="text-sm md:text-lg lg:text-xl font-medium italic font-serif-brand lowercase tracking-[0.4em] ml-2 md:ml-4 -mt-1 md:-mt-2 text-white"
+              className="text-sm md:text-lg lg:text-xl font-medium italic font-serif-brand lowercase tracking-[0.4em] ml-2 md:ml-4 -mt-1 md:-mt-2 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
             >
               with
             </motion.span>
@@ -93,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
             transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="relative flex items-center select-none"
           >
-            <span className="text-[12rem] md:text-[22rem] lg:text-[28rem] font-medium tracking-[-0.05em] leading-none font-Ariel relative bg-clip-text text-transparent bg-gradient-to-br from-white via-blue-300 to-blue-600">
+            <span className="text-[12rem] md:text-[22rem] lg:text-[28rem] font-medium tracking-[-0.05em] leading-none font-Ariel relative bg-clip-text text-transparent bg-gradient-to-br from-white via-blue-200 to-blue-500 drop-shadow-[0_6px_20px_rgba(0,0,0,0.5)]">
               AI
               
               <div className="absolute inset-0 pointer-events-none">
@@ -126,28 +115,15 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4, duration: 1 }}
-            className="text-xl md:text-3xl max-w-5xl font-light leading-none tracking-tight px-4 whitespace-normal md:whitespace-nowrap text-white"
+            className="text-xl md:text-3xl max-w-5xl font-light leading-none tracking-tight px-4 whitespace-normal md:whitespace-nowrap text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
             Transform your brand with <span className="font-medium text-white">AI-Agentic Systems.</span>
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-4xl px-4 flex justify-center mt-8 md:mt-12"
-          >
-            <img 
-              src="/IMG_6279.jpg" 
-              alt="Brand Showcase" 
-              className="w-full max-w-2xl md:max-w-3xl h-auto object-contain rounded-2xl shadow-2xl border border-white/10 hover:border-white/20 transition-all duration-500 filter drop-shadow-[0_0_30px_rgba(59,130,246,0.15)]"
-            />
-          </motion.div>
-
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 1 }}
+            transition={{ delay: 1.6, duration: 1 }}
             className="mt-10 md:mt-14 flex flex-col items-center gap-5"
           >
             <motion.a 
@@ -167,7 +143,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
                 href="https://www.instagram.com/innovatorsaihub" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-white/60 hover:text-white transition-all duration-300 hover:scale-110 transform"
+                className="text-white/60 hover:text-white transition-all duration-300 hover:scale-110 transform drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
                 aria-label="Instagram"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -178,7 +154,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
                 href="https://www.linkedin.com/in/sagarmasand1" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-white/60 hover:text-white transition-all duration-300 hover:scale-110 transform"
+                className="text-white/60 hover:text-white transition-all duration-300 hover:scale-110 transform drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
                 aria-label="LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
