@@ -111,69 +111,38 @@ const AIQuote: React.FC<AIQuoteProps> = ({ isDarkMode }) => {
               But are you?
             </motion.h3>
           </motion.div>
+
         </motion.div>
       </div>
 
-      {/* Full-Screen Horizontal Infinite Loop Logo Marquee */}
-      <div className="w-screen relative overflow-hidden py-10 bg-zinc-950/80 border-y border-white/5">
-        <motion.div 
-          className="flex flex-nowrap"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ 
-            duration: 30, 
-            repeat: Infinity, 
-            ease: "linear" 
+      {/* Full Screen Infinite Loop Marquee */}
+      <div className="w-full overflow-hidden relative z-20 select-none mt-8 md:mt-12 py-4">
+        <motion.div
+          animate={{ x: [0, "-50%"] }}
+          transition={{
+            ease: "linear",
+            duration: 20,
+            repeat: Infinity,
           }}
-          style={{ width: 'max-content' }}
+          className="flex whitespace-nowrap w-[200%]"
         >
-          {/* Repeated to create a perfect seamless scrolling marquee */}
-          {[...partners, ...partners, ...partners].map((partner, idx) => (
-            <div key={idx} className="flex-shrink-0 flex flex-col items-center px-16 md:px-24">
-              {/* Partner Logo and Info */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-zinc-900/40 border border-white/5 flex items-center justify-center transition-all duration-300 hover:border-blue-500/40 hover:bg-zinc-900 shadow-inner">
-                  {partner.icon}
-                </div>
-                <div className="flex flex-col items-start">
-                  <span className="text-lg md:text-xl font-semibold text-white tracking-widest font-sora">
-                    {partner.name}
-                  </span>
-                  <span className="text-[8px] md:text-[9px] text-zinc-400 font-mono tracking-widest uppercase mt-0.5">
-                    {partner.subtitle}
-                  </span>
-                </div>
-              </div>
-
-              {/* Continuous Ruler Element */}
-              <div className="w-full flex flex-col items-stretch">
-                <div className="h-[1px] bg-white/10 w-full" />
-                <div className="flex justify-between gap-2 px-1 pt-2 h-6">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <div 
-                      key={i} 
-                      className={`w-[1px] bg-white/20 transition-all ${
-                        i === 0 ? 'h-4 bg-white/40' : i === 5 ? 'h-3 bg-white/30' : 'h-1.5'
-                      }`} 
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
+          <div className="w-1/2 flex justify-center items-center shrink-0">
+            <img 
+              src="/ai-logos.png" 
+              alt="AI Product Logos" 
+              className="w-full h-auto object-cover opacity-85 filter drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]"
+            />
+          </div>
+          <div className="w-1/2 flex justify-center items-center shrink-0">
+            <img 
+              src="/ai-logos.png" 
+              alt="AI Product Logos" 
+              className="w-full h-auto object-cover opacity-85 filter drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]"
+            />
+          </div>
         </motion.div>
-        
-        {/* Edge Faders for premium full-screen blending */}
-        <div className="absolute inset-y-0 left-0 w-24 md:w-64 bg-gradient-to-r from-zinc-950 via-zinc-950/60 to-transparent z-20 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 md:w-64 bg-gradient-to-l from-zinc-950 via-zinc-950/60 to-transparent z-20 pointer-events-none" />
       </div>
 
-      {/* Decorative center line for alignment feel */}
-      <motion.div 
-        initial={{ scaleY: 0 }}
-        whileInView={{ scaleY: 1 }}
-        viewport={{ once: true }}
-        className="mt-6 w-[1px] h-16 bg-gradient-to-b from-white/20 to-transparent"
-      />
     </section>
   );
 };
