@@ -121,7 +121,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
           </motion.div>
         </div>
 
-        <div className="flex flex-col items-center text-center mt-6 md:mt-4">
+        <div className="flex flex-col items-center text-center mt-6 md:mt-4 w-full">
           <motion.p 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -131,10 +131,23 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
             Transform your brand with <span className="font-medium text-white">AI-Agentic Systems.</span>
           </motion.p>
 
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full max-w-4xl px-4 flex justify-center mt-8 md:mt-12"
+          >
+            <img 
+              src="/IMG_6279.jpg" 
+              alt="Brand Showcase" 
+              className="w-full max-w-2xl md:max-w-3xl h-auto object-contain rounded-2xl shadow-2xl border border-white/10 hover:border-white/20 transition-all duration-500 filter drop-shadow-[0_0_30px_rgba(59,130,246,0.15)]"
+            />
+          </motion.div>
+
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 1 }}
+            transition={{ delay: 1.8, duration: 1 }}
             className="mt-10 md:mt-14 flex flex-col items-center gap-5"
           >
             <motion.a 
