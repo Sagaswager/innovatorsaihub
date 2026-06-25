@@ -28,7 +28,7 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) 
         </button>
 
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10 text-[10px] font-bold tracking-[0.4em] uppercase">
-          <button onClick={() => navigateTo?.('services')} className="text-white/40 hover:text-white transition-all">Services</button>
+          <button onClick={() => navigateTo?.('services')} className="text-white/40 hover:text-white transition-all">Hire AI</button>
           <a 
             href="https://linkedinaiagent.vercel.app/dashboard.html" 
             target="_blank" 

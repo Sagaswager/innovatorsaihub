@@ -5,20 +5,50 @@ import {
   Code, 
   Cpu, 
   Target, 
-  Sparkles 
+  Sparkles,
+  ShoppingCart,
+  Check,
+  Plus,
+  ArrowRight
 } from 'lucide-react';
+import { agentsData } from './AgentTeams';
 
 interface ServicesProps {
   isDarkMode: boolean;
   isFullPage?: boolean;
+  selectedAgents?: string[];
+  customDescriptions?: Record<string, string>;
+  toggleAgent?: (id: string) => void;
+  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact') => void;
 }
 
-const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false }) => {
+const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, selectedAgents = [], customDescriptions = {}, toggleAgent, navigateTo }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const hubRef = useRef<any>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [coords, setCoords] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+
+  const selectedList = agentsData.filter(agent => selectedAgents.includes(agent.id));
+
+  const getWhatsAppLink = () => {
+    const agentDetails = selectedList.map(a => {
+      const desc = customDescriptions[a.id];
+      return desc ? `${a.name} (Purpose: "${desc}")` : a.name;
+    }).join(', ');
+    const text = encodeURIComponent(`Hi! I'm interested in hiring the following AI Agent Teams:\n\n${agentDetails}\n\nLet's connect to set things up!`);
+    return `https://wa.me/919810875683?text=${text}`;
+  };
+
+  const getEmailLink = () => {
+    const agentDetails = selectedList.map(a => {
+      const desc = customDescriptions[a.id];
+      return desc ? `${a.name} (Purpose: "${desc}")` : a.name;
+    }).join(', ');
+    const subject = encodeURIComponent(`Inquiry: Hiring AI Agent Teams`);
+    const body = encodeURIComponent(`Hi!\n\nI'm interested in hiring the following AI Agent Teams:\n\n${agentDetails}\n\nLet's schedule a call to get started.`);
+    return `mailto:Sagarmasand9@gmail.com?subject=${subject}&body=${body}`;
+  };
 
   const allServices = [
     {
@@ -116,119 +146,132 @@ const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false }) =
         }
       `}</style>
 
-      {/* Main Fan-out Container */}
-      <div 
-        ref={containerRef} 
-        className="relative flex flex-col md:flex-row items-center justify-between gap-12 md:gap-16 py-10 overflow-visible w-full min-h-[500px]"
-      >
-        {/* Absolute SVG Canvas */}
-        {coords.length > 0 && (
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible">
-            {coords.map((c, idx) => {
-              const isHovered = hoveredIdx === idx;
+      {/* Interactive Cart Panel */}
+      {isFullPage && (
+        <div className="mb-16 bg-zinc-900/30 border border-white/5 rounded-3xl p-6 md:p-8 max-w-4xl mx-auto hover:border-blue-500/10 transition-all duration-300">
+          <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                <ShoppingCart className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <h2 className="text-xl font-bold text-white tracking-tight">Your Custom AI Team</h2>
+                <p className="text-[10px] md:text-xs font-light text-white/40 mt-0.5">Collect the agents you need and proceed to checkout.</p>
+              </div>
+            </div>
+            {selectedList.length > 0 && (
+              <span className="text-[10px] md:text-xs font-bold bg-blue-600/20 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full">
+                {selectedList.length} Selected
+              </span>
+            )}
+          </div>
+
+          {selectedList.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-sm font-light text-white/50">No AI agents selected yet.</p>
+              <p className="text-xs font-light text-white/30 mt-1">Browse the agent catalog below to start building your team.</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {selectedList.map(agent => (
+                  <div key={agent.id} className="flex items-center justify-between p-4 bg-zinc-950/60 border border-white/5 rounded-2xl">
+                    <div className="flex items-center gap-3 text-left">
+                      <div className="text-blue-400">
+                        {agent.icon}
+                      </div>
+                      <div>
+                        <p className="text-xs md:text-sm font-bold text-white">{agent.name}</p>
+                        <p className="text-[10px] font-semibold text-blue-400 mt-0.5">{agent.price}</p>
+                        {customDescriptions[agent.id] && (
+                          <p className="text-[10px] font-light text-white/50 italic mt-1 max-w-md line-clamp-2">
+                            Purpose: "{customDescriptions[agent.id]}"
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => toggleAgent?.(agent.id)}
+                      className="text-[10px] font-bold text-red-500/70 hover:text-red-400 transition-colors uppercase tracking-wider px-3 py-1.5 hover:bg-red-500/5 rounded-xl"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-white/5">
+                <a
+                  href={getWhatsAppLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase tracking-widest text-[9px] rounded-2xl transition-all shadow-lg shadow-emerald-600/10 flex items-center justify-center gap-3"
+                >
+                  Checkout via WhatsApp <ArrowRight className="w-4 h-4" />
+                </a>
+                <a
+                  href={getEmailLink()}
+                  className="flex-1 py-3.5 bg-white hover:bg-zinc-100 text-zinc-950 font-bold uppercase tracking-widest text-[9px] rounded-2xl transition-all shadow-lg flex items-center justify-center gap-3"
+                >
+                  Checkout via Email <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Agent Catalog (Shown on full page Services/Hire AI) */}
+      {isFullPage && (
+        <div className="mb-20">
+          <div className="text-center mb-10">
+            <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">AI Agent Catalog</h3>
+            <p className="text-xs font-light text-white/40 mt-2">Build your workforce with our pre-trained agent models.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {agentsData.map((agent) => {
+              const isAdded = selectedAgents.includes(agent.id);
               return (
-                <g key={idx}>
-                  {isHovered && (
-                    <motion.path
-                      d={drawPath(c)}
-                      fill="none"
-                      stroke="rgb(59, 130, 246)"
-                      strokeWidth="6"
-                      opacity="0.1"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-                  <path
-                    d={drawPath(c)}
-                    fill="none"
-                    stroke={isHovered ? "url(#glowGradient)" : "rgb(63, 63, 70)"}
-                    strokeWidth={isHovered ? "2.5" : "1.2"}
-                    strokeDasharray="4 6"
-                    strokeLinecap="round"
-                    style={{
-                      strokeDashoffset: isHovered ? -100 : 0,
-                      animation: isHovered ? "dash-flow 1s linear infinite" : "none",
-                      transition: "stroke 0.4s ease, stroke-width 0.4s ease, opacity 0.4s ease",
-                      opacity: hoveredIdx === null ? 0.4 : isHovered ? 1.0 : 0.15
-                    }}
-                  />
-                </g>
+                <div
+                  key={agent.id}
+                  className="bg-zinc-900/40 border border-white/5 rounded-3xl p-5 flex flex-col justify-between h-full hover:border-blue-500/15 transition-all duration-300 hover:bg-zinc-900/70"
+                >
+                  <div className="text-left">
+                    <div className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-4">
+                      {agent.icon}
+                    </div>
+                    <h4 className="text-sm font-bold text-white mb-1">{agent.name}</h4>
+                    <p className="text-[11px] font-light text-white/50 leading-relaxed mb-4">{agent.description}</p>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs font-semibold text-white/70 mb-3">{agent.price}</p>
+                    <button
+                      onClick={() => toggleAgent?.(agent.id)}
+                      className={`w-full py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all ${
+                        isAdded
+                          ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                          : 'bg-white hover:bg-zinc-100 text-zinc-950'
+                      }`}
+                    >
+                      {isAdded ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" /> Added
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-3.5 h-3.5" /> Add to Hire
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
               );
             })}
-            <defs>
-              <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="50%" stopColor="#60a5fa" />
-                <stop offset="100%" stopColor="#93c5fd" />
-              </linearGradient>
-            </defs>
-          </svg>
-        )}
-
-        {/* Left Side: Heading text acting as the hub */}
-        <div className="w-full md:w-1/2 flex items-center justify-center md:justify-start z-20">
-          <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl">
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 mb-4"
-            >
-              <div className="w-8 h-[1px] bg-blue-500/50" />
-              <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/50">
-                We Build
-              </span>
-            </motion.div>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-7xl font-bold tracking-tighter text-white inline-block w-fit select-none"
-            >
-              <span ref={hubRef} className="inline">AI Agentic System</span>
-            </motion.h2>
           </div>
         </div>
+      )}
 
-        {/* Right Side: 5 Service Pills */}
-        <div className="w-full md:w-[50%] flex flex-col gap-6 z-20">
-          {allServices.map((service, index) => (
-            <div
-              key={index}
-              ref={(el) => { itemRefs.current[index] = el; }}
-              onMouseEnter={() => setHoveredIdx(index)}
-              onMouseLeave={() => setHoveredIdx(null)}
-              className="w-full"
-            >
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex items-center gap-5 p-4 md:p-5 rounded-2xl md:rounded-3xl bg-zinc-900/40 border border-white/5 hover:border-blue-500/20 hover:bg-zinc-900/70 transition-all duration-500 hover:shadow-lg hover:shadow-blue-500/5 group/pill cursor-pointer w-full"
-              >
-                {/* Icon Badge */}
-                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 group-hover/pill:bg-blue-600 group-hover/pill:text-white group-hover/pill:scale-105 transition-all duration-500 shadow-inner flex-shrink-0">
-                  {React.cloneElement(service.icon as React.ReactElement<{ className?: string }>, { className: "w-5 h-5 md:w-7 md:h-7" })}
-                </div>
-                {/* Text Content */}
-                <div className="flex flex-col text-left">
-                  <h3 className="text-base md:text-lg lg:text-xl font-bold text-white tracking-tight group-hover/pill:text-blue-400 transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="text-[11px] md:text-xs lg:text-sm font-light text-white/50 leading-relaxed mt-1 group-hover/pill:text-white/70 transition-colors duration-300">
-                    {service.description}
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          ))}
-        </div>
-      </div>
+
     </section>
   );
 };

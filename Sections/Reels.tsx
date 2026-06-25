@@ -10,7 +10,8 @@ const ReelCard: React.FC<{
   isDarkMode: boolean;
   index: number;
   onClick: () => void;
-}> = ({ isDarkMode, index, onClick }) => {
+  thumbnail?: string;
+}> = ({ isDarkMode, index, onClick, thumbnail }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // 3D Tilt Effect
@@ -77,8 +78,14 @@ const ReelCard: React.FC<{
       }}
       className="relative h-[315px] md:h-[385px] aspect-[9/16] rounded-[1.5rem] md:rounded-[2.2rem] overflow-hidden border border-white/10 flex-shrink-0 transition-all bg-zinc-950 group cursor-pointer"
     >
-      {/* Premium Gradient Background */}
+      {/* Premium Gradient Background & Thumbnail */}
       <div className={`absolute inset-0 bg-gradient-to-br ${gradientClass} z-0`} />
+      {thumbnail && (
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0 opacity-100 group-hover:scale-105 transition-all duration-500"
+          style={{ backgroundImage: `url(${thumbnail})` }}
+        />
+      )}
 
       {/* Cyber Grid pattern */}
       <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] z-10" />
@@ -112,23 +119,28 @@ const Reels: React.FC<ReelsProps> = ({ isDarkMode }) => {
   const reels = useMemo(() => [
     {
       title: "Storytelling",
-      video: "https://drive.google.com/file/d/1G-oBfUf-vEzmN2-DPiajLGF5vVcRPrzI/preview"
+      video: "https://www.youtube.com/embed/wY_xfN5Cc9Q",
+      thumbnail: "https://img.youtube.com/vi/wY_xfN5Cc9Q/0.jpg"
     },
     {
       title: "Studio Vision",
-      video: "https://drive.google.com/file/d/1aSqIVw42xcb5wVFaSx1wxd2fSRqoEOLp/preview"
+      video: "https://www.youtube.com/embed/B_g2MSCZNAw",
+      thumbnail: "https://img.youtube.com/vi/B_g2MSCZNAw/0.jpg"
     },
     {
       title: "AI Model",
-      video: "https://drive.google.com/file/d/1qQLB4fpca0Z7nEjElHkl7dO8vigMvfIM/preview"
+      video: "https://www.youtube.com/embed/7qEoi-UvMR4",
+      thumbnail: "https://img.youtube.com/vi/7qEoi-UvMR4/0.jpg"
     },
     {
       title: "Cinematic Flow",
-      video: "https://drive.google.com/file/d/1A2bxybhUp-XNb0YNkmkDN1CCdhCvFcox/preview"
+      video: "https://www.youtube.com/embed/oXI0_F_3ErY",
+      thumbnail: "https://img.youtube.com/vi/oXI0_F_3ErY/0.jpg"
     },
     {
       title: "Neural Core",
-      video: "https://drive.google.com/file/d/1UpsXnLnt-ntxiVpn0d3yn_nPLSDGBJHj/preview"
+      video: "https://www.youtube.com/embed/83qZlggVikY",
+      thumbnail: "https://img.youtube.com/vi/83qZlggVikY/0.jpg"
     }
   ], []);
 
@@ -205,6 +217,7 @@ const Reels: React.FC<ReelsProps> = ({ isDarkMode }) => {
                 isDarkMode={isDarkMode}
                 index={index}
                 onClick={() => setActiveReel(reel)}
+                thumbnail={reel.thumbnail}
               />
             </div>
           ))}

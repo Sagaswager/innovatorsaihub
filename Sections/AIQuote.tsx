@@ -79,7 +79,7 @@ const AIQuote: React.FC<AIQuoteProps> = ({ isDarkMode }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col items-center gap-0 mb-12 md:mb-20"
+          className="flex flex-col items-center gap-0 mb-4 md:mb-6"
         >
           <h2 
             style={arialFont}
@@ -116,7 +116,7 @@ const AIQuote: React.FC<AIQuoteProps> = ({ isDarkMode }) => {
       </div>
 
       {/* Full Screen Infinite Loop Marquee */}
-      <div className="w-full overflow-hidden relative z-20 select-none mt-8 md:mt-12 py-4">
+      <div className="w-full overflow-hidden relative z-20 select-none mt-2 md:mt-3 py-4">
         <motion.div
           animate={{ x: [0, "-50%"] }}
           transition={{

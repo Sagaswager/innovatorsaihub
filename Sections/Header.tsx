@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, ExternalLink, Calendar } from 'lucide-react';
+import { Menu, X, ArrowRight, ExternalLink, Calendar, ShoppingCart } from 'lucide-react';
 
 interface HeaderProps {
   isDarkMode: boolean;
   currentPage: 'home' | 'portfolio' | 'services' | 'contact';
   navigateTo: (page: 'home' | 'portfolio' | 'services' | 'contact') => void;
+  selectedAgents?: string[];
 }
 
-const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo }) => {
+const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, selectedAgents = [] }) => {
   const { scrollY } = useScroll();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
@@ -36,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo }) 
 
   const navItems: { label: string; page: 'home' | 'portfolio' | 'services' | 'contact'; type: 'internal' }[] = [
     { label: 'Studio', page: 'home', type: 'internal' },
-    { label: 'Services', page: 'services', type: 'internal' },
+    { label: 'Hire AI', page: 'services', type: 'internal' },
     { label: 'Portfolio', page: 'portfolio', type: 'internal' },
     { label: 'Contact', page: 'contact', type: 'internal' }
   ];
@@ -77,11 +78,14 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo }) 
               <button 
                 key={item.page}
                 onClick={() => handleLinkClick(item.page)}
-                className={`transition-all duration-300 outline-none nav-glow ${
-                  currentPage === item.page ? 'text-blue-500' : 'text-white hover:text-blue-400'
+                className={`relative transition-all duration-300 outline-none group ${
+                  currentPage === item.page ? 'text-white font-bold' : 'text-white/60 hover:text-white'
                 }`}
               >
                 {item.label}
+                {currentPage === item.page && (
+                  <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-[1px] bg-white rounded-full" />
+                )}
               </button>
             ))}
             <a 
@@ -89,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo }) 
               href="https://linkedinaiagent.vercel.app/dashboard.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-all duration-300 outline-none nav-glow text-white hover:text-blue-400 rounded-lg py-1 flex items-center gap-1.5"
+              className="relative transition-all duration-300 outline-none group text-white/60 hover:text-white rounded-lg py-1 flex items-center gap-1.5"
             >
               Linkedin AI Agent
             </a>
@@ -108,6 +112,23 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo }) 
             >
               BOOK DEMO CALL
             </motion.a>
+
+            {/* Shopping Cart Button */}
+            {selectedAgents.length > 0 && (
+              <motion.button
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                onClick={() => handleLinkClick('services')}
+                className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-all flex items-center justify-center cursor-pointer"
+                title="View Selected Agents"
+                aria-label="View Selected Agents"
+              >
+                <ShoppingCart size={16} />
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center text-[9px] font-bold text-white shadow-md shadow-blue-600/30">
+                  {selectedAgents.length}
+                </span>
+              </motion.button>
+            )}
 
             {/* Premium Menu Toggle Button */}
             <button
@@ -180,14 +201,14 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo }) 
                       className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3"
                     >
                       <span className={`text-2xl md:text-3xl font-light tracking-wide transition-colors ${
-                        currentPage === item.page ? 'text-blue-400 font-normal' : 'text-zinc-300 group-hover:text-white'
+                        currentPage === item.page ? 'text-white font-normal' : 'text-zinc-500 group-hover:text-zinc-300'
                       }`}>
                         {item.label}
                       </span>
                       <ArrowRight 
                         size={18} 
                         className={`text-white/40 transition-all transform duration-300 ${
-                          currentPage === item.page ? 'opacity-100 translate-x-0 text-blue-400' : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
+                          currentPage === item.page ? 'opacity-100 translate-x-0 text-white' : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
                         }`} 
                       />
                     </motion.button>

@@ -19,7 +19,7 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode, isFullPage = false }) => 
             animate={{ opacity: 1, y: 0 }}
             className="text-6xl md:text-8xl font-bold tracking-tighter mb-16 text-white leading-[0.9]"
           >
-            Let's create the <br /> <span className="font-serif-brand italic font-normal">Next Wave.</span>
+            Let's Connect
           </motion.h2>
           
           <div className="space-y-12 w-full">
@@ -39,7 +39,7 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode, isFullPage = false }) => 
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] font-bold mb-1 text-white/40">Phone / Whatsapp</p>
-                <p className="text-2xl md:text-3xl font-medium text-white tracking-tight">+919810875683</p>
+                <p className="text-2xl md:text-3xl font-medium text-white tracking-tight">+919810875683<br />+919873641909</p>
               </div>
             </div>
 
