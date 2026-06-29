@@ -54,7 +54,7 @@ const AgentPopup: React.FC<AgentPopupProps> = ({ onClose }) => {
   }, [isMerging]);
 
   const handleAccess = () => {
-    window.open("https://linkedinaiagent.vercel.app/dashboard.html", "_blank", "noopener,noreferrer");
+    window.open("https://187.127.187.153.sslip.io/dashboard.html", "_blank", "noopener,noreferrer");
     setIsMerging(true);
   };
 
