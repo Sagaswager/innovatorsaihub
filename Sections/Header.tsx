@@ -90,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
             ))}
             <a 
               id="header-linkedin-agent-link"
-              href="https://linkedinaiagent.vercel.app/dashboard.html"
+              href="https://187.127.187.153.sslip.io/dashboard.html"
               target="_blank"
               rel="noopener noreferrer"
               className="relative transition-all duration-300 outline-none group text-white/60 hover:text-white rounded-lg py-1 flex items-center gap-1.5"
@@ -219,7 +219,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: navItems.length * 0.05 }}
-                    href="https://linkedinaiagent.vercel.app/dashboard.html"
+                    href="https://187.127.187.153.sslip.io/dashboard.html"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3"
