@@ -1,4 +1,27 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "innovatorsaihub.com"
+        }
+      ],
+      "destination": "https://www.innovatorsaihub.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/WhatsAppautomaton",

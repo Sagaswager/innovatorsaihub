@@ -9,7 +9,7 @@
 
 ## Services & Pricing
 
-Full specifications can be parsed at [/pricing.md](https://innovatorsaihub.com/pricing.md).
+Full specifications can be parsed at [/pricing.md](https://www.innovatorsaihub.com/pricing.md).
 
 - **WhatsApp AI Agent**: Starts at ₹12,000/mo. Automated CRM integration, chat, & lead qualification.
 - **Voice Calling AI Agent**: Starts at ₹5,000/mo. Automated outbound calling & support.
@@ -19,7 +19,7 @@ Full specifications can be parsed at [/pricing.md](https://innovatorsaihub.com/p
 
 ## Primary Contacts & Links
 
-- **Website**: https://innovatorsaihub.com/
+- **Website**: https://www.innovatorsaihub.com/
 - **Email**: Sagarmasand9@gmail.com
 - **WhatsApp**: +91 98108 75683
 - **Instagram**: https://www.instagram.com/innovatorsaihub

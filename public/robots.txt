@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://innovatorsaihub.com/sitemap.xml
+Sitemap: https://www.innovatorsaihub.com/sitemap.xml
