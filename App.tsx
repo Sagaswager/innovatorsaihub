@@ -51,10 +51,9 @@ const App: React.FC = () => {
   };
 
   const navigateTo = (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin') => {
-    const targetPage = page === 'home' ? 'platform' : page;
-    setCurrentPage(targetPage);
-    const path = targetPage === 'platform' ? '/' : `/${targetPage}`;
-    window.history.pushState({ page: targetPage }, '', path);
+    setCurrentPage(page);
+    const path = page === 'platform' ? '/' : `/${page}`;
+    window.history.pushState({ page }, '', path);
     // Use setTimeout to ensure DOM is updated before scrolling
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -63,14 +62,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handlePopState = () => {
-      const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
-      if (rawPath === 'home') {
-        window.history.replaceState({ page: 'platform' }, '', '/');
-        setCurrentPage('platform');
-        return;
-      }
-      if (rawPath === 'portfolio' || rawPath === 'services' || rawPath === 'contact' || rawPath === 'register' || rawPath === 'platform' || rawPath === 'join' || rawPath === 'admin') {
-        setCurrentPage(rawPath as any);
+      const path = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
+      if (path === 'home' || path === 'portfolio' || path === 'services' || path === 'contact' || path === 'register' || path === 'platform' || path === 'join' || path === 'admin') {
+        setCurrentPage(path as any);
       }
     };
 
@@ -87,7 +81,6 @@ const App: React.FC = () => {
 
     switch (currentPage) {
       case 'home':
-      case 'platform':
         title = 'Innovators AI HUB | AI-Agentic Systems & Brand Films';
         description = "Hire autonomous AI agent teams to automate workflows, WhatsApp support, voice calls & outbound outreach. Elevate your business with Innovators AI HUB.";
         break;
@@ -119,7 +112,7 @@ const App: React.FC = () => {
     }
 
     document.title = title;
-    const pageUrl = `https://www.innovatorsaihub.com${currentPage === 'platform' || currentPage === 'home' ? '/' : `/${currentPage}`}`;
+    const pageUrl = `https://innovatorsaihub.com${currentPage === 'platform' ? '/' : `/${currentPage}`}`;
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
