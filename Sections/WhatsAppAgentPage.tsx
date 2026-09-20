@@ -1,21 +1,90 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Check, Loader2 } from 'lucide-react';
 
 interface WhatsAppAgentPageProps {
   isDarkMode?: boolean;
-  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'whatsapp-agent' | 'linkedin-agent' | 'gmail-agent' | 'voice-agent' | 'seo-agent') => void;
+  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'platform' | 'register' | any) => void;
 }
 
 const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = false, navigateTo }) => {
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec";
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
+  const [profession, setProfession] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const toggleFaq = (index: number) => {
     setOpenFaq(prev => prev === index ? null : index);
   };
 
+  const scrollToRentAgent = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const btn = document.getElementById('rent-agent-pricing-btn');
+    if (btn) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.classList.add('ring-4', 'ring-emerald-400', 'scale-105', 'transition-all');
+      setTimeout(() => {
+        btn.classList.remove('ring-4', 'ring-emerald-400', 'scale-105', 'transition-all');
+      }, 1500);
+    }
+  };
+
+  const handleRentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    const userData = {
+      name,
+      email,
+      mail: email,
+      number,
+      profession,
+      companyName,
+      agent: 'WhatsApp AI Agent',
+      price: '₹2,999/mo',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const existingUsersRaw = localStorage.getItem('platform_registered_users');
+      const existingUsers = existingUsersRaw ? JSON.parse(existingUsersRaw) : [];
+      if (!existingUsers.some((u: any) => u.email === email)) {
+        existingUsers.push(userData);
+        localStorage.setItem('platform_registered_users', JSON.stringify(existingUsers));
+      }
+      localStorage.setItem('platform_user', JSON.stringify({ name, email }));
+
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("Submission failed:", err);
+      setSubmitError('Failed to submit rental request. Please try again or reach out on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full bg-[#f9f9f9] text-[#0F172A] selection:bg-[#25D366] selection:text-white font-['Plus_Jakarta_Sans',sans-serif]">
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden"><div className="absolute -top-40 left-1/4 w-[650px] h-[650px] bg-emerald-100/60 rounded-full blur-[130px]"></div><div className="absolute top-1/3 -right-40 w-[550px] h-[550px] bg-sky-100/50 rounded-full blur-[150px]"></div><div className="absolute -bottom-20 left-1/3 w-[700px] h-[500px] bg-emerald-50/70 rounded-full blur-[160px]"></div><div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div></div>
-<header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]"><div className="h-20 w-full max-w-[1400px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div className="flex items-center gap-space-md shrink-0 cursor-pointer" onClick={() => navigateTo ? navigateTo("home") : (window.location.href = "/")}><img alt="Innovators AI Hub WhatsApp Agent Logo" className="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xd1I_S9Ff0MJiv1Uxtd87heR7v3CgiLf_3BqhjGQO51ZkqUDFsww9zY90rRfWiOYO3TZkYUTPubRvegcuQhhPWYnx39Ujxzk1MsL58GKDMHqsH11oUcW1jijaBrnYdwEXC8O0bDYe4StSxzsKOmqtvjcBTkJeOQwS1wiLtdZ2taErc42fdvVBjon46eyzYNT9DpUKtFu4ENQp75ZQiSN_oQ4eY6MbSh8ePfKNCwA"/><div className="flex flex-col"><div className="flex items-center gap-1.5"><span className="font-headline-sm text-[19px] font-bold text-slate-900 tracking-tight leading-none">Innovators</span><span className="font-headline-sm text-[19px] font-bold text-primary-container tracking-tight leading-none">AI HUB</span></div><span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">WhatsApp Co-Worker</span></div></div><nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-100/80 border border-slate-200/60 shadow-inner"><a aria-current="page" className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-900 bg-white shadow-sm transition-all" data-path="features" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("home"); else window.location.href = "/"; }}>Home</a><a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" data-path="pricing" href="#pricing">Pricing</a><a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" data-path="faq" href="#faq">FAQ</a></nav><div className="flex items-center gap-3 shrink-0"><a className="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black text-white text-xs font-semibold shadow hover:bg-slate-800 active:scale-95 transition-all" href="#pricing"><span className="material-symbols-outlined text-[16px]">calendar_month</span>Book Demo</a><a className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary-container text-white text-xs font-semibold shadow-[0_4px_14px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all" data-path="rent-whatsapp-ai-agent" href="#pricing"><svg className="w-4 h-4 text-white shrink-0 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.991.541 1.777.82 2.796.82 3.18 0 5.767-2.586 5.768-5.766.001-3.182-2.585-5.77-5.768-5.772zm3.376 8.212c-.14.394-.799.734-1.12.781-.309.046-.713.076-2.288-.574-1.785-.738-2.91-2.56-3.003-.681-.088-.124-.72-1.026-.72-1.956 0-.931.488-1.389.662-1.579.174-.189.379-.237.505-.237.126 0 .252.001.363.007.117.006.275-.044.43.328.157.379.537 1.309.584 1.404.047.095.079.206.016.332-.063.126-.095.205-.189.316-.095.11-.199.247-.284.332-.095.095-.195.198-.083.39.111.189.493.813 1.058 1.317.728.648 1.341.85 1.531.944.189.095.3.079.41-.047.111-.127.474-.553.6-.742.127-.189.252-.158.426-.095.174.063 1.106.521 1.296.616.189.095.316.142.363.221.047.079.047.458-.093.852zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.981-1.307C8.441 21.53 10.165 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>Rent WhatsApp AI Agent</a></div></div></header>
+<header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]"><div className="h-20 w-full max-w-[1400px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div className="flex items-center gap-space-md shrink-0 cursor-pointer" onClick={() => navigateTo ? navigateTo("platform") : (window.location.href = "/")}><img alt="Innovators AI Hub WhatsApp Agent Logo" className="h-8 md:h-10 w-auto object-contain" src="/logo.png"/><div className="flex flex-col"><div className="flex items-center gap-1.5"><span className="font-headline-sm text-[19px] font-bold text-slate-900 tracking-tight leading-none">Innovators</span><span className="font-headline-sm text-[19px] font-bold text-primary-container tracking-tight leading-none">AI HUB</span></div><span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">WhatsApp Co-Worker</span></div></div><nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-100/80 border border-slate-200/60 shadow-inner"><a aria-current="page" className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-900 bg-white shadow-sm transition-all cursor-pointer" data-path="features" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("platform"); else window.location.href = "/"; }}>Home</a><a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" data-path="pricing" href="#rental-pricing">Pricing</a><a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" data-path="faq" href="#faq">FAQ</a></nav><div className="flex items-center gap-3 shrink-0"><a className="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black text-white text-xs font-semibold shadow hover:bg-slate-800 active:scale-95 transition-all" href="https://calendar.app.google/D4VcVM3GVSh4PAia6" target="_blank" rel="noopener noreferrer"><span className="material-symbols-outlined text-[16px]">calendar_month</span>Book Demo</a><button onClick={scrollToRentAgent} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary-container text-white text-xs font-semibold shadow-[0_4px_14px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"><svg className="w-4 h-4 text-white shrink-0 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.991.541 1.777.82 2.796.82 3.18 0 5.767-2.586 5.768-5.766.001-3.182-2.585-5.77-5.768-5.772zm3.376 8.212c-.14.394-.799.734-1.12.781-.309.046-.713.076-2.288-.574-1.785-.738-2.91-2.56-3.003-.681-.088-.124-.72-1.026-.72-1.956 0-.931.488-1.389.662-1.579.174-.189.379-.237.505-.237.126 0 .252.001.363.007.117.006.275-.044.43.328.157.379.537 1.309.584 1.404.047.095.079.206.016.332-.063.126-.095.205-.189.316-.095.11-.199.247-.284.332-.095.095-.195.198-.083.39.111.189.493.813 1.058 1.317.728.648 1.341.85 1.531.944.189.095.3.079.41-.047.111-.127.474-.553.6-.742.127-.189.252-.158.426-.095.174.063 1.106.521 1.296.616.189.095.316.142.363.221.047.079.047.458-.093.852zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.981-1.307C8.441 21.53 10.165 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>Rent WhatsApp AI Agent</button></div></div></header>
 <main className="w-full pt-20 bg-transparent min-h-screen"><div className="flex flex-col w-full">
 {/*  =========================================================================  */}
 {/*  SECTION 1: HERO VIEWPORT (CLEAN LIGHT THEME)  */}
@@ -50,7 +119,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 <p className="font-body-base text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed mb-space-xl">Turn every WhatsApp conversation into a customer.</p>
 {/*  Dual Call to Actions  */}
 <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
-<a className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_20px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all" href="https://wa.me/919810875683?text=Hi%20Innovators%20AI%20HUB,%20I%20want%20to%20rent%20the%20WhatsApp%20AI%20Agent" target="_blank" rel="noopener noreferrer"><span className="material-symbols-outlined text-[20px]">smart_toy</span>Rent WhatsApp AI Agent</a>
+<button onClick={scrollToRentAgent} className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_20px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"><span className="material-symbols-outlined text-[20px]">smart_toy</span>Rent WhatsApp AI Agent</button>
 </div>
 {/*  Trust Bar / Integrations Strip (Clean light badges)  */}
 <div className="w-full pt-space-md flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-slate-600 text-xs font-semibold uppercase tracking-wider">
@@ -73,7 +142,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  Realistic Crisp Light WhatsApp Interactive Simulator Device  */}
-<div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative"><img alt="Innovators AI Hub WhatsApp AI Agent interface with feature callouts for Instant Support, Appointment Booking, Automated Lead Qualification, and Real-time CRM Sync" className="w-full h-auto object-contain rounded-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM8QlDWqH1-QzE7_8GzDq4ll7ZjlTcEYKbwVUFL63pdS-L1RQu5HaUUFH9Pe-l9mSwCncCj_JyEJyKNetkwYo40tGBJcOCaRjfds56_1qSRYA1rxUws1c6nAkU0ErseAuCyebDMc3RuZcVev8B9rfjt46zslJHXlj9qwnlYUlNh3-d0axBSVBgD5CQnxerfdx8YhcbwbFprQGwWGadb0OwDLcNw8DntQ0XXHcNg4eAP0ELJO0stA"/></div>
+<div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative"><img alt="Innovators AI Hub WhatsApp AI Agent interface with feature callouts for Instant Support, Appointment Booking, Automated Lead Qualification, and Real-time CRM Sync" className="w-full h-auto object-contain rounded-2xl" src="/whatsapp-agent-interface.png"/></div>
 </section>
 {/*  =========================================================================  */}
 {/*  SECTION 2: WHY BUSINESSES NEED A WHATSAPP AI AGENT & METRIC STRIP  */}
@@ -617,9 +686,16 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 <span className="text-xs text-slate-500 font-medium">/mo</span>
 <span className="text-xs text-slate-400 line-through ml-2">₹4,999</span>
 </div>
-<a className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary-container text-white text-sm font-semibold shadow-[0_4px_14px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all" href="#">
-          Rent Agent
-        </a>
+<button
+  id="rent-agent-pricing-btn"
+  onClick={() => {
+    setIsSubmitted(false);
+    setIsModalOpen(true);
+  }}
+  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary-container text-white text-sm font-semibold shadow-[0_4px_14px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"
+>
+  Rent Agent
+</button>
 </div>
 </div>
 {/*  Subtitle Banner (from IMAGE_2)  */}
@@ -790,10 +866,13 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
     Stop spending your team's time on repetitive WhatsApp conversations. Use a WhatsApp AI Agent to automate customer interactions, qualify incoming leads, assist with appointments, organize customer information, and connect WhatsApp communication with your business workflow.
   </p>
 <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
-<a className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_24px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all" href="#pricing">
-<span className="material-symbols-outlined text-[22px]">smart_toy</span>
-      Rent WhatsApp AI Agent
-    </a>
+<button
+  onClick={scrollToRentAgent}
+  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_24px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"
+>
+  <span className="material-symbols-outlined text-[22px]">smart_toy</span>
+  Rent WhatsApp AI Agent
+</button>
 <a className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-slate-800 font-semibold text-base border border-slate-200 shadow-sm hover:bg-slate-50 transition-all" href="#">
 <span className="material-symbols-outlined text-read-cyan text-[20px]">support_agent</span>
       Talk to AI Specialist
@@ -818,7 +897,157 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 {/*  Accordion Inline Script  */}
 
 </div></main>
-<footer className="w-full bg-white border-t border-slate-200 pt-space-3xl pb-space-2xl mt-space-3xl shadow-sm"><div className="w-full max-w-[1400px] mx-auto px-gutter"><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-2xl mb-space-3xl"><div className="lg:col-span-2 flex flex-col items-start"><div className="flex items-center gap-space-sm mb-space-md cursor-pointer" onClick={() => navigateTo ? navigateTo("home") : (window.location.href = "/")}><img alt="Innovators AI Hub WhatsApp Agent Logo" className="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xd1I_S9Ff0MJiv1Uxtd87heR7v3CgiLf_3BqhjGQO51ZkqUDFsww9zY90rRfWiOYO3TZkYUTPubRvegcuQhhPWYnx39Ujxzk1MsL58GKDMHqsH11oUcW1jijaBrnYdwEXC8O0bDYe4StSxzsKOmqtvjcBTkJeOQwS1wiLtdZ2taErc42fdvVBjon46eyzYNT9DpUKtFu4ENQp75ZQiSN_oQ4eY6MbSh8ePfKNCwA"/><div className="flex items-center gap-1.5"><span className="font-display font-bold text-lg text-slate-900">Innovators</span><span className="font-display font-bold text-lg text-primary-container">AI HUB</span></div></div><p className="text-sm text-slate-500 max-w-sm mb-space-lg leading-relaxed">Architecting autonomous, hyper-intelligent enterprise WhatsApp agents that drive 24/7 conversion, synchronize leads instantaneously to tier-1 CRMs, and replace fragile legacy chatbots.</p><div className="flex flex-wrap items-center gap-space-sm"><div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200"><span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">Official Meta API Ready</span></div><div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200"><span className="material-symbols-outlined text-read-cyan text-[14px]">verified_user</span><span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">SOC2 &amp; GDPR Compliant</span></div></div></div><div className="flex flex-col"><span className="text-xs font-bold text-slate-900 uppercase mb-space-lg tracking-widest">Product Architecture</span><ul className="flex flex-col gap-space-sm text-sm text-slate-500"><li className=""><a className="hover:text-primary-container transition-colors" data-path="features" href="#">Autonomous Core</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="architecture-crm" href="#">CRM Sync Connectors</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="how-it-works" href="#">Webhook Dispatcher</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="use-cases" href="#">E-Commerce &amp; Bookings</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="pricing" href="#pricing">Rental Plans</a></li></ul></div><div className="flex flex-col"><span className="text-xs font-bold text-slate-900 uppercase mb-space-lg tracking-widest">Verified Integrations</span><ul className="flex flex-col gap-space-sm text-sm text-slate-500"><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-crm-sync-gold">sync_alt</span>HubSpot CRM</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-crm-sync-gold">sync_alt</span>Zoho Suite</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-indigo-500">sync_alt</span>Salesforce Enterprise</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-primary-container">bolt</span>Custom Webhooks &amp; APIs</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-read-cyan">calendar_today</span>Google &amp; Cal.com</span></li></ul></div><div className="flex flex-col"><span className="text-xs font-bold text-slate-900 uppercase mb-space-lg tracking-widest">Security &amp; Trust</span><ul className="flex flex-col gap-space-sm text-sm text-slate-500"><li className=""><a className="hover:text-primary-container transition-colors" data-path="privacy-policy" href="#">Data Privacy Charter</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="security" href="#">End-to-End Encryption</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="terms" href="#">Terms of Rental Agreement</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="sla" href="#">99.99% Uptime SLA</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="faq" href="#faq">Knowledge Base</a></li></ul></div></div><div className="pt-space-xl border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-space-md text-slate-400 text-xs"><div className="font-code-mono">© 2025 Innovators AI Hub Inc. All rights reserved. Operating on WhatsApp Cloud API infrastructure.</div><div className="flex items-center gap-space-lg font-semibold"><a className="hover:text-slate-900 transition-colors" data-path="privacy-policy" href="#">PRIVACY POLICY</a><a className="hover:text-slate-900 transition-colors" data-path="terms" href="#">TERMS OF SERVICE</a><a className="hover:text-slate-900 transition-colors" data-path="security" href="#">SECURITY</a></div></div></div></footer>
+<footer className="w-full bg-white border-t border-slate-200 pt-space-3xl pb-space-2xl mt-space-3xl shadow-sm"><div className="w-full max-w-[1400px] mx-auto px-gutter"><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-2xl mb-space-3xl"><div className="lg:col-span-2 flex flex-col items-start"><div className="flex items-center gap-space-sm mb-space-md cursor-pointer" onClick={() => navigateTo ? navigateTo("home") : (window.location.href = "/")}><img alt="Innovators AI Hub WhatsApp Agent Logo" className="h-7 w-auto object-contain" src="/logo.png"/><div className="flex items-center gap-1.5"><span className="font-display font-bold text-lg text-slate-900">Innovators</span><span className="font-display font-bold text-lg text-primary-container">AI HUB</span></div></div><p className="text-sm text-slate-500 max-w-sm mb-space-lg leading-relaxed">Architecting autonomous, hyper-intelligent enterprise WhatsApp agents that drive 24/7 conversion, synchronize leads instantaneously to tier-1 CRMs, and replace fragile legacy chatbots.</p><div className="flex flex-wrap items-center gap-space-sm"><div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200"><span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">Official Meta API Ready</span></div><div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200"><span className="material-symbols-outlined text-read-cyan text-[14px]">verified_user</span><span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">SOC2 &amp; GDPR Compliant</span></div></div></div><div className="flex flex-col"><span className="text-xs font-bold text-slate-900 uppercase mb-space-lg tracking-widest">Product Architecture</span><ul className="flex flex-col gap-space-sm text-sm text-slate-500"><li className=""><a className="hover:text-primary-container transition-colors" data-path="features" href="#">Autonomous Core</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="architecture-crm" href="#">CRM Sync Connectors</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="how-it-works" href="#">Webhook Dispatcher</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="use-cases" href="#">E-Commerce &amp; Bookings</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="pricing" href="#pricing">Rental Plans</a></li></ul></div><div className="flex flex-col"><span className="text-xs font-bold text-slate-900 uppercase mb-space-lg tracking-widest">Verified Integrations</span><ul className="flex flex-col gap-space-sm text-sm text-slate-500"><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-crm-sync-gold">sync_alt</span>HubSpot CRM</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-crm-sync-gold">sync_alt</span>Zoho Suite</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-indigo-500">sync_alt</span>Salesforce Enterprise</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-primary-container">bolt</span>Custom Webhooks &amp; APIs</span></li><li className=""><span className="hover:text-slate-900 transition-colors flex items-center gap-2"><span className="material-symbols-outlined text-[16px] text-read-cyan">calendar_today</span>Google &amp; Cal.com</span></li></ul></div><div className="flex flex-col"><span className="text-xs font-bold text-slate-900 uppercase mb-space-lg tracking-widest">Security &amp; Trust</span><ul className="flex flex-col gap-space-sm text-sm text-slate-500"><li className=""><a className="hover:text-primary-container transition-colors" data-path="privacy-policy" href="#">Data Privacy Charter</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="security" href="#">End-to-End Encryption</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="terms" href="#">Terms of Rental Agreement</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="sla" href="#">99.99% Uptime SLA</a></li><li className=""><a className="hover:text-primary-container transition-colors" data-path="faq" href="#faq">Knowledge Base</a></li></ul></div></div><div className="pt-space-xl border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-space-md text-slate-400 text-xs"><div className="font-code-mono">© 2025 Innovators AI Hub Inc. All rights reserved. Operating on WhatsApp Cloud API infrastructure.</div><div className="flex items-center gap-space-lg font-semibold"><a className="hover:text-slate-900 transition-colors" data-path="privacy-policy" href="#">PRIVACY POLICY</a><a className="hover:text-slate-900 transition-colors" data-path="terms" href="#">TERMS OF SERVICE</a><a className="hover:text-slate-900 transition-colors" data-path="security" href="#">SECURITY</a></div></div></div></footer>
+
+      {/* Glassy Rental Registration Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+            {/* Modal backdrop clicks close modal */}
+            <div className="fixed inset-0 cursor-default" onClick={() => setIsModalOpen(false)} />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="bg-white/95 border border-slate-200/80 backdrop-blur-xl rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.18)] p-6 md:p-8 max-w-md w-full relative z-50 text-left"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 p-1.5 rounded-full transition-colors outline-none cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+
+              {isSubmitted ? (
+                <div className="py-6 text-center flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-primary-container flex items-center justify-center mb-4 shadow-[0_4px_14px_rgba(34,197,94,0.35)]">
+                    <Check size={32} strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Rental Request Received!</h3>
+                  <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+                    Thank you, <span className="font-semibold text-slate-900">{name || 'there'}</span>! We have recorded your request to rent the <strong className="text-primary-container">WhatsApp AI Agent</strong>. Our deployment team will reach out to your WhatsApp number (<span className="font-semibold text-slate-900">{number}</span>) shortly with your onboarding and setup details.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setIsSubmitted(false);
+                    }}
+                    className="w-full py-3 rounded-xl bg-primary-container hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-[0_4px_14px_rgba(34,197,94,0.35)] cursor-pointer"
+                  >
+                    Done
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-xl bg-[#25D366] flex items-center justify-center shrink-0">
+                        <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.94.553 3.753 1.517 5.286L2 22l4.87-1.488A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm5.76 13.972c-.24.673-1.193 1.24-1.666 1.314-.457.07-1.037.102-3.34-.848-2.607-1.076-4.262-3.729-4.392-3.901-.13-.173-1.052-1.398-1.052-2.668 0-1.27.664-1.895.903-2.155.239-.26.52-.325.693-.325.174 0 .348 0 .502.009.16.008.373-.06.586.452.219.516.748 1.82.813 1.95.065.13.109.283.022.457-.087.174-.13.283-.261.435-.13.152-.271.348-.39.456-.13.13-.272.271-.119.533.153.26.68 1.116 1.458 1.811 1.002.894 1.846 1.17 2.11 1.3.264.13.418.11.575-.065.157-.174.659-.768.833-1.03.174-.265.348-.22.587-.13.239.09 1.53.721 1.792.852.262.13.436.195.5.304.065.11.065.632-.175 1.305z" fill="#ffffff" fillRule="evenodd"></path>
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900">
+                        Rent WhatsApp AI Agent
+                      </h3>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      Enter your details below to rent your WhatsApp AI Agent for <strong className="text-slate-800">₹2,999/mo</strong>.
+                    </p>
+                  </div>
+
+                  {/* Error feedback */}
+                  {submitError && (
+                    <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium">
+                      {submitError}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleRentSubmit} className="space-y-3.5">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        placeholder="e.g. Sagar"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Email (Mail)</label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="sagar@example.com"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">WhatsApp Number</label>
+                      <input
+                        type="tel"
+                        required
+                        value={number}
+                        onChange={e => setNumber(e.target.value)}
+                        placeholder="+91 XXXXX XXXXX"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Profession / Role</label>
+                      <input
+                        type="text"
+                        required
+                        value={profession}
+                        onChange={e => setProfession(e.target.value)}
+                        placeholder="e.g. Founder / Business Owner"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Company Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={companyName}
+                        onChange={e => setCompanyName(e.target.value)}
+                        placeholder="e.g. Innovators AI HUB"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    {/* Primary Action Button */}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full mt-5 py-3 rounded-xl bg-primary-container hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 outline-none shadow-[0_4px_14px_rgba(34,197,94,0.35)] active:scale-95 disabled:opacity-50 cursor-pointer"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={14} className="animate-spin" />
+                          <span>Submitting Request...</span>
+                        </>
+                      ) : (
+                        <span>Submit &amp; Rent Agent (₹2,999/mo)</span>
+                      )}
+                    </button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
