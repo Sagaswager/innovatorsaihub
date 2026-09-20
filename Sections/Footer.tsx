@@ -42,12 +42,14 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) 
             Linkedin AI Agent
           </a>
           <a 
-            href="/WhatsAppautomaton" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="text-white/40 hover:text-white transition-all"
+            href="/whatsapp-ai-agent" 
+            onClick={(e) => {
+              e.preventDefault();
+              navigateTo?.('whatsapp-ai-agent' as any);
+            }}
+            className="text-white/40 hover:text-white transition-all cursor-pointer"
           >
-            WhatsApp Automation
+            WhatsApp AI Agent
           </a>
           {externalLinks.map((link, idx) => (
             <a 

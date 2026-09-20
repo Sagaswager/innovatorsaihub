@@ -6,8 +6,8 @@ import { trackEvent } from '../analytics';
 
 interface HeaderProps {
   isDarkMode: boolean;
-  currentPage: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join';
-  navigateTo: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join') => void;
+  currentPage: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent';
+  navigateTo: (page: any) => void;
   selectedAgents?: string[];
 }
 
@@ -102,12 +102,14 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
             </a>
             <a 
               id="header-whatsapp-automation-link"
-              href="/WhatsAppautomaton"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors"
+              href="/whatsapp-ai-agent"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo('whatsapp-ai-agent');
+              }}
+              className="transition-colors cursor-pointer"
             >
-              WhatsApp Automation
+              WhatsApp AI Agent
             </a>
           </nav>
 
@@ -244,20 +246,23 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
                     <ExternalLink size={18} className="text-white/40 group-hover:text-white group-hover:scale-110 transition-all" />
                   </motion.a>
 
-                  {/* External Link: WhatsApp Automation */}
+                  {/* WhatsApp AI Agent */}
                   <motion.a
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: (navItems.length + 1) * 0.05 }}
-                    href="/WhatsAppautomaton"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3"
+                    href="/whatsapp-ai-agent"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      navigateTo('whatsapp-ai-agent');
+                    }}
+                    className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3 cursor-pointer"
                   >
                     <span className="text-2xl md:text-3xl font-light tracking-wide text-zinc-300 group-hover:text-white">
-                      WhatsApp Automation
+                      WhatsApp AI Agent
                     </span>
-                    <ExternalLink size={18} className="text-white/40 group-hover:text-white group-hover:scale-110 transition-all" />
+                    <ArrowRight size={18} className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
                   </motion.a>
                 </nav>
               </div>
