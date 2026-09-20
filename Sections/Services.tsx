@@ -20,7 +20,7 @@ interface ServicesProps {
   selectedAgents?: string[];
   customDescriptions?: Record<string, string>;
   toggleAgent?: (id: string) => void;
-  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact') => void;
+  navigateTo?: (page: any) => void;
 }
 
 const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, selectedAgents = [], customDescriptions = {}, toggleAgent, navigateTo }) => {
@@ -166,7 +166,30 @@ const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, sel
                     <div className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-4">
                       {agent.icon}
                     </div>
-                    <h4 className="text-sm font-bold text-white mb-1">{agent.name}</h4>
+                    <div className="flex items-center justify-between mb-1">
+                      <h4 
+                        onClick={() => {
+                          if (agent.id === 'whatsapp-agent') {
+                            if (navigateTo) navigateTo('whatsapp-ai-agent');
+                            else window.location.href = '/whatsapp-ai-agent';
+                          }
+                        }}
+                        className={`text-sm font-bold text-white ${agent.id === 'whatsapp-agent' ? 'cursor-pointer hover:underline text-emerald-400' : ''}`}
+                      >
+                        {agent.name}
+                      </h4>
+                      {agent.id === 'whatsapp-agent' && (
+                        <button
+                          onClick={() => {
+                            if (navigateTo) navigateTo('whatsapp-ai-agent');
+                            else window.location.href = '/whatsapp-ai-agent';
+                          }}
+                          className="text-[9px] font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/20 transition-all cursor-pointer"
+                        >
+                          View Page →
+                        </button>
+                      )}
+                    </div>
                     <p className="text-[11px] font-light text-white/50 leading-relaxed mb-4">{agent.description}</p>
                   </div>
                   <div className="text-left">

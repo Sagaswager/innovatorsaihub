@@ -74,7 +74,17 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handlePopState = () => {
-      const path = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
+      let path = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
+      const normalized = path.toLowerCase();
+      if (
+        normalized === 'whatsapp-ai-agent' || 
+        normalized === 'whatsappautomaton' || 
+        normalized === 'whatsappautomation' || 
+        normalized === 'whatsapp-agent' ||
+        normalized === 'whatsapp'
+      ) {
+        path = 'whatsapp-ai-agent';
+      }
       const validPages: Page[] = [
         'home',
         'portfolio',

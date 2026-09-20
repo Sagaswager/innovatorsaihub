@@ -16,7 +16,7 @@ interface AgentTeamsProps {
   isDarkMode: boolean;
   selectedAgents: string[];
   toggleAgent: (id: string) => void;
-  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact') => void;
+  navigateTo?: (page: any) => void;
 }
 
 export const agentsData: Agent[] = [
@@ -98,13 +98,42 @@ const AgentTeams: React.FC<AgentTeamsProps> = ({ selectedAgents, toggleAgent, na
             >
               <div>
                 {/* Icon Badge */}
-                <div className="w-12 h-12 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-6 group-hover/card:bg-blue-600 group-hover/card:text-white transition-all duration-500">
+                <div 
+                  onClick={() => {
+                    if (agent.id === 'whatsapp-agent') {
+                      if (navigateTo) navigateTo('whatsapp-ai-agent');
+                      else window.location.href = '/whatsapp-ai-agent';
+                    }
+                  }}
+                  className={`w-12 h-12 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-6 group-hover/card:bg-blue-600 group-hover/card:text-white transition-all duration-500 ${agent.id === 'whatsapp-agent' ? 'cursor-pointer' : ''}`}
+                >
                   {agent.icon}
                 </div>
                 {/* Title */}
-                <h3 className="text-lg font-bold text-white tracking-tight mb-2 group-hover/card:text-blue-400 transition-colors">
-                  {agent.name}
-                </h3>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 
+                    onClick={() => {
+                      if (agent.id === 'whatsapp-agent') {
+                        if (navigateTo) navigateTo('whatsapp-ai-agent');
+                        else window.location.href = '/whatsapp-ai-agent';
+                      }
+                    }}
+                    className={`text-lg font-bold text-white tracking-tight group-hover/card:text-blue-400 transition-colors ${agent.id === 'whatsapp-agent' ? 'cursor-pointer hover:underline' : ''}`}
+                  >
+                    {agent.name}
+                  </h3>
+                  {agent.id === 'whatsapp-agent' && (
+                    <button
+                      onClick={() => {
+                        if (navigateTo) navigateTo('whatsapp-ai-agent');
+                        else window.location.href = '/whatsapp-ai-agent';
+                      }}
+                      className="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/20 transition-all cursor-pointer"
+                    >
+                      View Page →
+                    </button>
+                  )}
+                </div>
                 {/* Description */}
                 <p className="text-xs font-light text-white/50 leading-relaxed mb-6">
                   {agent.description}

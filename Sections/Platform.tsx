@@ -576,7 +576,7 @@ const aiCoWorkers = [
 
 interface PlatformProps {
   isDarkMode: boolean;
-  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform') => void;
+  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent' | any) => void;
 }
 
 const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
@@ -1182,7 +1182,12 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                     <div 
                       key={index} 
                       onClick={() => {
-                        setSelectedAgent(item);
+                        if (item.title.toLowerCase().includes('whatsapp')) {
+                          if (navigateTo) navigateTo('whatsapp-ai-agent');
+                          else window.location.href = '/whatsapp-ai-agent';
+                        } else {
+                          setSelectedAgent(item);
+                        }
                       }}
                       className="bg-blue-500/[0.12] rounded-[28px] border border-blue-500/15 hover:border-blue-500/30 overflow-hidden shadow-sm hover:shadow-md hover:scale-[1.03] transition-all duration-300 cursor-pointer flex flex-col justify-between h-full group"
                     >
@@ -1219,7 +1224,10 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (item.title.toLowerCase().includes('linkedin')) {
+                              if (item.title.toLowerCase().includes('whatsapp')) {
+                                if (navigateTo) navigateTo('whatsapp-ai-agent');
+                                else window.location.href = '/whatsapp-ai-agent';
+                              } else if (item.title.toLowerCase().includes('linkedin')) {
                                 window.location.href = "https://innovatorslinai.duckdns.org/dashboard.html";
                               } else {
                                 setSelectedAgent(item);
@@ -1285,7 +1293,10 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                         </div>
                         <button 
                           onClick={() => {
-                            if (selectedAgent.title.toLowerCase().includes('linkedin')) {
+                            if (selectedAgent.title.toLowerCase().includes('whatsapp')) {
+                              if (navigateTo) navigateTo('whatsapp-ai-agent');
+                              else window.location.href = '/whatsapp-ai-agent';
+                            } else if (selectedAgent.title.toLowerCase().includes('linkedin')) {
                               window.location.href = "https://innovatorslinai.duckdns.org/dashboard.html";
                             } else {
                               setModalMode('register');
