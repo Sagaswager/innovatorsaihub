@@ -17,10 +17,30 @@ import EventRegistration from './Sections/EventRegistration';
 import Platform from './Sections/Platform';
 import JoinTeam from './Sections/JoinTeam';
 import AdminDashboard from './Sections/AdminDashboard';
+import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
+import LinkedInAgentPage from './Sections/LinkedInAgentPage';
+import GmailAgentPage from './Sections/GmailAgentPage';
+import VoiceCallingAgentPage from './Sections/VoiceCallingAgentPage';
+import SEOAgentPage from './Sections/SEOAgentPage';
+
+export type Page = 
+  | 'home' 
+  | 'portfolio' 
+  | 'services' 
+  | 'contact' 
+  | 'register' 
+  | 'platform' 
+  | 'join' 
+  | 'admin'
+  | 'whatsapp-ai-agent'
+  | 'linkedin-ai-agent'
+  | 'gmail-ai-agent'
+  | 'voice-calling-ai-agent'
+  | 'seo-ai-agent';
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
-  const [currentPage, setCurrentPage] = useState<'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin'>('platform');
+  const [currentPage, setCurrentPage] = useState<Page>('platform');
 
 
   const [selectedAgents, setSelectedAgents] = useState<string[]>([]);
@@ -50,7 +70,7 @@ const App: React.FC = () => {
     }
   };
 
-  const navigateTo = (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin') => {
+  const navigateTo = (page: Page) => {
     setCurrentPage(page);
     const path = page === 'platform' ? '/' : `/${page}`;
     window.history.pushState({ page }, '', path);
@@ -63,8 +83,23 @@ const App: React.FC = () => {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
-      if (path === 'home' || path === 'portfolio' || path === 'services' || path === 'contact' || path === 'register' || path === 'platform' || path === 'join' || path === 'admin') {
-        setCurrentPage(path as any);
+      const validPages: Page[] = [
+        'home',
+        'portfolio',
+        'services',
+        'contact',
+        'register',
+        'platform',
+        'join',
+        'admin',
+        'whatsapp-ai-agent',
+        'linkedin-ai-agent',
+        'gmail-ai-agent',
+        'voice-calling-ai-agent',
+        'seo-ai-agent'
+      ];
+      if (validPages.includes(path as Page)) {
+        setCurrentPage(path as Page);
       }
     };
 
@@ -109,10 +144,30 @@ const App: React.FC = () => {
         title = 'Admin Dashboard | Innovators AI HUB';
         description = 'Admin internal dashboard.';
         break;
+      case 'whatsapp-ai-agent':
+        title = 'WhatsApp AI Agent for Business | Automated 24/7 Support & CRM Sync';
+        description = 'Automate customer support, lead qualification, and appointment booking directly inside WhatsApp with Innovators AI HUB.';
+        break;
+      case 'linkedin-ai-agent':
+        title = 'LinkedIn AI Agent | Automated B2B Lead Generation & Outreach';
+        description = 'Scale B2B appointments and outbound connections safely on autopilot with our specialized LinkedIn AI agent.';
+        break;
+      case 'gmail-ai-agent':
+        title = 'Gmail AI Agent | Autonomous Email Automation & Inbox Management';
+        description = 'AI assistant for email management, automatic draft generation, client inquiry triage, and CRM updates.';
+        break;
+      case 'voice-calling-ai-agent':
+        title = 'AI Voice Calling Agent | Autonomous Inbound & Outbound Calling';
+        description = 'Deploy conversational AI voice agents capable of handling 1,000+ simultaneous inbound and outbound calls in India.';
+        break;
+      case 'seo-ai-agent':
+        title = 'SEO AI Agent | Autonomous Search Engine Optimization & Backlinks';
+        description = 'Boost organic search rankings with autonomous keyword tracking, on-page optimization, and programmatic SEO.';
+        break;
     }
 
     document.title = title;
-    const pageUrl = `https://innovatorsaihub.com${currentPage === 'platform' ? '/' : `/${currentPage}`}`;
+    const pageUrl = `https://www.innovatorsaihub.com${currentPage === 'platform' ? '/' : `/${currentPage}`}`;
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -322,6 +377,66 @@ const App: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               <AdminDashboard isDarkMode={isDarkMode} />
+            </motion.div>
+          )}
+
+          {currentPage === 'whatsapp-ai-agent' && (
+            <motion.div
+              key="whatsapp-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <WhatsAppAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
+            </motion.div>
+          )}
+
+          {currentPage === 'linkedin-ai-agent' && (
+            <motion.div
+              key="linkedin-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <LinkedInAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
+            </motion.div>
+          )}
+
+          {currentPage === 'gmail-ai-agent' && (
+            <motion.div
+              key="gmail-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <GmailAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
+            </motion.div>
+          )}
+
+          {currentPage === 'voice-calling-ai-agent' && (
+            <motion.div
+              key="voice-calling-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <VoiceCallingAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
+            </motion.div>
+          )}
+
+          {currentPage === 'seo-ai-agent' && (
+            <motion.div
+              key="seo-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <SEOAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
           )}
         </AnimatePresence>
