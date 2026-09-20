@@ -245,7 +245,7 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
         <Header 
           isDarkMode={isDarkMode} 
           currentPage={currentPage}
@@ -441,7 +441,7 @@ const App: React.FC = () => {
           )}
         </AnimatePresence>
       </main>
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}
 
