@@ -51,10 +51,6 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 {/*  Dual Call to Actions  */}
 <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
 <a className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_20px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all" href="https://wa.me/919810875683?text=Hi%20Innovators%20AI%20HUB,%20I%20want%20to%20rent%20the%20WhatsApp%20AI%20Agent" target="_blank" rel="noopener noreferrer"><span className="material-symbols-outlined text-[20px]">smart_toy</span>Rent WhatsApp AI Agent</a>
-<a className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-white text-slate-800 font-semibold text-base border border-slate-200/90 shadow-sm hover:bg-slate-50 active:scale-95 transition-all" href="#interactive-simulator">
-<span className="material-symbols-outlined text-primary-container text-[20px]">play_circle</span>
-    Watch Interactive Simulation
-  </a>
 </div>
 {/*  Trust Bar / Integrations Strip (Clean light badges)  */}
 <div className="w-full pt-space-md flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-slate-600 text-xs font-semibold uppercase tracking-wider">
@@ -77,95 +73,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  Realistic Crisp Light WhatsApp Interactive Simulator Device  */}
-<div className="w-full max-w-xl mx-auto rounded-[2rem] bg-white p-3 sm:p-4 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/90 relative" id="interactive-simulator">
-<div className="flex flex-col rounded-2xl bg-[#efeae2] overflow-hidden border border-slate-200 shadow-inner">
-{/*  WhatsApp Mobile Header  */}
-<div className="flex items-center justify-between px-4 py-3 bg-whatsapp-teal text-white shadow-md">
-<div className="flex items-center gap-3">
-<div className="relative w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-<span className="material-symbols-outlined text-white text-[22px]">smart_toy</span>
-<span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-whatsapp-green ring-2 ring-whatsapp-teal"></span>
-</div>
-<div className="flex flex-col text-left">
-<div className="flex items-center gap-1.5">
-<span className="font-semibold text-sm leading-tight text-white">Innovators AI Assistant</span>
-<span className="material-symbols-outlined text-whatsapp-green bg-white rounded-full text-[13px]">verified</span>
-</div>
-<span className="text-[11px] text-emerald-100 tracking-wide font-medium">Online · Instant 24/7 Co-Worker</span>
-</div>
-</div>
-<div className="flex items-center gap-3 text-white/90">
-<span className="material-symbols-outlined text-[20px] cursor-pointer hover:text-white">videocam</span>
-<span className="material-symbols-outlined text-[20px] cursor-pointer hover:text-white">call</span>
-<span className="material-symbols-outlined text-[20px] cursor-pointer hover:text-white">more_vert</span>
-</div>
-</div>
-{/*  Chat Stream (Light Theme Bubbles)  */}
-<div className="flex flex-col gap-3 p-4 sm:p-5 overflow-y-auto max-h-[380px]">
-<div className="flex justify-center">
-<span className="px-3 py-1 rounded-full bg-white/90 text-slate-600 text-[10px] font-semibold uppercase tracking-wider shadow-sm">Today</span>
-</div>
-{/*  Inbound Customer Message  */}
-<div className="flex flex-col max-w-[85%] self-start bg-white text-slate-800 rounded-2xl rounded-tl-none p-3 shadow-sm border border-slate-100">
-<p className="text-xs sm:text-sm leading-relaxed">Hi! I need help checking your automated booking features and pricing details for our clinic.</p>
-<div className="flex items-center justify-end gap-1 mt-1">
-<span className="font-code-mono text-[10px] text-slate-400">10:42 AM</span>
-</div>
-</div>
-{/*  Outbound AI Agent Message  */}
-<div className="flex flex-col max-w-[88%] self-end bg-whatsapp-bubble text-slate-900 rounded-2xl rounded-tr-none p-3 shadow-sm border border-emerald-200/60">
-<p className="text-xs sm:text-sm leading-relaxed">Hello! 👋 Thanks for reaching out to <strong>Innovators AI Hub</strong>.</p>
-<p className="text-xs sm:text-sm leading-relaxed mt-1.5">Our WhatsApp AI Agent automates appointment scheduling, syncs with your calendar in real time, and sends instant reminders to clients.</p>
-<p className="text-xs sm:text-sm leading-relaxed mt-1.5 text-emerald-900 font-semibold">Would you like a live preview of the booking flow or the rental plans?</p>
-<div className="flex items-center justify-end gap-1 mt-1">
-<span className="font-code-mono text-[10px] text-slate-500">10:42 AM</span>
-<span className="material-symbols-outlined text-[#34B7F1] text-[15px]">done_all</span>
-</div>
-</div>
-{/*  Inbound Slot Request  */}
-<div className="flex flex-col max-w-[85%] self-start bg-white text-slate-800 rounded-2xl rounded-tl-none p-3 shadow-sm border border-slate-100">
-<p className="text-xs sm:text-sm leading-relaxed">Could you share the booking preview and available slots for tomorrow?</p>
-<div className="flex items-center justify-end gap-1 mt-1">
-<span className="font-code-mono text-[10px] text-slate-400">10:43 AM</span>
-</div>
-</div>
-{/*  Outbound Interactive Menu Slot Cards  */}
-<div className="flex flex-col max-w-[88%] self-end bg-whatsapp-bubble text-slate-900 rounded-2xl rounded-tr-none p-3 shadow-sm border border-emerald-200/60">
-<p className="text-xs sm:text-sm leading-relaxed">Here are the next available consultation slots for tomorrow:</p>
-<div className="mt-2.5 flex flex-col gap-1.5">
-<button className="w-full py-2 px-3 rounded-lg bg-white hover:bg-slate-50 text-slate-800 text-left text-xs font-semibold flex items-center justify-between transition-colors shadow-sm border border-emerald-200">
-<span className="flex items-center gap-2">
-<span className="material-symbols-outlined text-primary-container text-[16px]">event_available</span>
-              Tomorrow at 2:30 PM
-            </span>
-<span className="text-whatsapp-green font-bold">Select</span>
-</button>
-<button className="w-full py-2 px-3 rounded-lg bg-white hover:bg-slate-50 text-slate-800 text-left text-xs font-semibold flex items-center justify-between transition-colors shadow-sm border border-emerald-200">
-<span className="flex items-center gap-2">
-<span className="material-symbols-outlined text-primary-container text-[16px]">event_available</span>
-              Tomorrow at 4:45 PM
-            </span>
-<span className="text-whatsapp-green font-bold">Select</span>
-</button>
-</div>
-<div className="flex items-center justify-end gap-1 mt-1.5">
-<span className="font-code-mono text-[10px] text-slate-500">10:43 AM</span>
-<span className="material-symbols-outlined text-[#34B7F1] text-[15px]">done_all</span>
-</div>
-</div>
-</div>
-{/*  WhatsApp Input Bar  */}
-<div className="p-2.5 bg-[#f0f2f5] flex items-center gap-2 border-t border-slate-200">
-<div className="flex-1 py-2 px-3.5 rounded-full bg-white text-slate-400 text-xs flex items-center justify-between shadow-sm border border-slate-200">
-<span className="">Type a message...</span>
-<span className="material-symbols-outlined text-slate-400 text-[18px]">sentiment_satisfied</span>
-</div>
-<div className="w-9 h-9 rounded-full bg-whatsapp-green flex items-center justify-center text-white shrink-0 cursor-pointer shadow-md hover:bg-emerald-600 transition-colors">
-<span className="material-symbols-outlined text-[18px]">send</span>
-</div>
-</div>
-</div>
-</div>
+<div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative"><img alt="Innovators AI Hub WhatsApp AI Agent interface with feature callouts for Instant Support, Appointment Booking, Automated Lead Qualification, and Real-time CRM Sync" className="w-full h-auto object-contain rounded-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM8QlDWqH1-QzE7_8GzDq4ll7ZjlTcEYKbwVUFL63pdS-L1RQu5HaUUFH9Pe-l9mSwCncCj_JyEJyKNetkwYo40tGBJcOCaRjfds56_1qSRYA1rxUws1c6nAkU0ErseAuCyebDMc3RuZcVev8B9rfjt46zslJHXlj9qwnlYUlNh3-d0axBSVBgD5CQnxerfdx8YhcbwbFprQGwWGadb0OwDLcNw8DntQ0XXHcNg4eAP0ELJO0stA"/></div>
 </section>
 {/*  =========================================================================  */}
 {/*  SECTION 2: WHY BUSINESSES NEED A WHATSAPP AI AGENT & METRIC STRIP  */}
