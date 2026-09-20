@@ -17,10 +17,22 @@ import EventRegistration from './Sections/EventRegistration';
 import Platform from './Sections/Platform';
 import JoinTeam from './Sections/JoinTeam';
 import AdminDashboard from './Sections/AdminDashboard';
+import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
+
+export type Page = 
+  | 'home' 
+  | 'portfolio' 
+  | 'services' 
+  | 'contact' 
+  | 'register' 
+  | 'platform' 
+  | 'join' 
+  | 'admin'
+  | 'whatsapp-ai-agent';
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
-  const [currentPage, setCurrentPage] = useState<'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin'>('platform');
+  const [currentPage, setCurrentPage] = useState<Page>('platform');
 
 
   const [selectedAgents, setSelectedAgents] = useState<string[]>([]);
@@ -50,7 +62,7 @@ const App: React.FC = () => {
     }
   };
 
-  const navigateTo = (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin') => {
+  const navigateTo = (page: Page) => {
     setCurrentPage(page);
     const path = page === 'platform' ? '/' : `/${page}`;
     window.history.pushState({ page }, '', path);
@@ -63,8 +75,19 @@ const App: React.FC = () => {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
-      if (path === 'home' || path === 'portfolio' || path === 'services' || path === 'contact' || path === 'register' || path === 'platform' || path === 'join' || path === 'admin') {
-        setCurrentPage(path as any);
+      const validPages: Page[] = [
+        'home',
+        'portfolio',
+        'services',
+        'contact',
+        'register',
+        'platform',
+        'join',
+        'admin',
+        'whatsapp-ai-agent'
+      ];
+      if (validPages.includes(path as Page)) {
+        setCurrentPage(path as Page);
       }
     };
 
@@ -109,10 +132,14 @@ const App: React.FC = () => {
         title = 'Admin Dashboard | Innovators AI HUB';
         description = 'Admin internal dashboard.';
         break;
+      case 'whatsapp-ai-agent':
+        title = 'WhatsApp AI Agent for Business | Automated 24/7 Support & CRM Sync';
+        description = 'Automate customer support, lead qualification, and appointment booking directly inside WhatsApp with Innovators AI HUB.';
+        break;
     }
 
     document.title = title;
-    const pageUrl = `https://innovatorsaihub.com${currentPage === 'platform' ? '/' : `/${currentPage}`}`;
+    const pageUrl = `https://www.innovatorsaihub.com${currentPage === 'platform' ? '/' : `/${currentPage}`}`;
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -190,7 +217,7 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {currentPage !== 'platform' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
         <Header 
           isDarkMode={isDarkMode} 
           currentPage={currentPage}
@@ -324,9 +351,21 @@ const App: React.FC = () => {
               <AdminDashboard isDarkMode={isDarkMode} />
             </motion.div>
           )}
+
+          {currentPage === 'whatsapp-ai-agent' && (
+            <motion.div
+              key="whatsapp-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <WhatsAppAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
+            </motion.div>
+          )}
         </AnimatePresence>
       </main>
-      {currentPage !== 'platform' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}
 
