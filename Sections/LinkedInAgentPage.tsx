@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Check, Loader2 } from 'lucide-react';
 
 interface LinkedInAgentPageProps {
   isDarkMode?: boolean;
@@ -6,65 +8,112 @@ interface LinkedInAgentPageProps {
 }
 
 const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = false, navigateTo }) => {
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec";
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<string>('Wed, 2:00 PM');
   const [confirmationBanner, setConfirmationBanner] = useState<string>('');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
+  const [profession, setProfession] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const toggleFaq = (index: number) => {
     setOpenFaq(prev => prev === index ? null : index);
   };
 
+  const scrollToRentAgent = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const btn = document.getElementById('rent-agent-pricing-btn');
+    if (btn) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.classList.add('ring-4', 'ring-emerald-400', 'scale-105', 'transition-all');
+      setTimeout(() => {
+        btn.classList.remove('ring-4', 'ring-emerald-400', 'scale-105', 'transition-all');
+      }, 1500);
+    }
+  };
+
+  const handleRentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    const userData = {
+      name,
+      email,
+      mail: email,
+      number,
+      profession,
+      companyName,
+      agent: 'LinkedIn AI Agent',
+      price: '₹2,222/mo',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const existingUsersRaw = localStorage.getItem('platform_registered_users');
+      const existingUsers = existingUsersRaw ? JSON.parse(existingUsersRaw) : [];
+      if (!existingUsers.some((u: any) => u.email === email)) {
+        existingUsers.push(userData);
+        localStorage.setItem('platform_registered_users', JSON.stringify(existingUsers));
+      }
+      localStorage.setItem('platform_user', JSON.stringify({ name, email }));
+
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("Submission failed:", err);
+      setSubmitError('Failed to submit rental request. Please try again or reach out on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full bg-white text-slate-900 selection:bg-emerald-500 selection:text-white font-['Plus_Jakarta_Sans',sans-serif]">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-<div className="h-20 max-w-[1280px] mx-auto px-4 md:px-8 flex items-center justify-between gap-4">
-{/*  Brand Logo  */}
-<div className="flex items-center gap-3">
-<a className="flex items-center gap-2.5 group cursor-pointer" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("home"); else window.location.href = "/"; }}>
-<img alt="Innovators AI HUB Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" src="/logo-dark.png"/>
-<div className="flex flex-col">
-<span className="font-extrabold text-[19px] text-slate-900 leading-tight tracking-tight flex items-center gap-1">
-              Innovators <span className="text-emerald-600">AI HUB</span>
-</span>
-<span className="text-[10px] tracking-widest text-slate-400 font-bold uppercase">Workplace Autonomous Agents</span>
-</div>
-</a>
-</div>
-{/*  Navigation Links  */}
-<nav className="hidden lg:flex items-center gap-1 font-medium text-[15px] text-slate-600">
-<a  className="px-3.5 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("home"); else window.location.href = "/"; }}>Home</a>
-<a  className="px-3.5 py-2 rounded-lg text-emerald-600 font-semibold bg-emerald-50/60" href="/services" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("services"); else window.location.href = "/services"; }}>Agents</a>
-<a className="px-3.5 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors flex items-center gap-1.5" href="#pricing-package">
-          Pricing
-          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold">₹2,222/mo</span>
-</a>
-<a className="px-3.5 py-2 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors" href="#faq-section">FAQ</a>
-</nav>
-{/*  Right Header Actions  */}
-<div className="flex items-center gap-3">
-{/*  Balance / Wallet badge  */}
-<div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold">
-<span className="material-symbols-outlined text-[16px] text-emerald-600">account_balance_wallet</span>
-<span className="">₹2,000</span>
-<span className="text-slate-400 text-[10px]">CREDITS</span>
-</div>
-{/*  Join Team / Book Demo link  */}
-<a className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition" href="#interactive-demo">
-<span className="material-symbols-outlined text-[16px] text-slate-500">calendar_month</span>
-          Book Demo
-        </a>
-{/*  Rent Agent Primary CTA  */}
-<a className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 hover:shadow-lg hover:shadow-emerald-500/35 transition-all flex items-center gap-1.5" href="#pricing-package">
-<span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-          Rent Agent
-        </a>
-{/*  User Profile Avatar  */}
-<div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer ml-1">
-<span className="material-symbols-outlined text-[20px]">person</span>
-</div>
-</div>
-</div>
-</header>
+      <header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+        <div className="h-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 cursor-pointer" onClick={() => navigateTo ? navigateTo("platform") : (window.location.href = "/")}>
+            <img alt="Innovators AI HUB" className="h-8 md:h-10 w-auto object-contain" src="/logo-dark.png"/>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[10px] sm:text-[11px] font-bold text-[#0A66C2] tracking-wider uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0A66C2] animate-pulse"></span>
+              LinkedIn Co-Worker
+            </span>
+          </div>
+          <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-100/80 border border-slate-200/60 shadow-inner">
+            <a aria-current="page" className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-900 bg-white shadow-sm transition-all cursor-pointer" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("platform"); else window.location.href = "/"; }}>Home</a>
+            <a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" href="#pricing-package">Pricing</a>
+            <a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" href="#faq-section">FAQ</a>
+          </nav>
+          <div className="flex items-center gap-3 shrink-0">
+            <a className="hidden sm:inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-black text-white text-xs font-semibold shadow hover:bg-slate-800 active:scale-95 transition-all" href="https://calendar.app.google/D4VcVM3GVSh4PAia6" target="_blank" rel="noopener noreferrer">
+              <span className="material-symbols-outlined text-[16px]">calendar_month</span>
+              Book Demo
+            </a>
+            <button onClick={scrollToRentAgent} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold shadow-[0_4px_14px_rgba(16,185,129,0.35)] active:scale-95 transition-all cursor-pointer">
+              <svg className="w-4 h-4 text-white shrink-0 fill-current" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28Z"/>
+              </svg>
+              Rent LinkedIn AI Agent
+            </button>
+          </div>
+        </div>
+      </header>
 <main className="w-full pt-20 bg-white min-h-screen">
 <div className="flex flex-col w-full">
 {/*  TOP CONTEXT BADGE BAR  */}
@@ -162,14 +211,13 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 {/*  Pricing and Action CTA Bar  */}
 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-<a className="px-7 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base text-center shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/35 transition-all flex items-center justify-center gap-2" href="#pricing-package">
-<span className="material-symbols-outlined text-[20px]">bolt</span>
-                  Rent Agent for ₹2,222/mo
-                </a>
-<a className="px-5 py-3.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm text-center shadow-sm transition-all flex items-center justify-center gap-2" href="#interactive-demo">
-<span className="material-symbols-outlined text-[18px] text-slate-500">play_circle</span>
-                  View Interactive Demo
-                </a>
+  <button 
+    onClick={scrollToRentAgent}
+    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-base shadow-[0_8px_20px_rgba(16,185,129,0.35)] active:scale-95 transition-all cursor-pointer"
+  >
+    <span className="material-symbols-outlined text-[20px]">smart_toy</span>
+    Rent LinkedIn AI Agent
+  </button>
 </div>
 <div className="flex items-center gap-2 text-slate-500 text-xs">
 <span className="line-through text-slate-400">Regular: ₹6,999/mo</span>
@@ -178,7 +226,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  RIGHT COLUMN: LinkedIn Simulation Card (Light themed mockup)  */}
-<div className="lg:col-span-6 flex flex-col" id="interactive-demo">
+<div className="lg:col-span-6 flex flex-col">
 <div className="relative rounded-3xl bg-white border border-slate-200/90 p-5 md:p-6 shadow-[0_12px_36px_rgba(15,23,42,0.08)] overflow-hidden">
 {/*  Ambient Subtle Gradient  */}
 <div className="absolute -top-16 -right-16 w-52 h-52 bg-emerald-100/50 rounded-full blur-3xl pointer-events-none"></div>
@@ -308,7 +356,15 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 <span className="text-xs font-medium text-slate-400 line-through mt-0.5">₹6,999</span>
 </div>
-<a className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 transition-all" href="https://wa.me/919810875683?text=Hi%20Innovators%20AI%20HUB,%20I%20want%20to%20rent%20the%20LinkedIn%20AI%20Agent%20for%20Rs%202,222/month" target="_blank" rel="noopener noreferrer">Rent Agent</a>
+<button
+  onClick={() => {
+    setIsSubmitted(false);
+    setIsModalOpen(true);
+  }}
+  className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer"
+>
+  Rent Agent
+</button>
 </div>
 </div>
 {/*  Subheading and summary  */}
@@ -870,7 +926,16 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Instant Cloud Activation • No software install required
               </div>
-<a className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base shadow-lg shadow-emerald-500/25 transition-all text-center inline-block" href="https://wa.me/919810875683?text=Hi%20Innovators%20AI%20HUB,%20I%20want%20to%20rent%20the%20LinkedIn%20AI%20Agent%20for%20Rs%202,222/month" target="_blank" rel="noopener noreferrer">Rent Agent Now</a>
+<button
+  id="rent-agent-pricing-btn"
+  onClick={() => {
+    setIsSubmitted(false);
+    setIsModalOpen(true);
+  }}
+  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/35 active:scale-95 transition-all text-center inline-block cursor-pointer"
+>
+  Rent Agent Now
+</button>
 </div>
 </div>
 </div>
@@ -949,12 +1014,13 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <p className="text-emerald-100 text-base sm:text-lg max-w-xl font-body">
               Stop spending your team's time manually writing connection requests, tracking follow-ups, and coordinating every meeting.
             </p>
-<div className="pt-2">
-<a className="px-8 py-4 rounded-xl bg-white text-emerald-800 hover:bg-slate-50 font-extrabold text-base shadow-lg transition-transform hover:scale-105 flex items-center gap-2" href="#pricing-package">
-<span className="material-symbols-outlined text-emerald-600">rocket_launch</span>
-                Automate Your LinkedIn Outreach
-              </a>
-</div>
+<button
+  onClick={scrollToRentAgent}
+  className="px-8 py-4 rounded-full bg-white text-emerald-800 hover:bg-slate-50 font-extrabold text-base shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
+>
+  <span className="material-symbols-outlined text-emerald-600">rocket_launch</span>
+  Rent Agent Now
+</button>
 <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-emerald-100 font-semibold pt-2">
 <span className="flex items-center gap-1.5">
 <span className="material-symbols-outlined text-[16px] text-white">check_circle</span>
@@ -1056,6 +1122,156 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </footer>
+
+      {/* Glassy Rental Registration Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+            {/* Modal backdrop clicks close modal */}
+            <div className="fixed inset-0 cursor-default" onClick={() => setIsModalOpen(false)} />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="bg-white/95 border border-slate-200/80 backdrop-blur-xl rounded-[28px] shadow-[0_25px_60px_rgba(0,0,0,0.18)] p-6 md:p-8 max-w-md w-full relative z-50 text-left"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 p-1.5 rounded-full transition-colors outline-none cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+
+              {isSubmitted ? (
+                <div className="py-6 text-center flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4 shadow-[0_4px_14px_rgba(16,185,129,0.35)]">
+                    <Check size={32} strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Rental Request Received!</h3>
+                  <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+                    Thank you, <span className="font-semibold text-slate-900">{name || 'there'}</span>! We have recorded your request to rent the <strong className="text-emerald-600">LinkedIn AI Agent</strong>. Our deployment team will reach out to your WhatsApp number (<span className="font-semibold text-slate-900">{number}</span>) shortly with your onboarding and setup details.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setIsSubmitted(false);
+                    }}
+                    className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-[0_4px_14px_rgba(16,185,129,0.35)] cursor-pointer"
+                  >
+                    Done
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-xl bg-[#0A66C2] flex items-center justify-center shrink-0 shadow-sm">
+                        <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28Z"/>
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900">
+                        Rent LinkedIn AI Agent
+                      </h3>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      Enter your details below to rent your LinkedIn AI Agent for <strong className="text-slate-800">₹2,222/mo</strong>.
+                    </p>
+                  </div>
+
+                  {/* Error feedback */}
+                  {submitError && (
+                    <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium">
+                      {submitError}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleRentSubmit} className="space-y-3.5">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        placeholder="e.g. Sagar"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Email (Mail)</label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="sagar@example.com"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">WhatsApp Number</label>
+                      <input
+                        type="tel"
+                        required
+                        value={number}
+                        onChange={e => setNumber(e.target.value)}
+                        placeholder="+91 XXXXX XXXXX"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Profession / Role</label>
+                      <input
+                        type="text"
+                        required
+                        value={profession}
+                        onChange={e => setProfession(e.target.value)}
+                        placeholder="e.g. Founder / Business Owner"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Company Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={companyName}
+                        onChange={e => setCompanyName(e.target.value)}
+                        placeholder="e.g. Innovators AI HUB"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                      />
+                    </div>
+
+                    {/* Primary Action Button */}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full mt-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 outline-none shadow-[0_4px_14px_rgba(16,185,129,0.35)] active:scale-95 disabled:opacity-50 cursor-pointer"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={14} className="animate-spin" />
+                          <span>Submitting Request...</span>
+                        </>
+                      ) : (
+                        <span>Submit &amp; Rent Agent (₹2,222/mo)</span>
+                      )}
+                    </button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
