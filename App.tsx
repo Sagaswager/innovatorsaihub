@@ -18,6 +18,7 @@ import Platform from './Sections/Platform';
 import JoinTeam from './Sections/JoinTeam';
 import AdminDashboard from './Sections/AdminDashboard';
 import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
+import LinkedInAgentPage from './Sections/LinkedInAgentPage';
 
 export type Page = 
   | 'home' 
@@ -28,7 +29,8 @@ export type Page =
   | 'platform' 
   | 'join' 
   | 'admin'
-  | 'whatsapp-ai-agent';
+  | 'whatsapp-ai-agent'
+  | 'linkedin-ai-agent';
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
@@ -84,6 +86,13 @@ const App: React.FC = () => {
         normalized === 'whatsapp'
       ) {
         path = 'whatsapp-ai-agent';
+      } else if (
+        normalized === 'linkedin-ai-agent' ||
+        normalized === 'linkedin-agent' ||
+        normalized === 'linkedin' ||
+        normalized === 'linkedinoutreach'
+      ) {
+        path = 'linkedin-ai-agent';
       }
       const validPages: Page[] = [
         'home',
@@ -94,7 +103,8 @@ const App: React.FC = () => {
         'platform',
         'join',
         'admin',
-        'whatsapp-ai-agent'
+        'whatsapp-ai-agent',
+        'linkedin-ai-agent'
       ];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
@@ -145,6 +155,10 @@ const App: React.FC = () => {
       case 'whatsapp-ai-agent':
         title = 'WhatsApp AI Agent for Business | Automated 24/7 Support & CRM Sync';
         description = 'Automate customer support, lead qualification, and appointment booking directly inside WhatsApp with Innovators AI HUB.';
+        break;
+      case 'linkedin-ai-agent':
+        title = 'LinkedIn AI Agent for B2B Outreach & Lead Generation | Innovators AI HUB';
+        description = 'Turn connections into conversations. AI-powered LinkedIn outreach for B2B businesses to personalize connections, automate follow-ups, and book calendar meetings.';
         break;
     }
 
@@ -227,7 +241,7 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
         <Header 
           isDarkMode={isDarkMode} 
           currentPage={currentPage}
@@ -373,9 +387,21 @@ const App: React.FC = () => {
               <WhatsAppAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
           )}
+
+          {currentPage === 'linkedin-ai-agent' && (
+            <motion.div
+              key="linkedin-agent-page"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <LinkedInAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
+            </motion.div>
+          )}
         </AnimatePresence>
       </main>
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}
 
