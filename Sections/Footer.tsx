@@ -34,12 +34,14 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) 
           <button onClick={() => navigateTo?.('services')} className="text-white/40 hover:text-white transition-all">Rent AI Co-worker</button>
           <button onClick={() => navigateTo?.('register')} className="text-white/40 hover:text-white transition-all">Event</button>
           <a 
-            href="https://innovatorslinai.duckdns.org/dashboard.html" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="text-white/40 hover:text-white transition-all"
+            href="/linkedin-ai-agent" 
+            onClick={(e) => {
+              e.preventDefault();
+              navigateTo?.('linkedin-ai-agent');
+            }}
+            className="text-white/40 hover:text-white transition-all cursor-pointer"
           >
-            Linkedin AI Agent
+            LinkedIn AI Agent
           </a>
           <a 
             href="/whatsapp-ai-agent" 

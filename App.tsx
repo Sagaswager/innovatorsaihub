@@ -19,9 +19,6 @@ import JoinTeam from './Sections/JoinTeam';
 import AdminDashboard from './Sections/AdminDashboard';
 import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
 import LinkedInAgentPage from './Sections/LinkedInAgentPage';
-import GmailAgentPage from './Sections/GmailAgentPage';
-import VoiceCallingAgentPage from './Sections/VoiceCallingAgentPage';
-import SEOAgentPage from './Sections/SEOAgentPage';
 
 export type Page = 
   | 'home' 
@@ -33,10 +30,7 @@ export type Page =
   | 'join' 
   | 'admin'
   | 'whatsapp-ai-agent'
-  | 'linkedin-ai-agent'
-  | 'gmail-ai-agent'
-  | 'voice-calling-ai-agent'
-  | 'seo-ai-agent';
+  | 'linkedin-ai-agent';
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
@@ -92,6 +86,13 @@ const App: React.FC = () => {
         normalized === 'whatsapp'
       ) {
         path = 'whatsapp-ai-agent';
+      } else if (
+        normalized === 'linkedin-ai-agent' ||
+        normalized === 'linkedin-agent' ||
+        normalized === 'linkedin' ||
+        normalized === 'linkedinoutreach'
+      ) {
+        path = 'linkedin-ai-agent';
       }
       const validPages: Page[] = [
         'home',
@@ -103,10 +104,7 @@ const App: React.FC = () => {
         'join',
         'admin',
         'whatsapp-ai-agent',
-        'linkedin-ai-agent',
-        'gmail-ai-agent',
-        'voice-calling-ai-agent',
-        'seo-ai-agent'
+        'linkedin-ai-agent'
       ];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
@@ -159,20 +157,8 @@ const App: React.FC = () => {
         description = 'Automate customer support, lead qualification, and appointment booking directly inside WhatsApp with Innovators AI HUB.';
         break;
       case 'linkedin-ai-agent':
-        title = 'LinkedIn AI Agent | Automated B2B Lead Generation & Outreach';
-        description = 'Scale B2B appointments and outbound connections safely on autopilot with our specialized LinkedIn AI agent.';
-        break;
-      case 'gmail-ai-agent':
-        title = 'Gmail AI Agent | Autonomous Email Automation & Inbox Management';
-        description = 'AI assistant for email management, automatic draft generation, client inquiry triage, and CRM updates.';
-        break;
-      case 'voice-calling-ai-agent':
-        title = 'AI Voice Calling Agent | Autonomous Inbound & Outbound Calling';
-        description = 'Deploy conversational AI voice agents capable of handling 1,000+ simultaneous inbound and outbound calls in India.';
-        break;
-      case 'seo-ai-agent':
-        title = 'SEO AI Agent | Autonomous Search Engine Optimization & Backlinks';
-        description = 'Boost organic search rankings with autonomous keyword tracking, on-page optimization, and programmatic SEO.';
+        title = 'LinkedIn AI Agent for B2B Outreach & Lead Generation | Innovators AI HUB';
+        description = 'Turn connections into conversations. AI-powered LinkedIn outreach for B2B businesses to personalize connections, automate follow-ups, and book calendar meetings.';
         break;
     }
 
@@ -255,7 +241,7 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
         <Header 
           isDarkMode={isDarkMode} 
           currentPage={currentPage}
@@ -413,45 +399,9 @@ const App: React.FC = () => {
               <LinkedInAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
           )}
-
-          {currentPage === 'gmail-ai-agent' && (
-            <motion.div
-              key="gmail-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-            >
-              <GmailAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
-            </motion.div>
-          )}
-
-          {currentPage === 'voice-calling-ai-agent' && (
-            <motion.div
-              key="voice-calling-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-            >
-              <VoiceCallingAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
-            </motion.div>
-          )}
-
-          {currentPage === 'seo-ai-agent' && (
-            <motion.div
-              key="seo-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-            >
-              <SEOAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
-            </motion.div>
-          )}
         </AnimatePresence>
       </main>
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}
 
