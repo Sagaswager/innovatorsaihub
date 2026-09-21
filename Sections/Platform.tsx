@@ -1185,6 +1185,9 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                         if (item.title.toLowerCase().includes('whatsapp')) {
                           if (navigateTo) navigateTo('whatsapp-ai-agent');
                           else window.location.href = '/whatsapp-ai-agent';
+                        } else if (item.title.toLowerCase().includes('linkedin')) {
+                          if (navigateTo) navigateTo('linkedin-ai-agent');
+                          else window.location.href = '/linkedin-ai-agent';
                         } else {
                           setSelectedAgent(item);
                         }
@@ -1228,7 +1231,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                                 if (navigateTo) navigateTo('whatsapp-ai-agent');
                                 else window.location.href = '/whatsapp-ai-agent';
                               } else if (item.title.toLowerCase().includes('linkedin')) {
-                                window.location.href = "https://innovatorslinai.duckdns.org/dashboard.html";
+                                if (navigateTo) navigateTo('linkedin-ai-agent');
+                                else window.location.href = '/linkedin-ai-agent';
                               } else {
                                 setSelectedAgent(item);
                               }
@@ -1297,7 +1301,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                               if (navigateTo) navigateTo('whatsapp-ai-agent');
                               else window.location.href = '/whatsapp-ai-agent';
                             } else if (selectedAgent.title.toLowerCase().includes('linkedin')) {
-                              window.location.href = "https://innovatorslinai.duckdns.org/dashboard.html";
+                              if (navigateTo) navigateTo('linkedin-ai-agent');
+                              else window.location.href = '/linkedin-ai-agent';
                             } else {
                               setModalMode('register');
                               setIsModalOpen(true);

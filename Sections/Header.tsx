@@ -93,12 +93,14 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
             ))}
             <a 
               id="header-linkedin-agent-link"
-              href="https://innovatorslinai.duckdns.org/dashboard.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors"
+              href="/linkedin-ai-agent"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo('linkedin-ai-agent');
+              }}
+              className="transition-colors cursor-pointer"
             >
-              Linkedin AI Agent
+              LinkedIn AI Agent
             </a>
             <a 
               id="header-whatsapp-automation-link"
@@ -230,20 +232,23 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
                     </motion.button>
                   ))}
 
-                  {/* External Link: LinkedIn AI Agent */}
+                  {/* Internal Link: LinkedIn AI Agent */}
                   <motion.a
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: navItems.length * 0.05 }}
-                    href="https://innovatorslinai.duckdns.org/dashboard.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3"
+                    href="/linkedin-ai-agent"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo('linkedin-ai-agent');
+                      setIsMenuOpen(false);
+                    }}
+                    className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3 cursor-pointer"
                   >
                     <span className="text-2xl md:text-3xl font-light tracking-wide text-zinc-300 group-hover:text-white">
-                      Linkedin AI Agent
+                      LinkedIn AI Agent
                     </span>
-                    <ExternalLink size={18} className="text-white/40 group-hover:text-white group-hover:scale-110 transition-all" />
+                    <ArrowRight size={18} className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
                   </motion.a>
 
                   {/* WhatsApp AI Agent */}

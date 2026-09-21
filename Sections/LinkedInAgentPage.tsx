@@ -21,7 +21,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 {/*  Brand Logo  */}
 <div className="flex items-center gap-3">
 <a className="flex items-center gap-2.5 group cursor-pointer" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("home"); else window.location.href = "/"; }}>
-<img alt="Innovators AI HUB Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" src="/logo.png"/>
+<img alt="Innovators AI HUB Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105 shrink-0" src="/logo-dark.png"/>
 <div className="flex flex-col">
 <span className="font-extrabold text-[19px] text-slate-900 leading-tight tracking-tight flex items-center gap-1">
               Innovators <span className="text-emerald-600">AI HUB</span>
@@ -980,7 +980,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 {/*  Col 1: Brand details  */}
 <div className="lg:col-span-4 flex flex-col gap-4">
 <div className="flex items-center gap-2.5">
-<img alt="Innovators AI HUB Logo" className="h-9 w-auto object-contain shrink-0" src="/logo.png"/>
+<img alt="Innovators AI HUB Logo" className="h-9 w-auto object-contain shrink-0" src="/logo-dark.png"/>
 <span className="font-extrabold text-lg text-slate-900 tracking-tight font-sans">
               Innovators <span className="text-emerald-600">AI HUB</span>
 </span>
