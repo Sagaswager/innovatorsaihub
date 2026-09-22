@@ -556,7 +556,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 
                         <div className="lg:col-span-5 relative">
                           <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white">
-                            <img className="w-full h-[320px] object-cover" alt="Enterprise operations and customer experience team command center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLBZbyTyei4gtY14x8tKgPpZctU_As4k3WO3aD4NWbtQnQ1y1BTkHP7vnYCK-HqURlVbHErcbMOJTtZ58Vm0UDIWU3XSTKO8zIwkc4hbZVlsFER24PK40LEG7naew1a8rNnxj-5ofafrq06hQmTwItD51khkmJ-dKDp5fcV8aldjn4UPyZ1U9em1N8rlFCTvPqCMTELvAotDf6ap9is-uFuu0RMjqapjAiOSlA"/>
+                            <img className="w-full h-[320px] object-cover" alt="Enterprise operations and customer experience team command center" src="/whatsapp_ai_agent.png"/>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-white/50 shadow-md">
                               <div className="flex items-center justify-between">
@@ -912,7 +912,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             </div>
                           </div>
                           <div className="lg:col-span-5">
-                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="E-commerce automation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtAVF0YjHbCS0BvxGkiqUbOrjKNj_tjFcmkqnF8ATizmLNz2ptVsX74vcucmO0WsLiQ206JjUfZIQx-5BiPYHBvJTT6ahp3jZERWPxIQoz66JUJkzKOcPfOahvgJI1PhYkIyHGrWj-Cn8S4SiKkdvO262oiyc7u35mFcWTETN-09n_OQcgG2bcfD-be01WdpQZ0n56YvFBqJq6daO5e0lnJeWBmOT7iY-PC7nU"/>
+                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="E-commerce automation" src="/retail_ecommerce.jpg"/>
                           </div>
                         </div>
                       </div>
@@ -933,7 +933,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             </div>
                           </div>
                           <div className="lg:col-span-5">
-                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Healthcare clinic appointment booking" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrMHeJ6KWKmM6TBCsy-IvUjOb1aAcAOkNWG6MqffwrSXhyIOZnXANSgr6U24oLaGS46IuoiUsXEKFHkW68uBfHm2bGmIeHNdLlKdmJjEPL-xtccLhm9zRg3k6gGHltONx5t1rTFh_5qPYYHvuAbVulsFBWJlWUsYaiA_HiKlafvT8TvSbpNNj8ivWFL1xI36gqERl-uAYdSq60qcPqT75y2klzBtjWLOnh2N9L"/>
+                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Healthcare clinic appointment booking" src="/clinic_appointment.png"/>
                           </div>
                         </div>
                       </div>
@@ -954,7 +954,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             </div>
                           </div>
                           <div className="lg:col-span-5">
-                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Sales and real estate lead handling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnw4iFPaNnRH0_2txLeUizRrNM6yhGz3mL3jVv6RW0tLpKUoxl_Xvl-XuffnT4GcfXBq8YuP95LiE44IkIMqf6BezOaFZakR8njw7V9-p6c0iUxpz74SHocTNuIMRxuUnqcSxWevLJNf52IAkwbhESjuhWC0s4fzmkpiB89isShaRLefsWz78_IqDfGpEWkqmcHDfRt-e2lJ4ElJMTxf7rIZ-gJVIN6CX0VKgl"/>
+                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Sales and real estate lead handling" src="/realestate.jpg"/>
                           </div>
                         </div>
                       </div>
