@@ -7,9 +7,17 @@ interface WhatsAppAgentPageProps {
   navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'platform' | 'register' | any) => void;
 }
 
+// Official WhatsApp Brand Vector (Simple Icons standard)
 const WhatsAppIcon: React.FC<{ className?: string; fill?: string }> = ({ className = "w-5 h-5", fill = "currentColor" }) => (
   <svg className={className} fill={fill} viewBox="0 0 24 24">
-    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.991.541 1.777.82 2.796.82 3.18 0 5.767-2.586 5.768-5.766.001-3.182-2.585-5.77-5.768-5.772zm3.376 8.212c-.14.394-.799.734-1.12.781-.309.046-.713.076-2.288-.574-1.785-.738-2.91-2.56-3.003-.681-.088-.124-.72-1.026-.72-1.956 0-.931.488-1.389.662-1.579.174-.189.379-.237.505-.237.126 0 .252.001.363.007.117.006.275-.044.43.328.157.379.537 1.309.584 1.404.047.095.079.206.016.332-.063.126-.095.205-.189.316-.095.11-.199.247-.284.332-.095.095-.195.198-.083.39.111.189.493.813 1.058 1.317.728.648 1.341.85 1.531.944.189.095.3.079.41-.047.111-.127.474-.553.6-.742.127-.189.252-.158.426-.095.174.063 1.106.521 1.296.616.189.095.316.142.363.221.047.079.047.458-.093.852zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.981-1.307C8.441 21.53 10.165 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.82 9.82 0 01-5.028-1.388l-.36-.214-3.741.982.998-3.648-.235-.374a9.865 9.865 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.955c-.003 5.444-4.437 9.88-9.875 9.88M20.41 3.588C18.157 1.334 15.155.074 11.97.074c-6.577 0-11.93 5.353-11.93 11.93 0 2.103.55 4.159 1.597 5.96L.1 24.348l6.34-1.666a11.935 11.935 0 005.717 1.458h.005c6.576 0 11.93-5.354 11.93-11.93 0-3.185-1.26-6.186-3.513-8.441"/>
+  </svg>
+);
+
+// Official Meta Infinity Brand Vector
+const MetaIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 16 16" fill="#0668E1">
+    <path fillRule="evenodd" d="M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123-.118-.197a55 55 0 0 0-.53-.877l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3q.477-.001.924.122c.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714m1.516 2.224q-.378-.615-.727-1.133L9 6.326c.845-1.305 1.543-1.954 2.372-1.954 1.723 0 3.102 2.537 3.102 5.653 0 1.188-.39 1.877-1.195 1.877-.773 0-1.142-.51-2.61-2.87zM4.846 4.756c.725.1 1.385.634 2.34 2.001A212 212 0 0 0 5.551 9.3c-1.357 2.126-1.826 2.603-2.581 2.603-.777 0-1.24-.682-1.24-1.9 0-2.602 1.298-5.264 2.846-5.264q.137 0 .27.018"/>
   </svg>
 );
 
@@ -213,7 +221,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </div>
 
-              {/* Shortened Headline */}
+              {/* Shortened Headline with Official WhatsApp Logo */}
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-space-md leading-[1.15]">
                 <span className="inline-flex items-center gap-3 align-baseline">
                   <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#25D366] flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(37,211,102,0.35)] -mt-1">
@@ -223,9 +231,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </span>
               </h1>
 
-              {/* Subheadline */}
+              {/* Humanized Subheadline */}
               <p className="font-body-base text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed mb-space-xl">
-                Turn every WhatsApp conversation into a customer.
+                Reply to customer inquiries in seconds, qualify leads automatically, and book appointments 24/7 — right inside WhatsApp.
               </p>
 
               {/* Primary Call to Action */}
@@ -247,11 +255,11 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
                   <span className="material-symbols-outlined text-crm-sync-gold text-[18px]">hub</span>
-                  <span>HubSpot &amp; Zoho Native Sync</span>
+                  <span>HubSpot &amp; Zoho Sync</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
                   <span className="material-symbols-outlined text-read-cyan text-[18px]">speed</span>
-                  <span>99.9% Guaranteed Uptime</span>
+                  <span>99.9% Reliable Uptime</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
                   <span className="material-symbols-outlined text-primary-container text-[18px]">code_off</span>
@@ -277,7 +285,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 
           {/* ========================================================================= */}
           {/* SECTION 2: DEDICATED WHATSAPP AI AGENT PRICING & AUTOMATION MATRIX */}
-          {/* Positioned directly below whatsapp-agent-interface.png as requested */}
+          {/* Positioned directly below whatsapp-agent-interface.png */}
           {/* ========================================================================= */}
           <section className="relative w-full max-w-[1000px] mx-auto px-gutter py-space-xl" id="rental-pricing">
             <div id="pricing" className="relative rounded-3xl bg-white border border-slate-200 shadow-xl p-6 sm:p-10 md:p-12 overflow-hidden">
@@ -331,7 +339,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </p>
               </div>
 
-              {/* Two-Column Comparison Matrix strictly from provided image */}
+              {/* Two-Column Comparison Matrix strictly from user-provided image */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
                 {/* Column 1: Whatsapp AI Agent Automates */}
                 <div className="flex flex-col gap-3">
@@ -452,7 +460,6 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 
           {/* ========================================================================= */}
           {/* COLLAPSIBLE SECTIONS CONTAINER */}
-          {/* Makes the remaining sections interactive and uncluttered like FAQ */}
           {/* ========================================================================= */}
           <section className="relative w-full max-w-[1200px] mx-auto px-gutter py-space-xl">
             {/* Section 1 Accordion: Why Use a WhatsApp AI Agent? */}
@@ -468,14 +475,14 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] sm:text-[11px] font-bold text-primary-container uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                        The Operational Bottleneck
+                        The Daily Challenge
                       </span>
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                       Why Use a WhatsApp AI Agent?
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
-                      Faster responses to routine enquiries, automated follow-ups, and core enterprise KPIs.
+                      Stop losing leads to slow replies. Give every customer instant, helpful attention.
                     </p>
                   </div>
                 </div>
@@ -502,47 +509,47 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl items-center mb-space-2xl">
                         <div className="lg:col-span-7 flex flex-col">
                           <p className="text-base text-slate-700 leading-relaxed mb-space-md">
-                            Businesses often receive customer enquiries throughout the day, including outside normal working hours. Manually responding to every message can consume significant time and can make it difficult for teams to consistently follow up with potential customers.
+                            Every business owner knows the feeling: a customer messages late in the evening or over the weekend. By the time your team responds the next morning, they've already moved on to someone else. Typing the exact same pricing answers, checking calendars, and chasing cold leads eats hours every single day.
                           </p>
                           <p className="text-sm text-slate-500 leading-relaxed mb-space-lg">
-                            The WhatsApp AI Agent helps automate these repetitive interactions so that customers can receive timely responses while the business team can focus on conversations and tasks that require human attention.
+                            Your WhatsApp AI Agent acts like your friendliest, most dependable team member. It responds in seconds, answers product questions accurately, qualifies genuine buyers, and hands off ready leads directly to your sales team.
                           </p>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3.5 gap-x-6">
                             <div className="flex items-start gap-2.5">
                               <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-primary-container shrink-0 mt-0.5">
                                 <span className="material-symbols-outlined text-[14px] font-bold">check</span>
                               </div>
-                              <span className="text-sm font-medium text-slate-800">Faster responses to routine customer enquiries</span>
+                              <span className="text-sm font-medium text-slate-800">Instant answers to common customer questions, day or night</span>
                             </div>
                             <div className="flex items-start gap-2.5">
                               <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-primary-container shrink-0 mt-0.5">
                                 <span className="material-symbols-outlined text-[14px] font-bold">check</span>
                               </div>
-                              <span className="text-sm font-medium text-slate-800">Reduced repetitive manual communication</span>
+                              <span className="text-sm font-medium text-slate-800">No more typing the exact same replies 50 times a day</span>
                             </div>
                             <div className="flex items-start gap-2.5">
                               <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-primary-container shrink-0 mt-0.5">
                                 <span className="material-symbols-outlined text-[14px] font-bold">check</span>
                               </div>
-                              <span className="text-sm font-medium text-slate-800">Automated follow-ups &amp; interactions</span>
+                              <span className="text-sm font-medium text-slate-800">Gentle automated follow-ups so warm leads don't go cold</span>
                             </div>
                             <div className="flex items-start gap-2.5">
                               <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-primary-container shrink-0 mt-0.5">
                                 <span className="material-symbols-outlined text-[14px] font-bold">check</span>
                               </div>
-                              <span className="text-sm font-medium text-slate-800">More organized lead handling</span>
+                              <span className="text-sm font-medium text-slate-800">Clean customer contact details saved right to your CRM</span>
                             </div>
                             <div className="flex items-start gap-2.5">
                               <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-primary-container shrink-0 mt-0.5">
                                 <span className="material-symbols-outlined text-[14px] font-bold">check</span>
                               </div>
-                              <span className="text-sm font-medium text-slate-800">Easier appointment management</span>
+                              <span className="text-sm font-medium text-slate-800">Quick, hassle-free appointment booking right in the chat</span>
                             </div>
                             <div className="flex items-start gap-2.5">
                               <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-primary-container shrink-0 mt-0.5">
                                 <span className="material-symbols-outlined text-[14px] font-bold">check</span>
                               </div>
-                              <span className="text-sm font-medium text-slate-800">Support for multilingual communication</span>
+                              <span className="text-sm font-medium text-slate-800">Fluent conversations in Hinglish, Hindi, and English</span>
                             </div>
                           </div>
                         </div>
@@ -553,45 +560,45 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-white/50 shadow-md">
                               <div className="flex items-center justify-between">
-                                <span className="text-[11px] font-bold text-primary-container uppercase tracking-wider">Autonomous Efficiency</span>
-                                <span className="font-code-mono text-xs font-bold text-slate-900">+340% Bandwidth</span>
+                                <span className="text-[11px] font-bold text-primary-container uppercase tracking-wider">Productivity Boost</span>
+                                <span className="font-code-mono text-xs font-bold text-slate-900">+18 Hours Saved</span>
                               </div>
                               <p className="text-xs text-slate-600 mt-1">
-                                Teams reclaim 18+ hours per week per agent by offloading high-frequency WhatsApp questions.
+                                Teams win back over 18 hours each week by automating repetitive WhatsApp inquiries.
                               </p>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      {/* 4 KPI Blocks */}
+                      {/* 4 KPI Blocks with Natural Phrasing */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md pt-4 border-t border-slate-100">
                         <div className="p-space-lg rounded-2xl bg-slate-50/70 border border-slate-200/80">
-                          <span className="font-code-mono text-xs text-whatsapp-green font-bold block mb-1">REAL-TIME DISPATCH</span>
+                          <span className="font-code-mono text-xs text-whatsapp-green font-bold block mb-1">INSTANT REPLIES</span>
                           <div className="font-display text-3xl font-extrabold text-slate-900 tracking-tight">&lt; 2 sec</div>
                           <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                            Average First Response Time (compared to 4+ hours for manual human queuing).
+                            Customers get immediate help while their buying interest is highest, instead of waiting hours on read.
                           </p>
                         </div>
                         <div className="p-space-lg rounded-2xl bg-slate-50/70 border border-slate-200/80">
-                          <span className="font-code-mono text-xs text-primary-container font-bold block mb-1">TASK AUTOMATION</span>
+                          <span className="font-code-mono text-xs text-primary-container font-bold block mb-1">TIME SAVED</span>
                           <div className="font-display text-3xl font-extrabold text-slate-900 tracking-tight">85%</div>
                           <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                            Repetitive customer enquiries resolved end-to-end without requiring human agent touch.
+                            Most common product questions, pricing queries, and FAQs are resolved completely on autopilot.
                           </p>
                         </div>
                         <div className="p-space-lg rounded-2xl bg-slate-50/70 border border-slate-200/80">
-                          <span className="font-code-mono text-xs text-lime-growth font-bold block mb-1">CONVERSION VELOCITY</span>
+                          <span className="font-code-mono text-xs text-lime-growth font-bold block mb-1">MORE CONVERSIONS</span>
                           <div className="font-display text-3xl font-extrabold text-slate-900 tracking-tight">3.4x</div>
                           <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                            Higher lead conversion rate accomplished through immediate algorithmic scoring.
+                            Fast, helpful responses keep buyers engaged and turn far more inquiries into paying customers.
                           </p>
                         </div>
                         <div className="p-space-lg rounded-2xl bg-slate-50/70 border border-slate-200/80">
-                          <span className="font-code-mono text-xs text-read-cyan font-bold block mb-1">GLOBAL CONTINUITY</span>
+                          <span className="font-code-mono text-xs text-read-cyan font-bold block mb-1">ALWAYS ON</span>
                           <div className="font-display text-3xl font-extrabold text-slate-900 tracking-tight">24/7/365</div>
                           <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                            Zero downtime across global holiday schedules, weekend surges, and non-working hours.
+                            Your storefront never sleeps — capture and nurture leads during evenings, weekends, and holidays.
                           </p>
                         </div>
                       </div>
@@ -614,11 +621,11 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] sm:text-[11px] font-bold text-primary-container uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                        Autonomous Capabilities
+                        What Your Agent Can Do
                       </span>
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mt-1">
-                      Enterprise Features Engineered for Real Growth
+                      Helpful Features Built for Busy Businesses
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
                       Multilingual Support, Automated Follow-Ups, Appointment Booking, and Instant Lead Scoring.
@@ -653,15 +660,15 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                               <span className="material-symbols-outlined text-[22px]">translate</span>
                             </div>
                             <span className="font-code-mono text-xs font-bold text-primary-container uppercase tracking-wider">Feature 01</span>
-                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">1. Multilingual Customer Support</h4>
+                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">1. Speak Your Customer's Language</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              The WhatsApp AI Agent can support multilingual conversations, allowing businesses to communicate with customers across different regions in their preferred language.
+                              India is diverse, and so are your buyers. Whether a customer asks in Hinglish, Hindi, or English, your agent understands the context and responds naturally in the tone they are most comfortable with.
                             </p>
                           </div>
                           <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200/80">
-                            <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block mb-0.5">Business Impact:</span>
+                            <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block mb-0.5">Why it matters:</span>
                             <p className="text-xs font-semibold text-emerald-950">
-                              Enables broader regional engagement without the expense of hiring separate language support teams.
+                              Connect with more customers across different regions without needing dedicated multilingual staff.
                             </p>
                           </div>
                         </div>
@@ -673,15 +680,15 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                               <span className="material-symbols-outlined text-[22px]">mark_chat_unread</span>
                             </div>
                             <span className="font-code-mono text-xs font-bold text-read-cyan uppercase tracking-wider">Feature 02</span>
-                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">2. Automated Follow-Ups</h4>
+                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">2. Friendly Automated Follow-Ups</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              Customers often stop responding midway. The WhatsApp AI Agent automatically re-engages prospective buyers with polite, timely prompts to maintain momentum.
+                              People get busy and forget to reply. Instead of letting warm interest fade away, your agent sends polite, thoughtful follow-ups that gently bring buyers back into the conversation.
                             </p>
                           </div>
                           <div className="p-3 rounded-xl bg-sky-50 border border-sky-200/80">
-                            <span className="text-[10px] font-bold text-sky-800 uppercase tracking-wider block mb-0.5">Business Impact:</span>
+                            <span className="text-[10px] font-bold text-sky-800 uppercase tracking-wider block mb-0.5">Why it matters:</span>
                             <p className="text-xs font-semibold text-sky-950">
-                              Helps prevent potential sales from going cold without requiring manual tracking by team members.
+                              Revive dropped conversations and recover sales opportunities without anyone on your team having to track down who needs a reminder.
                             </p>
                           </div>
                         </div>
@@ -693,15 +700,15 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                               <span className="material-symbols-outlined text-[22px]">calendar_today</span>
                             </div>
                             <span className="font-code-mono text-xs font-bold text-crm-sync-gold uppercase tracking-wider">Feature 03</span>
-                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">3. Appointment Booking Assistant</h4>
+                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">3. Frictionless Appointment Booking</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              Customers can schedule consultations, demos, or service visits directly within WhatsApp conversations without leaving the chat thread.
+                              Skip the exhausting 'Are you free Tuesday?' back-and-forth. Customers can browse open slots and confirm consultations, service appointments, or demos directly inside WhatsApp.
                             </p>
                           </div>
                           <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/80">
-                            <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block mb-0.5">Business Impact:</span>
+                            <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block mb-0.5">Why it matters:</span>
                             <p className="text-xs font-semibold text-amber-950">
-                              Increases booking completion rates by eliminating back-and-forth phone calls and scheduling friction.
+                              Appointments sync straight to Google Calendar or Cal.com, eliminating phone tag and double-bookings.
                             </p>
                           </div>
                         </div>
@@ -713,15 +720,15 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                               <span className="material-symbols-outlined text-[22px]">leaderboard</span>
                             </div>
                             <span className="font-code-mono text-xs font-bold text-lime-growth uppercase tracking-wider">Feature 04</span>
-                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">4. Instant Lead Scoring</h4>
+                            <h4 className="font-display text-lg font-bold text-slate-900 mt-1 mb-2">4. Spot Ready Buyers Instantly</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              The agent qualifies incoming leads by analyzing conversation signals, buyer intent, and responses, assigning scores for intelligent sales prioritization.
+                              Not every message is ready to make a purchase today. Your agent politely asks the right questions upfront — budget, timeline, and exact needs — so you immediately know who is ready to buy.
                             </p>
                           </div>
                           <div className="p-3 rounded-xl bg-lime-50 border border-lime-200/80">
-                            <span className="text-[10px] font-bold text-lime-900 uppercase tracking-wider block mb-0.5">Business Impact:</span>
+                            <span className="text-[10px] font-bold text-lime-900 uppercase tracking-wider block mb-0.5">Why it matters:</span>
                             <p className="text-xs font-semibold text-lime-950">
-                              Sales teams immediately focus their attention on high-intent opportunities rather than sifting manually.
+                              Your sales team spends their precious time talking only to qualified leads who are eager to close.
                             </p>
                           </div>
                         </div>
@@ -745,14 +752,14 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] sm:text-[11px] font-bold text-primary-container uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                        Autonomous Execution
+                        Simple &amp; Seamless
                       </span>
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mt-1">
-                      How the WhatsApp AI Agent Works
+                      How It Works in Practice
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
-                      6-Step autonomous execution architecture from customer ping to verified CRM sync.
+                      From the very first 'Hello' to a confirmed sale, everything flows naturally.
                     </p>
                   </div>
                 </div>
@@ -780,11 +787,11 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
                           <div className="flex items-center justify-between mb-2">
                             <span className="font-code-mono text-xs px-2 py-0.5 rounded bg-white text-slate-800 font-bold border border-slate-200">01</span>
-                            <span className="material-symbols-outlined text-whatsapp-green text-[20px]">chat</span>
+                            <WhatsAppIcon className="w-5 h-5 text-[#25D366] fill-[#25D366]" />
                           </div>
-                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Customer sends message</h4>
+                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Customer Sends a Message</h4>
                           <p className="text-xs text-slate-500 leading-relaxed">
-                            Inquiries arrive from ads, QR codes, website widgets, or organic chat in any language.
+                            Inquiries arrive from your website, an Instagram or Facebook ad, a QR code, or an organic chat.
                           </p>
                         </div>
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -792,9 +799,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             <span className="font-code-mono text-xs px-2 py-0.5 rounded bg-white text-slate-800 font-bold border border-slate-200">02</span>
                             <span className="material-symbols-outlined text-read-cyan text-[20px]">psychology</span>
                           </div>
-                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">AI Agent understands intent</h4>
+                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Agent Reads the Room</h4>
                           <p className="text-xs text-slate-500 leading-relaxed">
-                            NLP extracts intent, sentiment, language context, and buyer readiness in milliseconds.
+                            It grasps what the customer wants, how urgent it is, and what language they prefer in a split second.
                           </p>
                         </div>
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -802,9 +809,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             <span className="font-code-mono text-xs px-2 py-0.5 rounded bg-white text-slate-800 font-bold border border-slate-200">03</span>
                             <span className="material-symbols-outlined text-lime-growth text-[20px]">forum</span>
                           </div>
-                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">AI responds instantly</h4>
+                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Helpful Answers in Seconds</h4>
                           <p className="text-xs text-slate-500 leading-relaxed">
-                            Delivers accurate catalogs, pricing parameters, or FAQs aligned with brand voice.
+                            Shares product links, pricing details, or answers common questions in your brand's friendly voice.
                           </p>
                         </div>
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -812,9 +819,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             <span className="font-code-mono text-xs px-2 py-0.5 rounded bg-white text-slate-800 font-bold border border-slate-200">04</span>
                             <span className="material-symbols-outlined text-indigo-600 text-[20px]">dataset</span>
                           </div>
-                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">AI collects &amp; organizes data</h4>
+                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Gathers Details Naturally</h4>
                           <p className="text-xs text-slate-500 leading-relaxed">
-                            Gathers verified contact details, location, and requirements naturally in conversation.
+                            Collects their name, location, and requirements through natural conversation, not an interrogation.
                           </p>
                         </div>
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -822,9 +829,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             <span className="font-code-mono text-xs px-2 py-0.5 rounded bg-white text-slate-800 font-bold border border-slate-200">05</span>
                             <span className="material-symbols-outlined text-crm-sync-gold text-[20px]">auto_graph</span>
                           </div>
-                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Lead qualified &amp; scored</h4>
+                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Identifies Ready Buyers</h4>
                           <p className="text-xs text-slate-500 leading-relaxed">
-                            Categorizes customer readiness into Hot, Warm, or Information Seekers automatically.
+                            Recognizes customers who are ready to book or purchase and prioritizes them for fast follow-up.
                           </p>
                         </div>
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -832,9 +839,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             <span className="font-code-mono text-xs px-2 py-0.5 rounded bg-white text-slate-800 font-bold border border-slate-200">06</span>
                             <span className="material-symbols-outlined text-primary-container text-[20px]">hub</span>
                           </div>
-                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">CRM sync &amp; appointment booking</h4>
+                          <h4 className="font-display text-sm font-bold text-slate-900 mb-1">Alerts Your Team &amp; Syncs CRM</h4>
                           <p className="text-xs text-slate-500 leading-relaxed">
-                            Pushes records to HubSpot / Zoho, schedules calendar holds, and alerts reps.
+                            Logs contact data into HubSpot or Zoho, holds calendar slots, and alerts your reps when human touch is needed.
                           </p>
                         </div>
                       </div>
@@ -857,14 +864,14 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] sm:text-[11px] font-bold text-primary-container uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                        Industry Deployments
+                        Real-World Examples
                       </span>
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mt-1">
-                      Real-World Use Cases
+                      How Different Businesses Use It Every Day
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
-                      E-Commerce &amp; Retail, Healthcare &amp; Appointments, and Sales &amp; Lead-Driven Businesses.
+                      See how teams across retail, healthcare, and services turn WhatsApp into their top sales channel.
                     </p>
                   </div>
                 </div>
@@ -892,16 +899,16 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       <div className="p-6 rounded-2xl bg-slate-50/70 border border-slate-200">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                           <div className="lg:col-span-7 flex flex-col">
-                            <span className="text-[11px] font-bold text-whatsapp-green uppercase tracking-wider mb-1">Vertical 01 · Direct-to-Consumer</span>
-                            <h4 className="font-display text-xl font-bold text-slate-900 mb-1">1. E-Commerce &amp; Retail</h4>
+                            <span className="text-[11px] font-bold text-whatsapp-green uppercase tracking-wider mb-1">Direct-to-Consumer &amp; Retail</span>
+                            <h4 className="font-display text-xl font-bold text-slate-900 mb-1">1. E-Commerce &amp; Retail Stores</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              Automate product inquiries, stock availability checks, catalog links, order status confirmations, and direct purchase checkout assistance.
+                              Shoppers want quick answers on pricing, sizes, delivery dates, and return policies. Your agent answers inquiries in real time, shares product photos, and provides payment links — helping customers buy in minutes.
                             </p>
                             <div className="flex flex-wrap gap-2">
                               <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Catalog Links</span>
-                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Stock Availability Check</span>
-                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Instant Payment Links</span>
-                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">CRM Buyer Sync</span>
+                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Stock Availability</span>
+                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Payment Links</span>
+                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Order Updates</span>
                             </div>
                           </div>
                           <div className="lg:col-span-5">
@@ -914,10 +921,10 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       <div className="p-6 rounded-2xl bg-slate-50/70 border border-slate-200">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                           <div className="lg:col-span-7 flex flex-col">
-                            <span className="text-[11px] font-bold text-read-cyan uppercase tracking-wider mb-1">Vertical 02 · Health &amp; Consultancies</span>
-                            <h4 className="font-display text-xl font-bold text-slate-900 mb-1">2. Healthcare &amp; Appointment-Based Services</h4>
+                            <span className="text-[11px] font-bold text-read-cyan uppercase tracking-wider mb-1">Health &amp; Consultancies</span>
+                            <h4 className="font-display text-xl font-bold text-slate-900 mb-1">2. Clinics &amp; Appointment-Based Services</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              Provide 24/7 patient booking assistance, schedule appointments directly via Google Calendar/Cal.com, and send automated confirmation reminders.
+                              Patients shouldn't have to wait on hold to book a doctor's visit or ask about clinic hours. The agent handles patient inquiries politely, checks open doctor slots, confirms visits, and sends reminder messages so no-shows drop drastically.
                             </p>
                             <div className="flex flex-wrap gap-2">
                               <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Doctor Slot Booking</span>
@@ -935,15 +942,15 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       <div className="p-6 rounded-2xl bg-slate-50/70 border border-slate-200">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                           <div className="lg:col-span-7 flex flex-col">
-                            <span className="text-[11px] font-bold text-crm-sync-gold uppercase tracking-wider mb-1">Vertical 03 · B2B &amp; High-Ticket Sales</span>
-                            <h4 className="font-display text-xl font-bold text-slate-900 mb-1">3. Sales &amp; Lead-Driven Businesses</h4>
+                            <span className="text-[11px] font-bold text-crm-sync-gold uppercase tracking-wider mb-1">High-Ticket Services &amp; Real Estate</span>
+                            <h4 className="font-display text-xl font-bold text-slate-900 mb-1">3. Real Estate &amp; B2B Sales Teams</h4>
                             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
-                              Capture inbound leads from advertising campaigns, qualify budget and timeline parameters, and synchronize high-value deals directly into HubSpot or Zoho.
+                              When you invest in digital ads, every incoming lead is valuable. Your agent immediately greets prospects, learns about their property preferences or project requirements, and notifies your top sales rep with a complete summary.
                             </p>
                             <div className="flex flex-wrap gap-2">
-                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Algorithmic ICP Scoring</span>
+                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Budget &amp; Intent Scoring</span>
                               <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">HubSpot Pipeline Routing</span>
-                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Instant Sales Rep Alert</span>
+                              <span className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700">Instant Sales Alerts</span>
                             </div>
                           </div>
                           <div className="lg:col-span-5">
@@ -970,14 +977,14 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] sm:text-[11px] font-bold text-primary-container uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                        Enterprise Standards
+                        Safe &amp; Compliant
                       </span>
                     </div>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mt-1">
-                      Enterprise Data Architecture &amp; Security
+                      Built on Official Meta Cloud Infrastructure
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
-                      Official Meta Cloud API gateway, end-to-end encryption, and zero model training.
+                      Official Meta WhatsApp Business API standards, encrypted communication, and complete data privacy.
                     </p>
                   </div>
                 </div>
@@ -1001,41 +1008,48 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                     className="overflow-hidden"
                   >
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100">
-                      <p className="text-sm text-slate-600 mb-6">
-                        We operate on official WhatsApp Business API standards. Customer data remains protected with transport encryption, strict compliance boundaries, and zero retention for model training.
+                      <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+                        We connect directly through the official WhatsApp Business Cloud API. Your customer data is encrypted in transit, completely isolated, and never used to train public AI models.
                       </p>
 
-                      {/* Architecture Diagram */}
+                      {/* Architecture Diagram with Official Brand Logos */}
                       <div className="w-full rounded-2xl bg-[#f8fafc] border border-slate-200/80 p-space-md mb-space-lg overflow-x-auto shadow-inner">
                         <div className="min-w-[650px] flex items-center justify-between text-center gap-3">
-                          <div className="flex-1 flex flex-col items-center p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-                            <span className="material-symbols-outlined text-whatsapp-green text-[24px] mb-1">smartphone</span>
+                          {/* Node 1: WhatsApp Customer */}
+                          <div className="flex-1 flex flex-col items-center p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                            <WhatsAppIcon className="w-6 h-6 mb-1 text-[#25D366] fill-[#25D366]" />
                             <span className="text-xs font-bold text-slate-900">End Customer</span>
                             <span className="font-code-mono text-[10px] text-slate-400">WhatsApp App</span>
                           </div>
+                          {/* Connector */}
                           <div className="flex flex-col items-center text-slate-400">
                             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                             <span className="font-code-mono text-[9px] font-medium text-emerald-600">Encrypted</span>
                           </div>
-                          <div className="flex-1 flex flex-col items-center p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-                            <span className="material-symbols-outlined text-read-cyan text-[24px] mb-1">cloud_sync</span>
+                          {/* Node 2: Official Meta Cloud API */}
+                          <div className="flex-1 flex flex-col items-center p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                            <MetaIcon className="w-6 h-6 mb-1" />
                             <span className="text-xs font-bold text-slate-900">Meta Cloud API</span>
                             <span className="font-code-mono text-[10px] text-slate-400">Official Gateway</span>
                           </div>
+                          {/* Connector */}
                           <div className="flex flex-col items-center text-slate-400">
                             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                             <span className="font-code-mono text-[9px] font-medium text-slate-500">Secure Webhook</span>
                           </div>
-                          <div className="flex-1 flex flex-col items-center p-3 rounded-xl bg-emerald-50 border border-emerald-300 shadow-sm">
-                            <span className="material-symbols-outlined text-primary-container text-[24px] mb-1">memory</span>
+                          {/* Node 3: Official Innovators AI Hub */}
+                          <div className="flex-1 flex flex-col items-center p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 shadow-sm">
+                            <img alt="Innovators AI HUB" className="h-6 w-auto object-contain mb-1" src="/logo-dark.png" />
                             <span className="text-xs font-bold text-emerald-950">Innovators AI</span>
                             <span className="font-code-mono text-[10px] text-primary-container font-semibold">NLP Intent Core</span>
                           </div>
+                          {/* Connector */}
                           <div className="flex flex-col items-center text-slate-400">
                             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                             <span className="font-code-mono text-[9px] font-medium text-slate-500">Bi-Directional</span>
                           </div>
-                          <div className="flex-1 flex flex-col items-center p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
+                          {/* Node 4: CRM Pipeline */}
+                          <div className="flex-1 flex flex-col items-center p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
                             <span className="material-symbols-outlined text-crm-sync-gold text-[24px] mb-1">hub</span>
                             <span className="text-xs font-bold text-slate-900">HubSpot / Zoho</span>
                             <span className="font-code-mono text-[10px] text-slate-400">CRM Sync Pipeline</span>
@@ -1049,21 +1063,21 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                           <span className="material-symbols-outlined text-whatsapp-green text-[20px]">lock</span>
                           <div>
                             <span className="text-xs font-bold text-slate-900 block">Zero Model Training</span>
-                            <span className="text-[10px] text-slate-500">Your data stays completely private</span>
+                            <span className="text-[10px] text-slate-500">Your customer data stays strictly private</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
                           <span className="material-symbols-outlined text-read-cyan text-[20px]">policy</span>
                           <div>
                             <span className="text-xs font-bold text-slate-900 block">GDPR &amp; SOC2 Compliant</span>
-                            <span className="text-[10px] text-slate-500">Enterprise data security enforced</span>
+                            <span className="text-[10px] text-slate-500">Protected with transport encryption</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
                           <span className="material-symbols-outlined text-primary-container text-[20px]">verified_user</span>
                           <div>
                             <span className="text-xs font-bold text-slate-900 block">Official Meta Cloud API</span>
-                            <span className="text-[10px] text-slate-500">Zero unofficial hacks or risks</span>
+                            <span className="text-[10px] text-slate-500">Zero unofficial hacks or ban risks</span>
                           </div>
                         </div>
                       </div>
@@ -1093,7 +1107,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       Frequently Asked Questions
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-0.5 hidden sm:block">
-                      Everything you need to know about renting and deploying our WhatsApp AI Agent.
+                      Simple, honest answers about renting, setting up, and using your WhatsApp AI Agent.
                     </p>
                   </div>
                 </div>
@@ -1122,12 +1136,12 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
                           <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(0)}>
                             <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              1. What is a WhatsApp AI Agent and how can it help my business?
+                              1. What exactly does the WhatsApp AI Agent do for my business?
                             </span>
                             <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 0 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
                           </button>
                           <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 0 ? "block" : "hidden"}`}>
-                            A WhatsApp AI Agent is an AI-powered system that handles customer conversations and routine WhatsApp tasks automatically. It can respond to enquiries, manage follow-ups, share product information, qualify leads, assist with appointments, and connect customer interactions with supported business workflows.
+                            Think of it as your most reliable team member who never sleeps, gets tired, or misses a message. It chats with customers just like a human would — answering product questions, qualifying leads, sharing prices, booking appointments, and syncing contact details to your CRM. You stay in complete control and can jump into any conversation whenever you want.
                           </div>
                         </div>
 
@@ -1135,12 +1149,12 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
                           <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(1)}>
                             <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              2. Is the WhatsApp AI Agent suitable for small businesses?
+                              2. Is this suitable for small and medium-sized businesses?
                             </span>
                             <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 1 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
                           </button>
                           <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 1 ? "block" : "hidden"}`}>
-                            Yes. The agent can be useful for businesses that regularly communicate with customers through WhatsApp and want to reduce repetitive manual communication. It can be particularly relevant for businesses handling customer enquiries, appointments, product questions, or incoming leads through WhatsApp.
+                            Yes, absolutely. Small teams often see the biggest relief because it saves hours of repetitive typing every day. Whether you get 15 messages a day or 1,500, the agent gives every potential customer instant attention without needing extra staff.
                           </div>
                         </div>
 
@@ -1148,12 +1162,12 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
                           <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(2)}>
                             <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              3. Do I need technical knowledge to use the WhatsApp AI Agent?
+                              3. Do I need technical skills or coding to set this up?
                             </span>
                             <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 2 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
                           </button>
                           <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 2 ? "block" : "hidden"}`}>
-                            The agent is designed to automate customer communication and routine WhatsApp interactions so that businesses do not have to manually manage every conversation. Specific setup and integration requirements can depend on the business's workflow and the services being connected.
+                            None at all. Our team takes care of the technical setup, official Meta Cloud API connection, and integration with your CRM or calendar. Once it's live, you can manage everything without writing a single line of code.
                           </div>
                         </div>
 
@@ -1161,12 +1175,12 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
                           <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(3)}>
                             <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              4. Can the WhatsApp AI Agent handle customer enquiries outside business hours?
+                              4. Can it answer customer messages late at night or on weekends?
                             </span>
                             <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 3 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
                           </button>
                           <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 3 ? "block" : "hidden"}`}>
-                            Yes. The agent is designed for 24/7 automated customer communication, allowing customers to receive automated assistance even when the business team is unavailable.
+                            Yes, 24 hours a day, 365 days a year. When potential customers browse your offerings at 11 PM or on Sunday morning, they receive helpful, immediate responses rather than waiting until Monday morning.
                           </div>
                         </div>
 
@@ -1174,12 +1188,12 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
                           <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(4)}>
                             <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              5. What types of businesses can use the WhatsApp AI Agent?
+                              5. What happens if a customer asks a complex or unique question?
                             </span>
                             <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 4 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
                           </button>
                           <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 4 ? "block" : "hidden"}`}>
-                            The agent can be useful for businesses that use WhatsApp for customer communication, including e-commerce and retail businesses, healthcare and appointment-based services, and sales- and lead-driven businesses.
+                            When a chat requires personal attention — like a custom quote or a special request — the agent politely informs the customer that a team member is stepping in and immediately notifies your team with the full chat history.
                           </div>
                         </div>
                       </div>
@@ -1200,10 +1214,10 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 <span className="text-[11px] font-bold text-primary-container uppercase tracking-wider">Immediate Deployment Available</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-space-md max-w-3xl tracking-tight">
-                Automate Your WhatsApp Customer Communication
+                Ready to Automate Your WhatsApp Customer Communication?
               </h2>
               <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed mb-space-xl">
-                Stop spending your team's time on repetitive WhatsApp conversations. Use a WhatsApp AI Agent to automate customer interactions, qualify incoming leads, assist with appointments, organize customer information, and connect WhatsApp communication with your business workflow.
+                Your customers are already on WhatsApp. Give them the fast, friendly experience they expect while giving your team their time back to focus on what matters most.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
                 <button
@@ -1230,11 +1244,11 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-primary-container text-[18px]">support</span>
-                  <span>Dedicated Solution Architect</span>
+                  <span>Dedicated Setup Specialist</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-read-cyan text-[18px]">cancel</span>
-                  <span>Cancel or Upgrade Anytime</span>
+                  <span>Cancel Anytime</span>
                 </div>
               </div>
             </div>
@@ -1257,7 +1271,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </span>
               </div>
               <p className="text-sm text-slate-500 max-w-sm mb-space-lg leading-relaxed">
-                Architecting autonomous, hyper-intelligent enterprise WhatsApp agents that drive 24/7 conversion, synchronize leads instantaneously to tier-1 CRMs, and replace fragile legacy chatbots.
+                Smart, reliable WhatsApp AI agents that answer questions instantly, qualify leads, and grow your business around the clock.
               </p>
               <div className="flex flex-wrap items-center gap-space-sm">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200">
