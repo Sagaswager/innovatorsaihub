@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './Sections/Header';
-import Hero from './Sections/Hero';
-import Services from './Sections/Services';
-import Reels from './Sections/Reels';
-import Contact from './Sections/Contact';
 import Footer from './Sections/Footer';
-import Port from './Sections/Port';
-import SnowEffect from './Sections/SnowEffect';
-import AIQuote from './Sections/AIQuote';
-import { ArrowRight } from 'lucide-react';
-import AgentTeams from './Sections/AgentTeams';
-import CustomAgentModal from './Sections/CustomAgentModal';
-import CustomAgentBanner from './Sections/CustomAgentBanner';
-import EventRegistration from './Sections/EventRegistration';
 import Platform from './Sections/Platform';
-import JoinTeam from './Sections/JoinTeam';
-import AdminDashboard from './Sections/AdminDashboard';
-import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
-import LinkedInAgentPage from './Sections/LinkedInAgentPage';
+import SnowEffect from './Sections/SnowEffect';
 import { initTracking, trackPageView, trackMetaEvent } from './analytics';
+
+// Code-split secondary routes and modals to minimize initial bundle size
+const Hero = lazy(() => import('./Sections/Hero'));
+const Services = lazy(() => import('./Sections/Services'));
+const Reels = lazy(() => import('./Sections/Reels'));
+const Contact = lazy(() => import('./Sections/Contact'));
+const AgentTeams = lazy(() => import('./Sections/AgentTeams'));
+const AIQuote = lazy(() => import('./Sections/AIQuote'));
+const CustomAgentBanner = lazy(() => import('./Sections/CustomAgentBanner'));
+const CustomAgentModal = lazy(() => import('./Sections/CustomAgentModal'));
+const EventRegistration = lazy(() => import('./Sections/EventRegistration'));
+const JoinTeam = lazy(() => import('./Sections/JoinTeam'));
+const AdminDashboard = lazy(() => import('./Sections/AdminDashboard'));
+const WhatsAppAgentPage = lazy(() => import('./Sections/WhatsAppAgentPage'));
+const LinkedInAgentPage = lazy(() => import('./Sections/LinkedInAgentPage'));
 
 export type Page = 
   | 'home' 
@@ -264,15 +264,17 @@ const App: React.FC = () => {
           </motion.div>
         )}
         {isCustomModalOpen && (
-          <CustomAgentModal 
-            key="custom-agent-modal"
-            onClose={() => setIsCustomModalOpen(false)}
-            onConfirm={(description) => {
-              setSelectedAgents(prev => [...prev, 'custom-agents']);
-              setCustomDescriptions(prev => ({ ...prev, 'custom-agents': description }));
-              setIsCustomModalOpen(false);
-            }}
-          />
+          <Suspense fallback={null}>
+            <CustomAgentModal 
+              key="custom-agent-modal"
+              onClose={() => setIsCustomModalOpen(false)}
+              onConfirm={(description) => {
+                setSelectedAgents(prev => [...prev, 'custom-agents']);
+                setCustomDescriptions(prev => ({ ...prev, 'custom-agents': description }));
+                setIsCustomModalOpen(false);
+              }}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
@@ -286,7 +288,8 @@ const App: React.FC = () => {
       )}
       
       <main className="relative">
-        <AnimatePresence>
+        <Suspense fallback={<div className="min-h-screen bg-transparent" />}>
+          <AnimatePresence initial={false}>
           {currentPage === 'home' && (
             <motion.div
               key="home"
@@ -426,7 +429,8 @@ const App: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </main>
+      </Suspense>
+    </main>
       {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}

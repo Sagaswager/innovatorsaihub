@@ -281,11 +281,12 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
               <img
                 alt="Innovators AI Hub WhatsApp AI Agent interface with feature callouts for Instant Support, Appointment Booking, Automated Lead Qualification, and Real-time CRM Sync"
                 className="w-full h-auto object-contain rounded-2xl"
-                src="/whatsapp-agent-interface.png"
+                src="/whatsapp-agent-interface.webp"
                 width={2560}
                 height={1440}
                 loading="eager"
                 fetchPriority="high"
+                decoding="async"
                 style={{ imageRendering: '-webkit-optimize-contrast' }}
               />
             </div>
@@ -564,7 +565,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
 
                         <div className="lg:col-span-5 relative">
                           <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white">
-                            <img className="w-full h-[320px] object-cover" alt="Enterprise operations and customer experience team command center" src="/whatsapp_ai_agent.png"/>
+                            <img className="w-full h-[320px] object-cover" alt="Enterprise operations and customer experience team command center" src="/whatsapp_ai_agent.webp" loading="lazy" decoding="async"/>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                             <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-white/50 shadow-md">
                               <div className="flex items-center justify-between">
@@ -920,7 +921,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             </div>
                           </div>
                           <div className="lg:col-span-5">
-                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="E-commerce automation" src="/retail_ecommerce.jpg"/>
+                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="E-commerce automation" src="/retail_ecommerce.webp" loading="lazy" decoding="async"/>
                           </div>
                         </div>
                       </div>
@@ -941,7 +942,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             </div>
                           </div>
                           <div className="lg:col-span-5">
-                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Healthcare clinic appointment booking" src="/clinic_appointment.png"/>
+                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Healthcare clinic appointment booking" src="/clinic_appointment.webp" loading="lazy" decoding="async"/>
                           </div>
                         </div>
                       </div>
@@ -962,7 +963,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                             </div>
                           </div>
                           <div className="lg:col-span-5">
-                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Sales and real estate lead handling" src="/realestate.jpg"/>
+                            <img className="w-full h-[180px] object-cover rounded-xl border border-slate-200" alt="Sales and real estate lead handling" src="/realestate.webp" loading="lazy" decoding="async"/>
                           </div>
                         </div>
                       </div>

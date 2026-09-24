@@ -1042,8 +1042,12 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
             {/* Image Wrapper with Bottom White Fade Overlay & Founder Tag */}
             <div className="relative flex justify-center items-end max-w-[450px] md:max-w-[540px] lg:max-w-[620px] w-full overflow-hidden -translate-y-8 md:-translate-y-14">
               <img
-                src="/platform_hero.png"
+                src="/platform_hero.webp"
                 alt="AI Co-Worker Platform Hero"
+                width={620}
+                height={480}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-auto object-contain translate-y-[5%] scale-[1.05] mix-blend-multiply"
               />
 

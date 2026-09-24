@@ -1,0 +1,21 @@
+{
+  "short_name": "Innovators AI",
+  "name": "Innovators AI HUB",
+  "description": "Autonomous AI agent teams and workflows for custom business automation.",
+  "icons": [
+    {
+      "src": "/ai-logos.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/ai-logos.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#006e2f",
+  "display": "standalone"
+}
