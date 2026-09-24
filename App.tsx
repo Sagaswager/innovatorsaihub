@@ -69,10 +69,8 @@ const App: React.FC = () => {
     setCurrentPage(page);
     const path = page === 'platform' ? '/' : `/${page}`;
     window.history.pushState({ page }, '', path);
-    // Use setTimeout to ensure DOM is updated before scrolling
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
+    // Instant scroll to top to prevent layout jitter and transition stutter
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -109,6 +107,7 @@ const App: React.FC = () => {
       ];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
+        window.scrollTo(0, 0);
       }
     };
 
@@ -226,26 +225,40 @@ const App: React.FC = () => {
     }
   }, [currentPage]);
 
+  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent';
+
   useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.remove('light');
-      document.body.classList.add('dark');
-    } else {
+    if (isLightPage) {
       document.body.classList.remove('dark');
       document.body.classList.add('light');
+      document.body.style.backgroundColor = currentPage === 'whatsapp-ai-agent' ? '#f9f9f9' : '#ffffff';
+      document.body.style.color = '#0f172a';
+    } else {
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
+      document.body.style.backgroundColor = '#09090b';
+      document.body.style.color = '#ffffff';
     }
-  }, [isDarkMode]);
+  }, [isLightPage, currentPage]);
+
+  const containerBg = isLightPage
+    ? currentPage === 'whatsapp-ai-agent'
+      ? 'bg-[#f9f9f9] text-[#0F172A]'
+      : 'bg-white text-slate-900'
+    : isDarkMode
+      ? 'bg-zinc-950 text-zinc-100'
+      : 'bg-zinc-50 text-zinc-900';
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDarkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-zinc-900'}`}>
+    <div className={`min-h-screen ${containerBg}`}>
       <AnimatePresence>
-        {isDarkMode && (
+        {!isLightPage && isDarkMode && (
           <motion.div
             key="snow-layer"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 2 }}
+            transition={{ duration: 0.5 }}
           >
             <SnowEffect />
           </motion.div>
@@ -273,14 +286,13 @@ const App: React.FC = () => {
       )}
       
       <main className="relative">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {currentPage === 'home' && (
             <motion.div
               key="home"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2 }}
             >
               <Hero isDarkMode={isDarkMode} navigateTo={navigateTo} />
               
@@ -315,10 +327,9 @@ const App: React.FC = () => {
           {currentPage === 'platform' && (
             <motion.div
               key="platform-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
             >
               <Platform isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
@@ -327,10 +338,9 @@ const App: React.FC = () => {
           {currentPage === 'services' && (
             <motion.div
               key="services-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <Services 
                 isDarkMode={isDarkMode} 
@@ -353,10 +363,9 @@ const App: React.FC = () => {
           {currentPage === 'contact' && (
             <motion.div
               key="contact-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <Contact isDarkMode={isDarkMode} isFullPage={true} />
             </motion.div>
@@ -365,10 +374,9 @@ const App: React.FC = () => {
           {currentPage === 'register' && (
             <motion.div
               key="register-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <EventRegistration isDarkMode={isDarkMode} />
             </motion.div>
@@ -377,10 +385,9 @@ const App: React.FC = () => {
           {currentPage === 'join' && (
             <motion.div
               key="join-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <JoinTeam isDarkMode={isDarkMode} />
             </motion.div>
@@ -389,10 +396,9 @@ const App: React.FC = () => {
           {currentPage === 'admin' && (
             <motion.div
               key="admin-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <AdminDashboard isDarkMode={isDarkMode} />
             </motion.div>
@@ -401,10 +407,9 @@ const App: React.FC = () => {
           {currentPage === 'whatsapp-ai-agent' && (
             <motion.div
               key="whatsapp-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
             >
               <WhatsAppAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
@@ -413,10 +418,9 @@ const App: React.FC = () => {
           {currentPage === 'linkedin-ai-agent' && (
             <motion.div
               key="linkedin-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
             >
               <LinkedInAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
