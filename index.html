@@ -15,6 +15,14 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.innovatorsaihub.com/">
 
+    <!-- Search Engine Verification Anchors (Google Search Console & Bing Webmaster Tools) -->
+    <!-- Active verification via GSC DNS & Bing GSC OAuth Import. Add direct meta tags here if needed -->
+    <!-- <meta name="google-site-verification" content="" /> -->
+    <!-- <meta name="msvalidate.01" content="" /> -->
+
+    <!-- ======================================================= -->
+    <!--  Tracking & Social Meta Pixel Block                     -->
+    <!-- ======================================================= -->
     <!-- Google Tag Manager / Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRNF7K23EF"></script>
     <script>
@@ -24,8 +32,7 @@
       gtag('config', 'G-FRNF7K23EF');
     </script>
 
-    <!-- Meta Pixel Code (Facebook Pixel) -->
-    <!-- Replace 'YOUR_PIXEL_ID' with actual Facebook Pixel ID -->
+    <!-- Social Meta Pixel (Facebook Pixel) Core Bootstrap -->
     <script>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -35,8 +42,13 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', 'YOUR_PIXEL_ID');
-      fbq('track', 'PageView');
+
+      // Initialize Meta Pixel if ID is configured
+      window.__META_PIXEL_ID__ = window.__META_PIXEL_ID__ || '';
+      if (window.__META_PIXEL_ID__ && window.__META_PIXEL_ID__ !== 'YOUR_PIXEL_ID') {
+        fbq('init', window.__META_PIXEL_ID__);
+        fbq('track', 'PageView');
+      }
     </script>
 
     <!-- Open Graph / Facebook -->

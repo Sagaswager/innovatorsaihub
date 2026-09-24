@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Globe, Mail, Phone, CheckCircle2, AlertCircle, Loader2, ArrowUpRight, X } from 'lucide-react';
+import { trackContact } from '../analytics';
 
 interface ContactProps {
   isDarkMode: boolean;
@@ -30,7 +31,13 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode, isFullPage = false }) => 
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] font-bold mb-1 text-white/40">Email Studio</p>
                 <p className="text-2xl md:text-3xl font-medium text-white tracking-tight">
-                  <a href="mailto:Sagarmasand9@gmail.com" className="hover:text-blue-400 transition-colors">Sagarmasand9@gmail.com</a>
+                  <a
+                    href="mailto:Sagarmasand9@gmail.com"
+                    onClick={() => trackContact('email', { email: 'Sagarmasand9@gmail.com', location: 'contact_section' })}
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    Sagarmasand9@gmail.com
+                  </a>
                 </p>
               </div>
             </div>
@@ -42,8 +49,20 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode, isFullPage = false }) => 
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] font-bold mb-1 text-white/40">Phone / Whatsapp</p>
                 <p className="text-2xl md:text-3xl font-medium text-white tracking-tight flex flex-col">
-                  <a href="tel:+919810875683" className="hover:text-blue-400 transition-colors">+91 9810875683</a>
-                  <a href="tel:+919873641909" className="hover:text-blue-400 transition-colors">+91 9873641909</a>
+                  <a
+                    href="tel:+919810875683"
+                    onClick={() => trackContact('phone', { phone: '+919810875683', location: 'contact_section' })}
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    +91 9810875683
+                  </a>
+                  <a
+                    href="tel:+919873641909"
+                    onClick={() => trackContact('phone', { phone: '+919873641909', location: 'contact_section' })}
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    +91 9873641909
+                  </a>
                 </p>
               </div>
             </div>

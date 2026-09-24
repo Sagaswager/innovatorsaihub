@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCircle2, AlertCircle, Loader2, X } from 'lucide-react';
+import { trackLead } from '../analytics';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -44,6 +45,13 @@ const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
       });
 
       setSubmitStatus('success');
+      trackLead('demo_modal_booking', {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.contactNumber,
+        subject: formData.subject,
+        location: formData.location,
+      });
       setFormData({
         fullName: '',
         email: '',

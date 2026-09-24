@@ -19,6 +19,7 @@ import JoinTeam from './Sections/JoinTeam';
 import AdminDashboard from './Sections/AdminDashboard';
 import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
 import LinkedInAgentPage from './Sections/LinkedInAgentPage';
+import { initTracking, trackPageView, trackMetaEvent } from './analytics';
 
 export type Page = 
   | 'home' 
@@ -113,6 +114,7 @@ const App: React.FC = () => {
 
     // Run once on initial load to set page state based on the pathname
     handlePopState();
+    initTracking();
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -201,6 +203,26 @@ const App: React.FC = () => {
     const twitterDesc = document.querySelector('meta[name="twitter:description"]');
     if (twitterDesc) {
       twitterDesc.setAttribute('content', description);
+    }
+
+    // SPA Virtual PageView tracking across GA4 & Social Meta Pixel
+    const currentPath = currentPage === 'platform' ? '/' : `/${currentPage}`;
+    trackPageView(currentPath, title);
+
+    if (currentPage === 'whatsapp-ai-agent') {
+      trackMetaEvent('ViewContent', {
+        content_name: 'WhatsApp AI Agent',
+        content_category: 'AI Agents',
+        value: 2999,
+        currency: 'INR',
+      });
+    } else if (currentPage === 'linkedin-ai-agent') {
+      trackMetaEvent('ViewContent', {
+        content_name: 'LinkedIn AI Agent',
+        content_category: 'AI Agents',
+        value: 2222,
+        currency: 'INR',
+      });
     }
   }, [currentPage]);
 

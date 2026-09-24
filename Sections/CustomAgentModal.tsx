@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Send, Sparkles } from 'lucide-react';
+import { trackLead } from '../analytics';
 
 interface CustomAgentModalProps {
   onClose: () => void;
@@ -17,6 +18,9 @@ const CustomAgentModal: React.FC<CustomAgentModalProps> = ({ onClose, onConfirm 
       setError('Please provide a short description of the agent\'s purpose.');
       return;
     }
+    trackLead('custom_agent_spec_submission', {
+      description: description.trim(),
+    });
     onConfirm(description);
   };
 

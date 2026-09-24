@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, Loader2 } from 'lucide-react';
+import { trackAgentRental, trackEvent } from '../analytics';
 
 interface LinkedInAgentPageProps {
   isDarkMode?: boolean;
@@ -76,6 +77,13 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
       localStorage.setItem('platform_user', JSON.stringify({ name, email }));
 
       setIsSubmitted(true);
+      trackAgentRental('LinkedIn AI Agent', '₹2,222/mo', {
+        name,
+        email,
+        phone: number,
+        profession,
+        companyName,
+      });
     } catch (err) {
       console.error("Submission failed:", err);
       setSubmitError('Failed to submit rental request. Please try again or reach out on WhatsApp.');
