@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base Body & Theming */
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    color: #0f172a;
+}
+
+body.dark {
+    background-color: #09090b;
+    color: #ffffff;
+}
+
+body.light {
+    background-color: #ffffff;
+    color: #0f172a;
+}
+
+h1, h2, h3 {
+    font-family: 'Sora', sans-serif;
+}
+
+.font-serif-brand {
+    font-family: 'Bodoni MT', 'Didot', 'Georgia', serif;
+}
+
+.font-syne {
+    font-family: 'Syne', sans-serif;
+}
+
+.nav-glow:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    transform: scale(1.08);
+}
+
+/* Hide scrollbar for all browsers */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Lightweight GPU-composited Snowfall (0% Main Thread JS Overhead) */
+@keyframes snowfall {
+    0% {
+        transform: translate3d(0, -10px, 0);
+        opacity: 0;
+    }
+    10% {
+        opacity: var(--flake-opacity, 0.6);
+    }
+    90% {
+        opacity: var(--flake-opacity, 0.6);
+    }
+    100% {
+        transform: translate3d(var(--flake-sway, 0px), 105vh, 0);
+        opacity: 0;
+    }
+}
+
+.snow-flake {
+    position: absolute;
+    top: 0;
+    border-radius: 50%;
+    background-color: #ffffff;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .snow-flake {
+        animation: none !important;
+        display: none !important;
+    }
+}

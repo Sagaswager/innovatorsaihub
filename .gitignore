@@ -25,3 +25,12 @@ dist-ssr
 
 # Planning
 .planning/
+
+# Environment variables
+.env
+.env*.local
+.env.*
+!.env.example
+
+# Scratch and temporary files
+scratch/

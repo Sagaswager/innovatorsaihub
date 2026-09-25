@@ -1,6 +1,16 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # 1. Enforce HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 2. Enforce canonical www domain (innovatorsaihub.com -> www.innovatorsaihub.com)
+  RewriteCond %{HTTP_HOST} ^innovatorsaihub\.com$ [NC]
+  RewriteRule ^(.*)$ https://www.innovatorsaihub.com/$1 [L,R=301]
+
+  # 3. SPA Fallback routing
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

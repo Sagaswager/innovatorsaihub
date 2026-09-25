@@ -1,52 +1,62 @@
 
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useState, useEffect } from 'react';
 
 interface SnowEffectProps {
   count?: number;
 }
 
-const SnowEffect: React.FC<SnowEffectProps> = ({ count = 60 }) => {
-  // Generate random properties for each snowflake to create depth and variety
+const SnowEffect: React.FC<SnowEffectProps> = ({ count }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const effectiveCount = count ?? (isMobile ? 16 : 38);
+
+  // Generate random properties once per count to avoid unnecessary layout recalculations
   const snowflakes = useMemo(() => {
-    return Array.from({ length: count }).map((_, i) => ({
-      id: i,
-      size: Math.random() * 4 + 1,
-      left: `${Math.random() * 100}%`,
-      duration: Math.random() * 10 + 10, // 10s to 20s
-      delay: Math.random() * 10,
-      opacity: Math.random() * 0.5 + 0.2,
-      blur: Math.random() * 2,
-    }));
-  }, [count]);
+    return Array.from({ length: effectiveCount }).map((_, i) => {
+      const size = Math.random() * 3 + 1.5;
+      const left = `${Math.random() * 100}%`;
+      const duration = `${(Math.random() * 8 + 8).toFixed(1)}s`;
+      const delay = `${(Math.random() * 8).toFixed(1)}s`;
+      const opacity = (Math.random() * 0.4 + 0.25).toFixed(2);
+      const sway = `${(Math.random() * 40 - 20).toFixed(0)}px`;
+
+      return {
+        id: i,
+        size,
+        left,
+        duration,
+        delay,
+        opacity,
+        sway,
+      };
+    });
+  }, [effectiveCount]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden" aria-hidden="true">
       {snowflakes.map((flake) => (
-        <motion.div
+        <div
           key={flake.id}
-          initial={{ y: -20, opacity: 0 }}
-          animate={{
-            y: ['0vh', '110vh'],
-            opacity: [0, flake.opacity, flake.opacity, 0],
-            x: [0, Math.random() * 50 - 25], // Subtle horizontal sway
-          }}
-          transition={{
-            duration: flake.duration,
-            repeat: Infinity,
-            delay: flake.delay,
-            ease: "linear",
-          }}
+          className="snow-flake"
           style={{
-            position: 'absolute',
             left: flake.left,
-            width: flake.size,
-            height: flake.size,
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            filter: `blur(${flake.blur}px)`,
-            boxShadow: '0 0 10px rgba(255, 255, 255, 0.4)',
-          }}
+            width: `${flake.size}px`,
+            height: `${flake.size}px`,
+            animationDuration: flake.duration,
+            animationDelay: flake.delay,
+            '--flake-opacity': flake.opacity,
+            '--flake-sway': flake.sway,
+            boxShadow: '0 0 6px rgba(255, 255, 255, 0.4)',
+          } as React.CSSProperties}
         />
       ))}
     </div>

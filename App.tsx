@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './Sections/Header';
-import Hero from './Sections/Hero';
-import Services from './Sections/Services';
-import Reels from './Sections/Reels';
-import Contact from './Sections/Contact';
 import Footer from './Sections/Footer';
-import Port from './Sections/Port';
-import SnowEffect from './Sections/SnowEffect';
-import AIQuote from './Sections/AIQuote';
-import { ArrowRight } from 'lucide-react';
-import AgentTeams from './Sections/AgentTeams';
-import CustomAgentModal from './Sections/CustomAgentModal';
-import CustomAgentBanner from './Sections/CustomAgentBanner';
-import EventRegistration from './Sections/EventRegistration';
 import Platform from './Sections/Platform';
-import JoinTeam from './Sections/JoinTeam';
-import AdminDashboard from './Sections/AdminDashboard';
-import WhatsAppAgentPage from './Sections/WhatsAppAgentPage';
-import LinkedInAgentPage from './Sections/LinkedInAgentPage';
+import SnowEffect from './Sections/SnowEffect';
+import { initTracking, trackPageView, trackMetaEvent } from './analytics';
+
+// Code-split secondary routes and modals to minimize initial bundle size
+const Hero = lazy(() => import('./Sections/Hero'));
+const Services = lazy(() => import('./Sections/Services'));
+const Reels = lazy(() => import('./Sections/Reels'));
+const Contact = lazy(() => import('./Sections/Contact'));
+const AgentTeams = lazy(() => import('./Sections/AgentTeams'));
+const AIQuote = lazy(() => import('./Sections/AIQuote'));
+const CustomAgentBanner = lazy(() => import('./Sections/CustomAgentBanner'));
+const CustomAgentModal = lazy(() => import('./Sections/CustomAgentModal'));
+const EventRegistration = lazy(() => import('./Sections/EventRegistration'));
+const JoinTeam = lazy(() => import('./Sections/JoinTeam'));
+const AdminDashboard = lazy(() => import('./Sections/AdminDashboard'));
+const WhatsAppAgentPage = lazy(() => import('./Sections/WhatsAppAgentPage'));
+const LinkedInAgentPage = lazy(() => import('./Sections/LinkedInAgentPage'));
 
 export type Page = 
   | 'home' 
@@ -68,10 +69,8 @@ const App: React.FC = () => {
     setCurrentPage(page);
     const path = page === 'platform' ? '/' : `/${page}`;
     window.history.pushState({ page }, '', path);
-    // Use setTimeout to ensure DOM is updated before scrolling
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
+    // Instant scroll to top to prevent layout jitter and transition stutter
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -108,24 +107,29 @@ const App: React.FC = () => {
       ];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
+        window.scrollTo(0, 0);
       }
     };
 
     // Run once on initial load to set page state based on the pathname
     handlePopState();
+    initTracking();
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   useEffect(() => {
-    let title = 'Innovators AI HUB | AI-Agentic Systems & Brand Films';
-    let description = "Hire autonomous AI agent teams to automate workflows, WhatsApp support, voice calls & outbound outreach. Elevate your business with Innovators AI HUB.";
+    let title = 'AI Agent Teams & Business Automation | Innovators AI HUB';
+    let description = "Build AI agent teams for business automation, sales and customer workflows. Discover custom AI automation solutions from Innovators AI HUB. Get started.";
+    let ogImage = 'https://www.innovatorsaihub.com/platform_hero.webp';
 
     switch (currentPage) {
       case 'home':
-        title = 'Innovators AI HUB | AI-Agentic Systems & Brand Films';
-        description = "Hire autonomous AI agent teams to automate workflows, WhatsApp support, voice calls & outbound outreach. Elevate your business with Innovators AI HUB.";
+      case 'platform':
+        title = 'AI Agent Teams & Business Automation | Innovators AI HUB';
+        description = "Build AI agent teams for business automation, sales and customer workflows. Discover custom AI automation solutions from Innovators AI HUB. Get started.";
+        ogImage = 'https://www.innovatorsaihub.com/platform_hero.webp';
         break;
 
       case 'portfolio':
@@ -153,12 +157,14 @@ const App: React.FC = () => {
         description = 'Admin internal dashboard.';
         break;
       case 'whatsapp-ai-agent':
-        title = 'WhatsApp AI Agent for Business | Automated 24/7 Support & CRM Sync';
-        description = 'Automate customer support, lead qualification, and appointment booking directly inside WhatsApp with Innovators AI HUB.';
+        title = 'WhatsApp AI Agent for Business | Innovators AI HUB';
+        description = 'Automate customer support, lead qualification and CRM workflows with a WhatsApp AI Agent for business. Explore smarter WhatsApp automation today.';
+        ogImage = 'https://www.innovatorsaihub.com/whatsapp-agent-interface.webp';
         break;
       case 'linkedin-ai-agent':
-        title = 'LinkedIn AI Agent for B2B Outreach & Lead Generation | Innovators AI HUB';
-        description = 'Turn connections into conversations. AI-powered LinkedIn outreach for B2B businesses to personalize connections, automate follow-ups, and book calendar meetings.';
+        title = 'LinkedIn AI Agent for B2B Prospecting | Innovators AI HUB';
+        description = 'Scale B2B prospecting with a LinkedIn AI Agent for sales. Automate personalized outreach, lead generation and follow-ups. Explore the solution today.';
+        ogImage = 'https://www.innovatorsaihub.com/linkedin_agent_preview.png';
         break;
     }
 
@@ -188,6 +194,10 @@ const App: React.FC = () => {
     if (ogDesc) {
       ogDesc.setAttribute('content', description);
     }
+    const ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg) {
+      ogImg.setAttribute('content', ogImage);
+    }
 
     // Dynamic Twitter Card Updates
     const twitterUrl = document.querySelector('meta[name="twitter:url"]');
@@ -202,42 +212,82 @@ const App: React.FC = () => {
     if (twitterDesc) {
       twitterDesc.setAttribute('content', description);
     }
+    const twitterImg = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImg) {
+      twitterImg.setAttribute('content', ogImage);
+    }
+
+    // SPA Virtual PageView tracking across GA4 & Social Meta Pixel
+    const currentPath = currentPage === 'platform' ? '/' : `/${currentPage}`;
+    trackPageView(currentPath, title);
+
+    if (currentPage === 'whatsapp-ai-agent') {
+      trackMetaEvent('ViewContent', {
+        content_name: 'WhatsApp AI Agent',
+        content_category: 'AI Agents',
+        value: 2999,
+        currency: 'INR',
+      });
+    } else if (currentPage === 'linkedin-ai-agent') {
+      trackMetaEvent('ViewContent', {
+        content_name: 'LinkedIn AI Agent',
+        content_category: 'AI Agents',
+        value: 2222,
+        currency: 'INR',
+      });
+    }
   }, [currentPage]);
 
+  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent';
+
   useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.remove('light');
-      document.body.classList.add('dark');
-    } else {
+    if (isLightPage) {
       document.body.classList.remove('dark');
       document.body.classList.add('light');
+      document.body.style.backgroundColor = currentPage === 'whatsapp-ai-agent' ? '#f9f9f9' : '#ffffff';
+      document.body.style.color = '#0f172a';
+    } else {
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
+      document.body.style.backgroundColor = '#09090b';
+      document.body.style.color = '#ffffff';
     }
-  }, [isDarkMode]);
+  }, [isLightPage, currentPage]);
+
+  const containerBg = isLightPage
+    ? currentPage === 'whatsapp-ai-agent'
+      ? 'bg-[#f9f9f9] text-[#0F172A]'
+      : 'bg-white text-slate-900'
+    : isDarkMode
+      ? 'bg-zinc-950 text-zinc-100'
+      : 'bg-zinc-50 text-zinc-900';
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDarkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-zinc-900'}`}>
+    <div className={`min-h-screen ${containerBg}`}>
       <AnimatePresence>
-        {isDarkMode && (
+        {!isLightPage && isDarkMode && (
           <motion.div
             key="snow-layer"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 2 }}
+            transition={{ duration: 0.5 }}
           >
             <SnowEffect />
           </motion.div>
         )}
         {isCustomModalOpen && (
-          <CustomAgentModal 
-            key="custom-agent-modal"
-            onClose={() => setIsCustomModalOpen(false)}
-            onConfirm={(description) => {
-              setSelectedAgents(prev => [...prev, 'custom-agents']);
-              setCustomDescriptions(prev => ({ ...prev, 'custom-agents': description }));
-              setIsCustomModalOpen(false);
-            }}
-          />
+          <Suspense fallback={null}>
+            <CustomAgentModal 
+              key="custom-agent-modal"
+              onClose={() => setIsCustomModalOpen(false)}
+              onConfirm={(description) => {
+                setSelectedAgents(prev => [...prev, 'custom-agents']);
+                setCustomDescriptions(prev => ({ ...prev, 'custom-agents': description }));
+                setIsCustomModalOpen(false);
+              }}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
@@ -251,14 +301,14 @@ const App: React.FC = () => {
       )}
       
       <main className="relative">
-        <AnimatePresence mode="wait">
+        <Suspense fallback={<div className="min-h-screen bg-transparent" />}>
+          <AnimatePresence initial={false}>
           {currentPage === 'home' && (
             <motion.div
               key="home"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2 }}
             >
               <Hero isDarkMode={isDarkMode} navigateTo={navigateTo} />
               
@@ -293,10 +343,9 @@ const App: React.FC = () => {
           {currentPage === 'platform' && (
             <motion.div
               key="platform-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
             >
               <Platform isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
@@ -305,10 +354,9 @@ const App: React.FC = () => {
           {currentPage === 'services' && (
             <motion.div
               key="services-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <Services 
                 isDarkMode={isDarkMode} 
@@ -331,10 +379,9 @@ const App: React.FC = () => {
           {currentPage === 'contact' && (
             <motion.div
               key="contact-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <Contact isDarkMode={isDarkMode} isFullPage={true} />
             </motion.div>
@@ -343,10 +390,9 @@ const App: React.FC = () => {
           {currentPage === 'register' && (
             <motion.div
               key="register-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <EventRegistration isDarkMode={isDarkMode} />
             </motion.div>
@@ -355,10 +401,9 @@ const App: React.FC = () => {
           {currentPage === 'join' && (
             <motion.div
               key="join-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <JoinTeam isDarkMode={isDarkMode} />
             </motion.div>
@@ -367,10 +412,9 @@ const App: React.FC = () => {
           {currentPage === 'admin' && (
             <motion.div
               key="admin-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
             >
               <AdminDashboard isDarkMode={isDarkMode} />
             </motion.div>
@@ -379,10 +423,9 @@ const App: React.FC = () => {
           {currentPage === 'whatsapp-ai-agent' && (
             <motion.div
               key="whatsapp-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
             >
               <WhatsAppAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
@@ -391,16 +434,16 @@ const App: React.FC = () => {
           {currentPage === 'linkedin-ai-agent' && (
             <motion.div
               key="linkedin-agent-page"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
             >
               <LinkedInAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
           )}
         </AnimatePresence>
-      </main>
+      </Suspense>
+    </main>
       {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}

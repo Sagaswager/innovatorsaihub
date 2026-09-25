@@ -1,4 +1,79 @@
+# ========================================================
+# Innovators AI HUB - robots.txt
+# Canonical Domain: https://www.innovatorsaihub.com/
+# ========================================================
+
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
 
+# Explicitly welcome major search engine crawlers
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+# Generative Engine Optimization (GEO) & AI Search Crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+# Canonical XML Sitemap Declaration
 Sitemap: https://www.innovatorsaihub.com/sitemap.xml
