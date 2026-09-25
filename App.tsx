@@ -120,13 +120,16 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    let title = 'Innovators AI HUB | AI-Agentic Systems & Brand Films';
-    let description = "Hire autonomous AI agent teams to automate workflows, WhatsApp support, voice calls & outbound outreach. Elevate your business with Innovators AI HUB.";
+    let title = 'AI Agent Teams & Business Automation | Innovators AI HUB';
+    let description = "Build AI agent teams for business automation, sales and customer workflows. Discover custom AI automation solutions from Innovators AI HUB. Get started.";
+    let ogImage = 'https://www.innovatorsaihub.com/platform_hero.webp';
 
     switch (currentPage) {
       case 'home':
-        title = 'Innovators AI HUB | AI-Agentic Systems & Brand Films';
-        description = "Hire autonomous AI agent teams to automate workflows, WhatsApp support, voice calls & outbound outreach. Elevate your business with Innovators AI HUB.";
+      case 'platform':
+        title = 'AI Agent Teams & Business Automation | Innovators AI HUB';
+        description = "Build AI agent teams for business automation, sales and customer workflows. Discover custom AI automation solutions from Innovators AI HUB. Get started.";
+        ogImage = 'https://www.innovatorsaihub.com/platform_hero.webp';
         break;
 
       case 'portfolio':
@@ -154,12 +157,14 @@ const App: React.FC = () => {
         description = 'Admin internal dashboard.';
         break;
       case 'whatsapp-ai-agent':
-        title = 'WhatsApp AI Agent for Business | Automated 24/7 Support & CRM Sync';
-        description = 'Automate customer support, lead qualification, and appointment booking directly inside WhatsApp with Innovators AI HUB.';
+        title = 'WhatsApp AI Agent for Business | Innovators AI HUB';
+        description = 'Automate customer support, lead qualification and CRM workflows with a WhatsApp AI Agent for business. Explore smarter WhatsApp automation today.';
+        ogImage = 'https://www.innovatorsaihub.com/whatsapp-agent-interface.webp';
         break;
       case 'linkedin-ai-agent':
-        title = 'LinkedIn AI Agent for B2B Outreach & Lead Generation | Innovators AI HUB';
-        description = 'Turn connections into conversations. AI-powered LinkedIn outreach for B2B businesses to personalize connections, automate follow-ups, and book calendar meetings.';
+        title = 'LinkedIn AI Agent for B2B Prospecting | Innovators AI HUB';
+        description = 'Scale B2B prospecting with a LinkedIn AI Agent for sales. Automate personalized outreach, lead generation and follow-ups. Explore the solution today.';
+        ogImage = 'https://www.innovatorsaihub.com/linkedin_agent_preview.png';
         break;
     }
 
@@ -189,6 +194,10 @@ const App: React.FC = () => {
     if (ogDesc) {
       ogDesc.setAttribute('content', description);
     }
+    const ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg) {
+      ogImg.setAttribute('content', ogImage);
+    }
 
     // Dynamic Twitter Card Updates
     const twitterUrl = document.querySelector('meta[name="twitter:url"]');
@@ -202,6 +211,10 @@ const App: React.FC = () => {
     const twitterDesc = document.querySelector('meta[name="twitter:description"]');
     if (twitterDesc) {
       twitterDesc.setAttribute('content', description);
+    }
+    const twitterImg = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImg) {
+      twitterImg.setAttribute('content', ogImage);
     }
 
     // SPA Virtual PageView tracking across GA4 & Social Meta Pixel
