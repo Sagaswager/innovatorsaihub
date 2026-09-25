@@ -720,8 +720,10 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           className="flex items-center group focus:outline-none"
         >
           <img
-            src="/new-logo.png"
+            src="/new-logo.webp"
             alt="Innovators AI HUB Logo"
+            width={130}
+            height={48}
             style={{ filter: 'brightness(0)' }}
             className="h-10 md:h-12 w-auto object-contain transition-all duration-300 group-hover:opacity-80"
           />
@@ -739,7 +741,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           >
             <Sparkles size={13} className="text-zinc-950 fill-zinc-950" />
             <span>₹2,000</span>
-            <ChevronDown size={12} className={`text-zinc-500 transition-transform duration-200 ${isCreditsOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown size={12} className={`text-zinc-600 transition-transform duration-200 ${isCreditsOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {/* Credits Popover Menu matching the screenshot exactly */}
@@ -755,7 +757,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm font-semibold text-zinc-700">Available Balance</span>
-                    <span className="w-4 h-4 rounded-full border border-zinc-300 flex items-center justify-center text-[10px] text-zinc-400 font-bold cursor-help" title="Usage balance in Indian Rupees">?</span>
+                    <span className="w-4 h-4 rounded-full border border-zinc-300 flex items-center justify-center text-[10px] text-zinc-500 font-bold cursor-help" title="Usage balance in Indian Rupees">?</span>
                   </div>
                   <span className="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                     New User
@@ -775,9 +777,9 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-1 text-zinc-600 font-medium">
                       <span>Welcome Bonus</span>
-                      <span className="w-3.5 h-3.5 rounded-full border border-zinc-300 flex items-center justify-center text-[8px] text-zinc-400 font-bold cursor-help" title="Free welcome bonus credited to account">i</span>
+                      <span className="w-3.5 h-3.5 rounded-full border border-zinc-300 flex items-center justify-center text-[8px] text-zinc-500 font-bold cursor-help" title="Free welcome bonus credited to account">i</span>
                     </div>
-                    <span className="font-bold text-zinc-900">₹2,000 <span className="text-zinc-400 font-normal">/ ₹2,000</span></span>
+                    <span className="font-bold text-zinc-900">₹2,000 <span className="text-zinc-500 font-normal">/ ₹2,000</span></span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-zinc-600 font-medium">Added Funds</span>
@@ -796,7 +798,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 </button>
 
                 {/* Row 5: Footer explanatory copy */}
-                <p className="text-[11px] leading-relaxed text-zinc-500 font-medium">
+                <p className="text-[11px] leading-relaxed text-zinc-600 font-medium">
                   Every new user receives a welcome bonus of <span className="text-zinc-900 font-bold">₹2,000</span>. When you rent any AI Agent, this balance will automatically be used to pay your bills.
                 </p>
               </motion.div>
@@ -867,9 +869,9 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   {currentUser ? (
                     <>
                       <div className="px-4 py-2 border-b border-zinc-100 mb-1.5">
-                        <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Account</p>
+                        <p className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Account</p>
                         <p className="text-xs font-bold text-zinc-950 truncate mt-0.5">{currentUser.name}</p>
-                        <p className="text-[10px] text-zinc-500 truncate">{currentUser.email}</p>
+                        <p className="text-[10px] text-zinc-600 truncate">{currentUser.email}</p>
                       </div>
 
                       <button
@@ -956,7 +958,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 </span>
                 <span
                   style={{
-                    color: '#95d656',
+                    color: '#15803d',
                     fontWeight: 900,
                     fontSize: 'clamp(5.5rem, 13vw, 10.5rem)',
                     display: 'inline-flex',
@@ -1043,6 +1045,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
             <div className="relative flex justify-center items-end max-w-[450px] md:max-w-[540px] lg:max-w-[620px] w-full overflow-hidden -translate-y-8 md:-translate-y-14">
               <img
                 src="/platform_hero.webp"
+                srcSet="/platform_hero_mobile.webp 640w, /platform_hero.webp 1024w"
+                sizes="(max-width: 768px) 100vw, 620px"
                 alt="AI Co-Worker Platform Hero"
                 width={620}
                 height={480}
@@ -1073,14 +1077,18 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               >
                 {/* Real LinkedIn logo image */}
                 <img
-                  src="/linkedin_logo.png"
+                  src="/linkedin_logo.webp"
                   alt="LinkedIn Logo"
+                  width={40}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
                   className="w-10 h-10 object-contain rounded-xl"
                 />
 
                 <div className="flex flex-col items-start leading-none pr-1">
                   <span className="text-[13px] font-bold text-zinc-900 leading-none">Sagar</span>
-                  <span className="text-[9px] text-zinc-500 font-semibold tracking-wider uppercase mt-1">Founder</span>
+                  <span className="text-[9px] text-zinc-600 font-semibold tracking-wider uppercase mt-1">Founder</span>
                 </div>
               </a>
 
@@ -1137,7 +1145,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 fontWeight: 600,
                 letterSpacing: '-0.01em',
               }}
-              className="text-zinc-400 font-sans"
+              className="text-zinc-600 font-sans"
             >
               in
             </span>
@@ -1202,7 +1210,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <div className="w-full h-44 bg-blue-500/[0.05] group-hover:bg-blue-500/[0.10] flex items-center justify-center relative select-none border-b border-blue-200/20 transition-colors duration-300">
                         {/* Rating badge */}
                         <div className="absolute top-3 right-3 bg-white text-[10px] md:text-xs font-semibold text-zinc-700 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm border border-zinc-100/60">
-                          <span className="text-yellow-500">★</span> {item.rating.split(" ")[0]} <span className="text-zinc-400">({item.reviews.split(" ")[0]})</span>
+                          <span className="text-yellow-500">★</span> {item.rating.split(" ")[0]} <span className="text-zinc-600">({item.reviews.split(" ")[0]})</span>
                         </div>
                         {/* Logo Wrapper */}
                         <div className="flex items-center justify-center p-6 text-zinc-800 transition-transform duration-300 group-hover:scale-110">
@@ -1223,9 +1231,9 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                         <div className="flex items-center justify-between mt-4">
                           <div className="flex items-baseline gap-1 select-text font-medium">
                             <span className="text-xl text-zinc-950">₹{item.price}</span>
-                            <span className="text-xs text-zinc-500">/mo</span>
+                            <span className="text-xs text-zinc-600">/mo</span>
                             {item.originalPrice && (
-                              <span className="text-xs line-through text-zinc-400 ml-2">₹{item.originalPrice}</span>
+                              <span className="text-xs line-through text-zinc-600 ml-2">₹{item.originalPrice}</span>
                             )}
                           </div>
                           <button 
@@ -1281,7 +1289,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                           <h1 className="text-2xl md:text-3xl font-extrabold text-zinc-950 tracking-tight mb-1">
                             {selectedAgent.title}
                           </h1>
-                          <div className="flex items-center gap-1.5 text-zinc-500 text-xs md:text-sm font-medium">
+                          <div className="flex items-center gap-1.5 text-zinc-600 text-xs md:text-sm font-medium">
                             <span className="text-yellow-500">★</span>
                             <span>{selectedAgent.rating} ({selectedAgent.reviews})</span>
                           </div>
@@ -1293,10 +1301,10 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                         <div className="text-left md:text-right">
                           <div className="flex items-baseline gap-1">
                             <span className="text-2xl md:text-3xl font-black text-zinc-950">₹{selectedAgent.price}</span>
-                            <span className="text-xs md:text-sm text-zinc-500">/mo</span>
+                            <span className="text-xs md:text-sm text-zinc-600">/mo</span>
                           </div>
                           {selectedAgent.originalPrice && (
-                            <span className="text-xs md:text-sm line-through text-zinc-400">₹{selectedAgent.originalPrice}</span>
+                            <span className="text-xs md:text-sm line-through text-zinc-600">₹{selectedAgent.originalPrice}</span>
                           )}
                         </div>
                         <button 
@@ -1399,7 +1407,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               {/* Close Button */}
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 p-1.5 rounded-full transition-colors outline-none"
+                className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 p-1.5 rounded-full transition-colors outline-none"
               >
                 <X size={16} />
               </button>
@@ -1408,7 +1416,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 <h3 className="text-xl font-bold text-zinc-950">
                   {modalMode === 'register' ? 'Get Started' : 'Sign In'}
                 </h3>
-                <p className="text-[11px] text-zinc-500 mt-1">
+                <p className="text-[11px] text-zinc-600 mt-1">
                   {modalMode === 'register'
                     ? 'Enter your details below to rent your AI Co-worker team.'
                     : 'Enter your email id to access your AI login account.'}

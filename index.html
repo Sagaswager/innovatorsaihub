@@ -9,6 +9,10 @@
     <link rel="icon" type="image/png" href="/ai-logos.png">
     <link rel="manifest" href="/manifest.json">
     
+    <!-- Preload LCP Hero Image for Instant Mobile Painting -->
+    <link rel="preload" as="image" href="/platform_hero_mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+    <link rel="preload" as="image" href="/platform_hero.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+    
     <!-- Primary SEO Metadata -->
     <title>AI Agent Teams &amp; Business Automation | Innovators AI HUB</title>
     <meta name="description" content="Build AI agent teams for business automation, sales and customer workflows. Discover custom AI automation solutions from Innovators AI HUB. Get started.">
@@ -22,34 +26,30 @@
     <!-- <meta name="msvalidate.01" content="" /> -->
 
     <!-- ======================================================= -->
-    <!--  Tracking & Social Meta Pixel Block                     -->
+    <!--  Tracking Configuration                                 -->
     <!-- ======================================================= -->
-    <!-- Google Tag Manager / Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRNF7K23EF"></script>
+    <!-- Google Tag Manager / Google Analytics (GA4) - Initialized on idle to eliminate mobile TBT -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-FRNF7K23EF');
-    </script>
 
-    <!-- Social Meta Pixel (Facebook Pixel) Core Bootstrap -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-
-      // Initialize Meta Pixel if ID is configured
-      window.__META_PIXEL_ID__ = window.__META_PIXEL_ID__ || '';
-      if (window.__META_PIXEL_ID__ && window.__META_PIXEL_ID__ !== 'YOUR_PIXEL_ID') {
-        fbq('init', window.__META_PIXEL_ID__);
-        fbq('track', 'PageView');
-      }
+      (function() {
+        function loadGtag() {
+          if (window.__GTAG_LOADED__) return;
+          window.__GTAG_LOADED__ = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FRNF7K23EF';
+          document.head.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(function() { setTimeout(loadGtag, 1000); });
+        } else {
+          window.addEventListener('load', function() { setTimeout(loadGtag, 1000); });
+        }
+      })();
     </script>
 
     <!-- Open Graph / Facebook -->
@@ -146,20 +146,17 @@
     }
     </script>
 
-    <!-- Preconnect & Asynchronous Fonts -->
+    <!-- Preconnect & Asynchronous Non-blocking Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=Syne:wght@800&family=JetBrains+Mono:wght@400;500;600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Sora:wght@600;700;800&family=Syne:wght@800&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Sora:wght@600;700;800&family=Syne:wght@800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 
     <!-- Asynchronous Non-blocking Material Symbols Outlined -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"></noscript>
 </head>
-<body class="cinematic-overlay">
-    <!-- Meta Pixel Code noscript fallback -->
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
-    /></noscript>
+<body>
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>

@@ -69,6 +69,11 @@ export const initMetaPixel = (pixelId?: string) => {
     TRACKING_CONFIG.metaPixelId = id;
   }
 
+  // Only load and initialize Meta Pixel script if an active, configured ID exists
+  if (!isMetaPixelActive()) {
+    return;
+  }
+
   // Load official Meta Pixel loader snippet if not already on window
   if (!window.fbq) {
     const f: any = window;
@@ -103,14 +108,10 @@ export const initMetaPixel = (pixelId?: string) => {
     window.fbq = n;
   }
 
-  // Initialize pixel ID if active
-  if (isMetaPixelActive() && window.fbq) {
+  // Initialize pixel ID
+  if (window.fbq) {
     window.fbq('init', TRACKING_CONFIG.metaPixelId);
     console.log(`[Meta Pixel]: Initialized with ID ${TRACKING_CONFIG.metaPixelId}`);
-  } else {
-    console.info(
-      `[Meta Pixel]: Inactive (add your 15-16 digit Meta Pixel ID in .env as VITE_META_PIXEL_ID to activate live tracking).`
-    );
   }
 };
 

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/spec/schema.json",
+  "name": "Innovators AI HUB",
+  "description": "Autonomous AI Agent Teams and Custom Business Automation Solutions",
+  "version": "1.0.0",
+  "homepage": "https://www.innovatorsaihub.com",
+  "endpoints": [
+    {
+      "name": "WhatsApp AI Agent",
+      "description": "Autonomous 24/7 WhatsApp AI agent for lead qualification, order updates, and customer support.",
+      "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent"
+    },
+    {
+      "name": "LinkedIn AI Agent",
+      "description": "Automated B2B outreach, personalized connection invitations, and lead generation AI agent on LinkedIn.",
+      "url": "https://www.innovatorsaihub.com/linkedin-ai-agent"
+    }
+  ]
+}
