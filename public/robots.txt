@@ -75,6 +75,5 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-# Canonical Sitemap & Host Declarations
+# Canonical XML Sitemap Declaration
 Sitemap: https://www.innovatorsaihub.com/sitemap.xml
-Host: www.innovatorsaihub.com
