@@ -29,8 +29,37 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
     setOpenFaq(prev => prev === index ? null : index);
   };
 
+  const isUserLoggedIn = (): boolean => {
+    try {
+      const userStr = localStorage.getItem('platform_user');
+      if (!userStr) return false;
+      const user = JSON.parse(userStr);
+      return Boolean(user && (user.email || user.name));
+    } catch {
+      return false;
+    }
+  };
+
+  const handleRentAgent = () => {
+    if (isUserLoggedIn()) {
+      window.location.href = 'https://innovatorslinai.duckdns.org/dashboard.html';
+    } else {
+      sessionStorage.setItem('open_auth_modal', 'register');
+      sessionStorage.setItem('post_login_redirect', 'https://innovatorslinai.duckdns.org/dashboard.html');
+      if (navigateTo) {
+        navigateTo('platform');
+      } else {
+        window.location.href = '/?auth=register';
+      }
+    }
+  };
+
   const scrollToRentAgent = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
+    if (isUserLoggedIn()) {
+      window.location.href = 'https://innovatorslinai.duckdns.org/dashboard.html';
+      return;
+    }
     const btn = document.getElementById('rent-agent-pricing-btn');
     if (btn) {
       btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -365,10 +394,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <span className="text-xs font-medium text-slate-400 line-through mt-0.5">₹6,999</span>
 </div>
 <button
-  onClick={() => {
-    setIsSubmitted(false);
-    setIsModalOpen(true);
-  }}
+  onClick={handleRentAgent}
   className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer"
 >
   Rent Agent
@@ -936,10 +962,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
               </div>
 <button
   id="rent-agent-pricing-btn"
-  onClick={() => {
-    setIsSubmitted(false);
-    setIsModalOpen(true);
-  }}
+  onClick={handleRentAgent}
   className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/35 active:scale-95 transition-all text-center inline-block cursor-pointer"
 >
   Rent Agent Now
@@ -1023,7 +1046,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
               Stop spending your team's time manually writing connection requests, tracking follow-ups, and coordinating every meeting.
             </p>
 <button
-  onClick={scrollToRentAgent}
+  onClick={handleRentAgent}
   className="px-8 py-4 rounded-full bg-white text-emerald-800 hover:bg-slate-50 font-extrabold text-base shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
 >
   <span className="material-symbols-outlined text-emerald-600">rocket_launch</span>
