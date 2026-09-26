@@ -612,11 +612,32 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   const [profession, setProfession] = useState('');
   const [companyName, setCompanyName] = useState('');
 
-  // Check login status on mount
+  // Check login status on mount & check for auto-open auth modal trigger
   useEffect(() => {
     const saved = localStorage.getItem('platform_user');
     if (saved) {
-      setCurrentUser(JSON.parse(saved));
+      try {
+        setCurrentUser(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse saved user:", e);
+      }
+    }
+
+    const authIntent = sessionStorage.getItem('open_auth_modal');
+    const params = new URLSearchParams(window.location.search);
+    const authParam = params.get('auth') || params.get('signup');
+
+    if (authIntent || authParam) {
+      if (authIntent === 'login' || authParam === 'login' || authParam === 'signin') {
+        setModalMode('login');
+      } else {
+        setModalMode('register');
+      }
+      setIsModalOpen(true);
+      sessionStorage.removeItem('open_auth_modal');
+      if (authParam) {
+        window.history.replaceState({}, '', '/');
+      }
     }
   }, []);
 
@@ -669,6 +690,13 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
         setCompanyName('');
         setIsModalOpen(false);
         
+        const postLoginRedirect = sessionStorage.getItem('post_login_redirect');
+        if (postLoginRedirect) {
+          sessionStorage.removeItem('post_login_redirect');
+          window.location.href = postLoginRedirect;
+          return;
+        }
+
         if (pendingAction === 'join') {
           navigateTo?.('join');
           setPendingAction(null);
@@ -695,6 +723,13 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
         setEmail('');
         setIsModalOpen(false);
         
+        const postLoginRedirect = sessionStorage.getItem('post_login_redirect');
+        if (postLoginRedirect) {
+          sessionStorage.removeItem('post_login_redirect');
+          window.location.href = postLoginRedirect;
+          return;
+        }
+
         if (pendingAction === 'join') {
           navigateTo?.('join');
           setPendingAction(null);

@@ -53,8 +53,37 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
+  const isUserLoggedIn = (): boolean => {
+    try {
+      const userStr = localStorage.getItem('platform_user');
+      if (!userStr) return false;
+      const user = JSON.parse(userStr);
+      return Boolean(user && (user.email || user.name));
+    } catch {
+      return false;
+    }
+  };
+
+  const handleRentAgent = () => {
+    if (isUserLoggedIn()) {
+      window.location.href = 'https://wa.innovatorsaihub.com/inbox';
+    } else {
+      sessionStorage.setItem('open_auth_modal', 'register');
+      sessionStorage.setItem('post_login_redirect', 'https://wa.innovatorsaihub.com/inbox');
+      if (navigateTo) {
+        navigateTo('platform');
+      } else {
+        window.location.href = '/?auth=register';
+      }
+    }
+  };
+
   const scrollToRentAgent = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
+    if (isUserLoggedIn()) {
+      window.location.href = 'https://wa.innovatorsaihub.com/inbox';
+      return;
+    }
     const btn = document.getElementById('rent-agent-pricing-btn');
     if (btn) {
       btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -327,10 +356,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   </div>
                   <button
                     id="rent-agent-pricing-btn"
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setIsModalOpen(true);
-                    }}
+                    onClick={handleRentAgent}
                     className="inline-flex items-center justify-center px-7 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold tracking-wide shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer"
                   >
                     Rent Agent
@@ -1230,7 +1256,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
                 <button
-                  onClick={scrollToRentAgent}
+                  onClick={handleRentAgent}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_24px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"
                 >
                   <WhatsAppIcon className="w-5 h-5 text-white fill-white" />
