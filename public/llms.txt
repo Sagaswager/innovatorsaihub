@@ -11,9 +11,9 @@
 
 Full specifications can be parsed at [/pricing.md](https://www.innovatorsaihub.com/pricing.md).
 
-- **WhatsApp AI Agent**: Starts at ₹12,000/mo. Automated CRM integration, chat, & lead qualification.
-- **Voice Calling AI Agent**: Starts at ₹5,000/mo. Automated outbound calling & support.
-- **LinkedIn AI Agent**: Starts at ₹3,000/mo. Automated outreach & appointment setting.
+- **WhatsApp AI Agent**: Starts at ₹999/mo. Automated CRM integration, chat, & lead qualification.
+- **Voice Calling AI Agent**: Starts at ₹999/mo. Automated outbound calling & support.
+- **LinkedIn AI Agent**: Starts at ₹999/mo. Automated outreach & appointment setting.
 - **Custom AI Workflows**: Custom pricing. Multi-agent collaborative setups for operational scale.
 - **AI Brand Films**: Custom pricing. Generative video production.
 
