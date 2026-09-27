@@ -83,7 +83,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
       profession,
       companyName,
       agent: 'LinkedIn AI Agent',
-      price: '₹2,222/mo',
+      price: '₹999/mo',
       timestamp: new Date().toISOString()
     };
 
@@ -106,7 +106,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
       localStorage.setItem('platform_user', JSON.stringify({ name, email }));
 
       setIsSubmitted(true);
-      trackAgentRental('LinkedIn AI Agent', '₹2,222/mo', {
+      trackAgentRental('LinkedIn AI Agent', '₹999/mo', {
         name,
         email,
         phone: number,
@@ -388,7 +388,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <div className="flex items-center gap-4 self-end sm:self-center">
 <div className="flex flex-col items-end">
 <div className="flex items-baseline gap-1">
-<span className="font-extrabold text-3xl text-slate-900 leading-none">₹2,222</span>
+<span className="font-extrabold text-3xl text-slate-900 leading-none">₹999</span>
 <span className="text-xs font-semibold text-slate-500">/mo</span>
 </div>
 <span className="text-xs font-medium text-slate-400 line-through mt-0.5">₹6,999</span>
@@ -921,7 +921,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 <div className="flex flex-col items-start sm:items-end">
 <div className="flex items-baseline gap-2">
-<span className="text-4xl sm:text-5xl font-extrabold text-slate-900">₹2,222</span>
+<span className="text-4xl sm:text-5xl font-extrabold text-slate-900">₹999</span>
 <span className="text-sm font-semibold text-slate-500">/month</span>
 </div>
 <span className="text-xs text-slate-400 line-through mt-0.5">₹6,999 /mo regular</span>
@@ -1063,7 +1063,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
               </span>
 <span className="flex items-center gap-1.5">
 <span className="material-symbols-outlined text-[16px] text-white">check_circle</span>
-                ₹2,222 / month Flat Rate
+                ₹999 / month Flat Rate
               </span>
 </div>
 </div>
@@ -1209,7 +1209,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Enter your details below to rent your LinkedIn AI Agent for <strong className="text-slate-800">₹2,222/mo</strong>.
+                      Enter your details below to rent your LinkedIn AI Agent for <strong className="text-slate-800">₹999/mo</strong>.
                     </p>
                   </div>
 
@@ -1293,7 +1293,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
                           <span>Submitting Request...</span>
                         </>
                       ) : (
-                        <span>Submit &amp; Rent Agent (₹2,222/mo)</span>
+                        <span>Submit &amp; Rent Agent (₹999/mo)</span>
                       )}
                     </button>
                   </form>

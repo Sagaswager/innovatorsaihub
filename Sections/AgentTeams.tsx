@@ -31,7 +31,7 @@ export const agentsData: Agent[] = [
     id: 'whatsapp-agent',
     name: 'WhatsApp AI Agent',
     description: '24/7 client engagement, instant lead qualification, and automated CRM updates directly inside WhatsApp.',
-    price: 'Starts at ₹12,000/mo',
+    price: 'Starts at ₹999/mo',
     icon: (
       <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" role="img" aria-label="WhatsApp Logo">
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.458L0 24zm6.59-3.571c1.616.958 3.202 1.488 4.809 1.488 5.505 0 9.983-4.482 9.986-9.99.002-2.67-1.036-5.176-2.92-7.062C16.639 2.979 14.137 1.94 11.47 1.94c-5.513 0-10 4.49-10.003 10 .001 1.83.476 3.618 1.38 5.187L1.835 21.84l4.812-1.411zm11.921-7.854c-.3-.15-1.774-.875-2.046-.975-.27-.1-.466-.15-.66.15-.195.3-.755.95-.926 1.15-.17.2-.34.225-.64.075-.3-.15-1.265-.467-2.41-1.487-.89-.794-1.49-1.776-1.665-2.076-.175-.3-.019-.462.13-.611.135-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.66-1.59-1.002-2.41-.336-.807-.724-.697-.985-.71-.252-.012-.54-.015-.828-.015-.288 0-.756.108-1.15.54-.395.431-1.507 1.472-1.507 3.59s1.543 4.159 1.759 4.448c.216.29 3.037 4.639 7.358 6.51 1.028.444 1.83.709 2.455.908 1.032.328 1.97.281 2.712.17.828-.124 2.546-1.04 2.905-2.043.359-1.003.359-1.862.252-2.043-.108-.18-.302-.281-.602-.431z" />
@@ -42,14 +42,14 @@ export const agentsData: Agent[] = [
     id: 'voice-agent',
     name: 'Voice Calling AI Agent',
     description: 'Autonomous conversational voice agent capable of handling high-volume outbound calls & customer service.',
-    price: 'Starts at ₹5,000/mo',
+    price: 'Starts at ₹999/mo',
     icon: <PhoneCall className="w-6 h-6" />
   },
   {
     id: 'linkedin-agent',
     name: 'LinkedIn AI Agent',
     description: 'Automated outbound outreach, messaging personalization, and appointment setting on autopilot.',
-    price: 'Starts at ₹3,000/mo',
+    price: 'Starts at ₹999/mo',
     icon: (
       <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" role="img" aria-label="LinkedIn Logo">
         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 .784 1.764 1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
