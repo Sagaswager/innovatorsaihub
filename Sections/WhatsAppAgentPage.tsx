@@ -22,6 +22,37 @@ const MetaIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) =
   </svg>
 );
 
+const WHATSAPP_FAQS = [
+  {
+    q: "What type of customer conversations can be automated using a WhatsApp AI Agent?",
+    a: "A WhatsApp AI Agent can support conversations that follow structured business workflows, including product enquiries, service requests, information gathering, customer qualification, appointment-related interactions, and routine follow-up communication. The exact automation scope depends on business requirements and workflow design."
+  },
+  {
+    q: "How does a business prepare its information before deploying a WhatsApp AI Agent?",
+    a: "Before deployment, businesses typically organize relevant information sources such as product details, service documentation, customer support guidelines, frequently requested information, and internal process requirements. This helps ensure that the AI workflow provides responses aligned with business objectives."
+  },
+  {
+    q: "Can one WhatsApp AI Agent manage multiple business workflows?",
+    a: "Yes. A WhatsApp AI Agent can be designed to support multiple workflows, such as handling customer enquiries, collecting lead information, assisting with scheduling processes, and routing conversations based on customer requirements."
+  },
+  {
+    q: "How can businesses monitor the effectiveness of WhatsApp AI automation?",
+    a: "Businesses can evaluate WhatsApp AI automation through workflow-specific indicators such as conversation volume handled, response efficiency, enquiry management, lead qualification activity, escalation frequency, and customer interaction patterns."
+  },
+  {
+    q: "What factors influence the implementation approach of a WhatsApp AI Agent?",
+    a: "Implementation depends on several factors, including business objectives, conversation complexity, required integrations, available information sources, security requirements, and the level of customization required."
+  },
+  {
+    q: "Can WhatsApp AI workflows be expanded as business requirements grow?",
+    a: "Yes. Businesses can begin with specific workflows and gradually expand capabilities by adding new processes, integrations, knowledge sources, and automation requirements as operational needs evolve."
+  },
+  {
+    q: "How does a WhatsApp AI Agent maintain consistent business communication?",
+    a: "A WhatsApp AI Agent can be configured around approved business information and communication guidelines, helping maintain consistency across customer interactions while allowing appropriate human involvement when required."
+  }
+];
+
 const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = false, navigateTo }) => {
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec";
 
@@ -229,6 +260,21 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
       </header>
 
       <main className="w-full pt-20 bg-transparent min-h-screen">
+        {/* Visible Breadcrumb Navigation */}
+        <div className="w-full max-w-[1400px] mx-auto px-gutter pt-4 pb-1">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+            <a 
+              href="/" 
+              onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("platform"); else window.location.href = "/"; }} 
+              className="hover:text-primary-container transition-colors cursor-pointer"
+            >
+              Home
+            </a>
+            <span className="text-slate-400">/</span>
+            <span className="text-slate-800 font-semibold" aria-current="page">WhatsApp AI Agent</span>
+          </nav>
+        </div>
+
         <div className="flex flex-col w-full">
           {/* ========================================================================= */}
           {/* SECTION 1: HERO VIEWPORT */}
@@ -315,7 +361,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
             {/* Interface Image Preview */}
             <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative">
               <img
-                alt="Innovators AI Hub WhatsApp AI Agent interface with feature callouts for Instant Support, Appointment Booking, Automated Lead Qualification, and Real-time CRM Sync"
+                alt="WhatsApp AI agent for customer support, appointment booking and CRM automation"
                 className="w-full h-auto object-contain rounded-2xl"
                 src="/whatsapp-agent-interface.webp"
                 width={2560}
@@ -1174,70 +1220,19 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   >
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100">
                       <div className="space-y-3.5" id="faq-accordion">
-                        {/* FAQ 1 */}
-                        <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
-                          <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(0)}>
-                            <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              1. What exactly does the WhatsApp AI Agent do for my business?
-                            </span>
-                            <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 0 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
-                          </button>
-                          <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 0 ? "block" : "hidden"}`}>
-                            Think of it as your most reliable team member who never sleeps, gets tired, or misses a message. It chats with customers just like a human would — answering product questions, qualifying leads, sharing prices, booking appointments, and syncing contact details to your CRM. You stay in complete control and can jump into any conversation whenever you want.
+                        {WHATSAPP_FAQS.map((faq, idx) => (
+                          <div key={idx} className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
+                            <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(idx)}>
+                              <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
+                                {idx + 1}. {faq.q}
+                              </span>
+                              <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === idx ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
+                            </button>
+                            <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === idx ? "block" : "hidden"}`}>
+                              {faq.a}
+                            </div>
                           </div>
-                        </div>
-
-                        {/* FAQ 2 */}
-                        <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
-                          <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(1)}>
-                            <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              2. Is this suitable for small and medium-sized businesses?
-                            </span>
-                            <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 1 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
-                          </button>
-                          <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 1 ? "block" : "hidden"}`}>
-                            Yes, absolutely. Small teams often see the biggest relief because it saves hours of repetitive typing every day. Whether you get 15 messages a day or 1,500, the agent gives every potential customer instant attention without needing extra staff.
-                          </div>
-                        </div>
-
-                        {/* FAQ 3 */}
-                        <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
-                          <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(2)}>
-                            <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              3. Do I need technical skills or coding to set this up?
-                            </span>
-                            <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 2 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
-                          </button>
-                          <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 2 ? "block" : "hidden"}`}>
-                            None at all. Our team takes care of the technical setup, official Meta Cloud API connection, and integration with your CRM or calendar. Once it's live, you can manage everything without writing a single line of code.
-                          </div>
-                        </div>
-
-                        {/* FAQ 4 */}
-                        <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
-                          <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(3)}>
-                            <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              4. Can it answer customer messages late at night or on weekends?
-                            </span>
-                            <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 3 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
-                          </button>
-                          <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 3 ? "block" : "hidden"}`}>
-                            Yes, 24 hours a day, 365 days a year. When potential customers browse your offerings at 11 PM or on Sunday morning, they receive helpful, immediate responses rather than waiting until Monday morning.
-                          </div>
-                        </div>
-
-                        {/* FAQ 5 */}
-                        <div className="rounded-2xl bg-slate-50/70 border border-slate-200 shadow-sm transition-all duration-200">
-                          <button className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 focus:outline-none cursor-pointer" onClick={() => toggleFaq(4)}>
-                            <span className="font-display text-sm sm:text-base text-slate-900 font-bold">
-                              5. What happens if a customer asks a complex or unique question?
-                            </span>
-                            <span className={`material-symbols-outlined transition-transform duration-200 shrink-0 ${openFaq === 4 ? "rotate-180 text-primary-container" : "text-slate-400"}`}>expand_more</span>
-                          </button>
-                          <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 4 ? "block" : "hidden"}`}>
-                            When a chat requires personal attention — like a custom quote or a special request — the agent politely informs the customer that a team member is stepping in and immediately notifies your team with the full chat history.
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </motion.div>
