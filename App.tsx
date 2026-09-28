@@ -75,7 +75,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handlePopState = () => {
-      let path = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
+      let rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '') || 'platform';
+      let path = rawPath;
       const normalized = path.toLowerCase();
       if (
         normalized === 'whatsapp-ai-agent' || 
@@ -107,6 +108,11 @@ const App: React.FC = () => {
       ];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
+        // Canonicalize URL in address bar if accessed via an alias or irregular casing/trailing slash
+        const canonicalPath = path === 'platform' ? '/' : `/${path}`;
+        if (window.location.pathname !== canonicalPath) {
+          window.history.replaceState({ page: path }, '', canonicalPath);
+        }
         window.scrollTo(0, 0);
       }
     };

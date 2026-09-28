@@ -21,6 +21,36 @@
       "source": "/home/:path*",
       "destination": "/:path*",
       "permanent": true
+    },
+    {
+      "source": "/whatsapp",
+      "destination": "/whatsapp-ai-agent",
+      "permanent": true
+    },
+    {
+      "source": "/whatsapp-agent",
+      "destination": "/whatsapp-ai-agent",
+      "permanent": true
+    },
+    {
+      "source": "/whatsappautomation",
+      "destination": "/whatsapp-ai-agent",
+      "permanent": true
+    },
+    {
+      "source": "/linkedin",
+      "destination": "/linkedin-ai-agent",
+      "permanent": true
+    },
+    {
+      "source": "/linkedin-agent",
+      "destination": "/linkedin-ai-agent",
+      "permanent": true
+    },
+    {
+      "source": "/linkedinoutreach",
+      "destination": "/linkedin-ai-agent",
+      "permanent": true
     }
   ],
   "headers": [

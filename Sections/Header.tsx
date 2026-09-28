@@ -6,7 +6,7 @@ import { trackEvent } from '../analytics';
 
 interface HeaderProps {
   isDarkMode: boolean;
-  currentPage: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent';
+  currentPage: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent' | 'linkedin-ai-agent';
   navigateTo: (page: any) => void;
   selectedAgents?: string[];
 }
@@ -98,7 +98,9 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
                 e.preventDefault();
                 navigateTo('linkedin-ai-agent');
               }}
-              className="transition-colors cursor-pointer"
+              className={`transition-colors cursor-pointer ${
+                currentPage === 'linkedin-ai-agent' ? 'drop-shadow-md text-emerald-400 font-extrabold' : 'hover:text-emerald-400'
+              }`}
             >
               LinkedIn AI Agent
             </a>
@@ -109,7 +111,9 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
                 e.preventDefault();
                 navigateTo('whatsapp-ai-agent');
               }}
-              className="transition-colors cursor-pointer"
+              className={`transition-colors cursor-pointer ${
+                currentPage === 'whatsapp-ai-agent' ? 'drop-shadow-md text-emerald-400 font-extrabold' : 'hover:text-emerald-400'
+              }`}
             >
               WhatsApp AI Agent
             </a>
