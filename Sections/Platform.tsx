@@ -1030,8 +1030,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               </h2>
             </div>
 
-            {/* Left Side Aligned Starts At Button (Triggers Get Started glassy Form) */}
-            <div className="text-left mt-6">
+            {/* Left Side Aligned Starts At Button & Update Label (Triggers Get Started glassy Form) */}
+            <div className="flex flex-wrap items-center gap-3 text-left mt-6">
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(149, 214, 86, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
@@ -1061,6 +1061,22 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               >
                 Starts at ₹999/mo
               </motion.button>
+
+              <div
+                style={{
+                  fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                  fontWeight: 600,
+                  backgroundColor: '#000000',
+                  color: '#ffffff'
+                }}
+                className="px-4 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 select-none"
+              >
+                <span className="flex h-2 w-2 relative shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                <span>New update : FREE Version is over, Sorry😔</span>
+              </div>
             </div>
 
           </div>
