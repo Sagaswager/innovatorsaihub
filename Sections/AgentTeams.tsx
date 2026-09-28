@@ -103,9 +103,12 @@ const AgentTeams: React.FC<AgentTeamsProps> = ({ selectedAgents, toggleAgent, na
                     if (agent.id === 'whatsapp-agent') {
                       if (navigateTo) navigateTo('whatsapp-ai-agent');
                       else window.location.href = '/whatsapp-ai-agent';
+                    } else if (agent.id === 'linkedin-agent') {
+                      if (navigateTo) navigateTo('linkedin-ai-agent');
+                      else window.location.href = '/linkedin-ai-agent';
                     }
                   }}
-                  className={`w-12 h-12 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-6 group-hover/card:bg-blue-600 group-hover/card:text-white transition-all duration-500 ${agent.id === 'whatsapp-agent' ? 'cursor-pointer' : ''}`}
+                  className={`w-12 h-12 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-6 group-hover/card:bg-blue-600 group-hover/card:text-white transition-all duration-500 ${agent.id === 'whatsapp-agent' || agent.id === 'linkedin-agent' ? 'cursor-pointer' : ''}`}
                 >
                   {agent.icon}
                 </div>
@@ -116,9 +119,12 @@ const AgentTeams: React.FC<AgentTeamsProps> = ({ selectedAgents, toggleAgent, na
                       if (agent.id === 'whatsapp-agent') {
                         if (navigateTo) navigateTo('whatsapp-ai-agent');
                         else window.location.href = '/whatsapp-ai-agent';
+                      } else if (agent.id === 'linkedin-agent') {
+                        if (navigateTo) navigateTo('linkedin-ai-agent');
+                        else window.location.href = '/linkedin-ai-agent';
                       }
                     }}
-                    className={`text-lg font-bold text-white tracking-tight group-hover/card:text-blue-400 transition-colors ${agent.id === 'whatsapp-agent' ? 'cursor-pointer hover:underline' : ''}`}
+                    className={`text-lg font-bold text-white tracking-tight group-hover/card:text-blue-400 transition-colors ${agent.id === 'whatsapp-agent' || agent.id === 'linkedin-agent' ? 'cursor-pointer hover:underline' : ''}`}
                   >
                     {agent.name}
                   </h3>
@@ -129,6 +135,17 @@ const AgentTeams: React.FC<AgentTeamsProps> = ({ selectedAgents, toggleAgent, na
                         else window.location.href = '/whatsapp-ai-agent';
                       }}
                       className="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/20 transition-all cursor-pointer"
+                    >
+                      View Page →
+                    </button>
+                  )}
+                  {agent.id === 'linkedin-agent' && (
+                    <button
+                      onClick={() => {
+                        if (navigateTo) navigateTo('linkedin-ai-agent');
+                        else window.location.href = '/linkedin-ai-agent';
+                      }}
+                      className="text-[10px] font-bold text-blue-400 hover:text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 px-2.5 py-1 rounded-full border border-blue-500/20 transition-all cursor-pointer"
                     >
                       View Page →
                     </button>

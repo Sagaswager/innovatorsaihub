@@ -163,7 +163,18 @@ const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, sel
                   className="bg-zinc-900/40 border border-white/5 rounded-3xl p-5 flex flex-col justify-between h-full hover:border-blue-500/15 transition-all duration-300 hover:bg-zinc-900/70"
                 >
                   <div className="text-left">
-                    <div className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-4">
+                    <div 
+                      onClick={() => {
+                        if (agent.id === 'whatsapp-agent') {
+                          if (navigateTo) navigateTo('whatsapp-ai-agent');
+                          else window.location.href = '/whatsapp-ai-agent';
+                        } else if (agent.id === 'linkedin-agent') {
+                          if (navigateTo) navigateTo('linkedin-ai-agent');
+                          else window.location.href = '/linkedin-ai-agent';
+                        }
+                      }}
+                      className={`w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center text-blue-400 mb-4 ${agent.id === 'whatsapp-agent' || agent.id === 'linkedin-agent' ? 'cursor-pointer hover:border-blue-500/40' : ''}`}
+                    >
                       {agent.icon}
                     </div>
                     <div className="flex items-center justify-between mb-1">
@@ -172,9 +183,18 @@ const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, sel
                           if (agent.id === 'whatsapp-agent') {
                             if (navigateTo) navigateTo('whatsapp-ai-agent');
                             else window.location.href = '/whatsapp-ai-agent';
+                          } else if (agent.id === 'linkedin-agent') {
+                            if (navigateTo) navigateTo('linkedin-ai-agent');
+                            else window.location.href = '/linkedin-ai-agent';
                           }
                         }}
-                        className={`text-sm font-bold text-white ${agent.id === 'whatsapp-agent' ? 'cursor-pointer hover:underline text-emerald-400' : ''}`}
+                        className={`text-sm font-bold text-white ${
+                          agent.id === 'whatsapp-agent' 
+                            ? 'cursor-pointer hover:underline text-emerald-400' 
+                            : agent.id === 'linkedin-agent'
+                            ? 'cursor-pointer hover:underline text-blue-400'
+                            : ''
+                        }`}
                       >
                         {agent.name}
                       </h4>
@@ -185,6 +205,17 @@ const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, sel
                             else window.location.href = '/whatsapp-ai-agent';
                           }}
                           className="text-[9px] font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/20 transition-all cursor-pointer"
+                        >
+                          View Page →
+                        </button>
+                      )}
+                      {agent.id === 'linkedin-agent' && (
+                        <button
+                          onClick={() => {
+                            if (navigateTo) navigateTo('linkedin-ai-agent');
+                            else window.location.href = '/linkedin-ai-agent';
+                          }}
+                          className="text-[9px] font-bold text-blue-400 hover:text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/20 transition-all cursor-pointer"
                         >
                           View Page →
                         </button>

@@ -2,8 +2,8 @@ import React from 'react';
 
 interface FooterProps {
   isDarkMode: boolean;
-  currentPage?: 'home' | 'portfolio' | 'services' | 'contact' | 'register';
-  navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register') => void;
+  currentPage?: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent' | 'linkedin-ai-agent';
+  navigateTo?: (page: any) => void;
 }
 
 const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) => {
@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) 
             href="/whatsapp-ai-agent" 
             onClick={(e) => {
               e.preventDefault();
-              navigateTo?.('whatsapp-ai-agent' as any);
+              navigateTo?.('whatsapp-ai-agent');
             }}
             className="text-white/40 hover:text-white transition-all cursor-pointer"
           >
