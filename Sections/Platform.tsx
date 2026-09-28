@@ -1098,7 +1098,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 src="/platform_hero.webp"
                 srcSet="/platform_hero_mobile.webp 640w, /platform_hero.webp 1024w"
                 sizes="(max-width: 768px) 100vw, 620px"
-                alt="AI Co-Worker Platform Hero"
+                alt="AI business automation platform"
                 width={620}
                 height={480}
                 fetchPriority="high"

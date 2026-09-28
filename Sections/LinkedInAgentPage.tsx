@@ -8,6 +8,37 @@ interface LinkedInAgentPageProps {
   navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'whatsapp-ai-agent' | 'linkedin-ai-agent' | 'gmail-agent' | 'voice-agent' | 'seo-agent') => void;
 }
 
+const LINKEDIN_FAQS = [
+  {
+    q: "How does a LinkedIn AI Agent support account-based sales strategies?",
+    a: "A LinkedIn AI Agent can assist account-based sales approaches by helping organize information about target companies, professional roles, business contexts, and engagement activities to support more focused outreach workflows."
+  },
+  {
+    q: "Can LinkedIn AI workflows be customized for different target markets?",
+    a: "Yes. LinkedIn AI workflows can be adapted according to industry segments, customer profiles, geographical focus, sales objectives, and specific business development strategies."
+  },
+  {
+    q: "How can businesses maintain personalization while using LinkedIn AI automation?",
+    a: "Businesses can maintain personalization by using AI as a support layer for research, message preparation, and workflow organization while allowing human teams to review and refine important communication."
+  },
+  {
+    q: "What role can AI play in improving sales pipeline organization through LinkedIn?",
+    a: "AI can support sales pipeline organization by helping teams structure prospect information, track workflow activities, identify follow-up requirements, and maintain better visibility into business development processes."
+  },
+  {
+    q: "How can organizations evaluate the success of LinkedIn AI workflows?",
+    a: "Organizations can evaluate performance based on workflow-specific factors such as prospect engagement quality, lead organization efficiency, sales process visibility, communication consistency, and team productivity improvements."
+  },
+  {
+    q: "Can LinkedIn AI workflows support different sales team structures?",
+    a: "Yes. LinkedIn AI workflows can be designed for different team structures, including individual sales professionals, business development teams, agencies, consulting organizations, and enterprise sales operations."
+  },
+  {
+    q: "What information is required to design an effective LinkedIn AI workflow?",
+    a: "Businesses generally need to define their target audience, customer profiles, sales objectives, outreach approach, existing sales processes, and required integrations to design an effective workflow."
+  }
+];
+
 const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = false, navigateTo }) => {
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec";
 
@@ -156,16 +187,22 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 {/*  TOP CONTEXT BADGE BAR  */}
 <section className="w-full bg-slate-50/70 border-b border-slate-100 py-2.5">
 <div className="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-wrap items-center justify-between gap-3 text-xs">
-<div className="flex items-center gap-2 text-slate-500 font-medium">
+<nav aria-label="Breadcrumb" className="flex items-center gap-2 text-slate-500 font-medium">
 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold">
 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
               Agent Online &amp; Active
             </span>
 <span className="text-slate-300">•</span>
-<span className="">Innovators AI HUB Marketplace</span>
+<a 
+  href="/" 
+  onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("platform"); else window.location.href = "/"; }} 
+  className="hover:text-emerald-600 transition-colors cursor-pointer"
+>
+  Home
+</a>
 <span className="text-slate-300">/</span>
-<span className="text-slate-800 font-semibold">LinkedIn Sales Automation</span>
-</div>
+<span className="text-slate-800 font-semibold" aria-current="page">LinkedIn AI Agent</span>
+</nav>
 <div className="flex items-center gap-3">
 <div className="inline-flex items-center gap-1 text-slate-700 font-semibold bg-white px-2.5 py-1 rounded-full border border-slate-200 shadow-sm">
 <span className="text-amber-500 font-bold">★ 4.9</span>
@@ -979,56 +1016,17 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <h3 className="text-3xl font-extrabold text-slate-900">Frequently Asked Questions</h3>
 </div>
 <div className="flex flex-col gap-3" id="faq-accordion-group">
-{/*  Q1  */}
-<div className="faq-item rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
-<button  className="faq-toggle w-full p-5 flex items-center justify-between text-left gap-4 hover:bg-slate-50/60 transition"  onClick={() => toggleFaq(0)}>
-<span className="font-bold text-[16px] text-slate-900">How does the LinkedIn AI Agent know what to write?</span>
-<span className="material-symbols-outlined text-slate-400 faq-icon transition-transform duration-200">expand_more</span>
-</button>
-<div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 0 ? "block" : "hidden"}`}>
-                The agent ingests your target ICP criteria and parses each prospect's public profile data, including their current title, previous roles, shared connections, and recent LinkedIn posts. It uses this context alongside your value proposition to formulate dynamic, customized messages rather than static copy-paste templates.
-              </div>
-</div>
-{/*  Q2  */}
-<div className="faq-item rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
-<button  className="faq-toggle w-full p-5 flex items-center justify-between text-left gap-4 hover:bg-slate-50/60 transition"  onClick={() => toggleFaq(1)}>
-<span className="font-bold text-[16px] text-slate-900">Will this put my LinkedIn account at risk?</span>
-<span className="material-symbols-outlined text-slate-400 faq-icon transition-transform duration-200">expand_more</span>
-</button>
-<div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 1 ? "block" : "hidden"}`}>
-                No. The LinkedIn AI Agent uses human-mimicking pacing, staggered dispatch intervals, and strict daily volume thresholds that strictly align with platform safety recommendations. It explicitly avoids cookie scraping, mass blasts, or artificial limits circumvention.
-              </div>
-</div>
-{/*  Q3  */}
-<div className="faq-item rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
-<button  className="faq-toggle w-full p-5 flex items-center justify-between text-left gap-4 hover:bg-slate-50/60 transition"  onClick={() => toggleFaq(2)}>
-<span className="font-bold text-[16px] text-slate-900">What happens when a prospect replies to an outreach note?</span>
-<span className="material-symbols-outlined text-slate-400 faq-icon transition-transform duration-200">expand_more</span>
-</button>
-<div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 2 ? "block" : "hidden"}`}>
-                The autonomous follow-up cadence immediately stops to prevent irrelevant automated messaging. The agent either continues intelligent qualifying conversation or instantly notifies you via Slack/Email so your sales team can step in and take over.
-              </div>
-</div>
-{/*  Q4  */}
-<div className="faq-item rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
-<button  className="faq-toggle w-full p-5 flex items-center justify-between text-left gap-4 hover:bg-slate-50/60 transition"  onClick={() => toggleFaq(3)}>
-<span className="font-bold text-[16px] text-slate-900">Can I connect my Google Calendar, Calendly, or Zoom?</span>
-<span className="material-symbols-outlined text-slate-400 faq-icon transition-transform duration-200">expand_more</span>
-</button>
-<div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 3 ? "block" : "hidden"}`}>
-                Yes. The platform natively integrates with Google Calendar, Outlook 365, Calendly, and HubSpot Meetings. When prospects show booking intent, your agent coordinates open time slots right in the conversation thread.
-              </div>
-</div>
-{/*  Q5  */}
-<div className="faq-item rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
-<button  className="faq-toggle w-full p-5 flex items-center justify-between text-left gap-4 hover:bg-slate-50/60 transition"  onClick={() => toggleFaq(4)}>
-<span className="font-bold text-[16px] text-slate-900">Can I cancel my rental subscription at any time?</span>
-<span className="material-symbols-outlined text-slate-400 faq-icon transition-transform duration-200">expand_more</span>
-</button>
-<div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === 4 ? "block" : "hidden"}`}>
-                Yes, subscriptions operate month-to-month with no lock-in contracts. You can pause or cancel your agent rental at any time directly through your Innovators AI HUB dashboard with one click.
-              </div>
-</div>
+  {LINKEDIN_FAQS.map((faq, idx) => (
+    <div key={idx} className="faq-item rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
+      <button className="faq-toggle w-full p-5 flex items-center justify-between text-left gap-4 hover:bg-slate-50/60 transition cursor-pointer" onClick={() => toggleFaq(idx)}>
+        <span className="font-bold text-[16px] text-slate-900">{idx + 1}. {faq.q}</span>
+        <span className={`material-symbols-outlined text-slate-400 faq-icon transition-transform duration-200 ${openFaq === idx ? "rotate-180 text-emerald-600" : ""}`}>expand_more</span>
+      </button>
+      <div className={`px-5 sm:px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed ${openFaq === idx ? "block" : "hidden"}`}>
+        {faq.a}
+      </div>
+    </div>
+  ))}
 </div>
 </div>
 </section>

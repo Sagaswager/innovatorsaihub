@@ -223,6 +223,241 @@ const App: React.FC = () => {
       twitterImg.setAttribute('content', ogImage);
     }
 
+    // Dynamic Schema.org JSON-LD Injection (Breadcrumbs, SoftwareApplication & FAQPage)
+    const existingDynamicSchema = document.getElementById('dynamic-page-schema');
+    if (existingDynamicSchema) {
+      existingDynamicSchema.remove();
+    }
+
+    let dynamicSchema: object | null = null;
+    if (currentPage === 'whatsapp-ai-agent') {
+      dynamicSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.innovatorsaihub.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "WhatsApp AI Agent",
+                "item": "https://www.innovatorsaihub.com/whatsapp-ai-agent"
+              }
+            ]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "WhatsApp AI Agent for Business",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Cloud-based / Web",
+            "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent",
+            "offers": {
+              "@type": "Offer",
+              "price": "999",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "28"
+            },
+            "description": "Automate customer support, lead qualification and CRM workflows with a WhatsApp AI Agent for business. Explore smarter WhatsApp automation today.",
+            "provider": {
+              "@type": "Organization",
+              "name": "Innovators AI HUB",
+              "url": "https://www.innovatorsaihub.com/"
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What type of customer conversations can be automated using a WhatsApp AI Agent?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A WhatsApp AI Agent can support conversations that follow structured business workflows, including product enquiries, service requests, information gathering, customer qualification, appointment-related interactions, and routine follow-up communication. The exact automation scope depends on business requirements and workflow design."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does a business prepare its information before deploying a WhatsApp AI Agent?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Before deployment, businesses typically organize relevant information sources such as product details, service documentation, customer support guidelines, frequently requested information, and internal process requirements. This helps ensure that the AI workflow provides responses aligned with business objectives."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can one WhatsApp AI Agent manage multiple business workflows?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. A WhatsApp AI Agent can be designed to support multiple workflows, such as handling customer enquiries, collecting lead information, assisting with scheduling processes, and routing conversations based on customer requirements."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can businesses monitor the effectiveness of WhatsApp AI automation?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Businesses can evaluate WhatsApp AI automation through workflow-specific indicators such as conversation volume handled, response efficiency, enquiry management, lead qualification activity, escalation frequency, and customer interaction patterns."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What factors influence the implementation approach of a WhatsApp AI Agent?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Implementation depends on several factors, including business objectives, conversation complexity, required integrations, available information sources, security requirements, and the level of customization required."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can WhatsApp AI workflows be expanded as business requirements grow?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Businesses can begin with specific workflows and gradually expand capabilities by adding new processes, integrations, knowledge sources, and automation requirements as operational needs evolve."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does a WhatsApp AI Agent maintain consistent business communication?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A WhatsApp AI Agent can be configured around approved business information and communication guidelines, helping maintain consistency across customer interactions while allowing appropriate human involvement when required."
+                }
+              }
+            ]
+          }
+        ]
+      };
+    } else if (currentPage === 'linkedin-ai-agent') {
+      dynamicSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.innovatorsaihub.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "LinkedIn AI Agent",
+                "item": "https://www.innovatorsaihub.com/linkedin-ai-agent"
+              }
+            ]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "LinkedIn AI Agent for B2B Prospecting",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Cloud-based / Web",
+            "url": "https://www.innovatorsaihub.com/linkedin-ai-agent",
+            "offers": {
+              "@type": "Offer",
+              "price": "999",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.innovatorsaihub.com/linkedin-ai-agent"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "28"
+            },
+            "description": "Scale B2B prospecting with a LinkedIn AI Agent for sales. Automate personalized outreach, lead generation and follow-ups. Explore the solution today.",
+            "provider": {
+              "@type": "Organization",
+              "name": "Innovators AI HUB",
+              "url": "https://www.innovatorsaihub.com/"
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does a LinkedIn AI Agent support account-based sales strategies?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A LinkedIn AI Agent can assist account-based sales approaches by helping organize information about target companies, professional roles, business contexts, and engagement activities to support more focused outreach workflows."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can LinkedIn AI workflows be customized for different target markets?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. LinkedIn AI workflows can be adapted according to industry segments, customer profiles, geographical focus, sales objectives, and specific business development strategies."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can businesses maintain personalization while using LinkedIn AI automation?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Businesses can maintain personalization by using AI as a support layer for research, message preparation, and workflow organization while allowing human teams to review and refine important communication."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What role can AI play in improving sales pipeline organization through LinkedIn?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "AI can support sales pipeline organization by helping teams structure prospect information, track workflow activities, identify follow-up requirements, and maintain better visibility into business development processes."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can organizations evaluate the success of LinkedIn AI workflows?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Organizations can evaluate performance based on workflow-specific factors such as prospect engagement quality, lead organization efficiency, sales process visibility, communication consistency, and team productivity improvements."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can LinkedIn AI workflows support different sales team structures?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. LinkedIn AI workflows can be designed for different team structures, including individual sales professionals, business development teams, agencies, consulting organizations, and enterprise sales operations."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What information is required to design an effective LinkedIn AI workflow?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Businesses generally need to define their target audience, customer profiles, sales objectives, outreach approach, existing sales processes, and required integrations to design an effective workflow."
+                }
+              }
+            ]
+          }
+        ]
+      };
+    }
+
+    if (dynamicSchema) {
+      const script = document.createElement('script');
+      script.id = 'dynamic-page-schema';
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(dynamicSchema);
+      document.head.appendChild(script);
+    }
+
     // SPA Virtual PageView tracking across GA4 & Social Meta Pixel
     const currentPath = currentPage === 'platform' ? '/' : `/${currentPage}`;
     trackPageView(currentPath, title);
@@ -242,6 +477,11 @@ const App: React.FC = () => {
         currency: 'INR',
       });
     }
+
+    return () => {
+      const dynamicScript = document.getElementById('dynamic-page-schema');
+      if (dynamicScript) dynamicScript.remove();
+    };
   }, [currentPage]);
 
   const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent';
