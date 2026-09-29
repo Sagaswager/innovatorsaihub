@@ -250,10 +250,11 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
             </a>
             <button
               onClick={scrollToRentAgent}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary-container text-white text-xs font-semibold shadow-[0_4px_14px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-primary-container text-white text-xs font-semibold shadow-[0_4px_14px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer shrink-0"
             >
               <WhatsAppIcon className="w-4 h-4 text-white fill-white shrink-0" />
-              Rent WhatsApp AI Agent
+              <span className="hidden sm:inline">Rent WhatsApp AI Agent</span>
+              <span className="sm:hidden">Rent Agent</span>
             </button>
           </div>
         </div>
@@ -1437,7 +1438,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         value={name}
                         onChange={e => setName(e.target.value)}
                         placeholder="e.g. Sagar"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-base sm:text-sm outline-none transition-all"
                       />
                     </div>
 
@@ -1449,7 +1450,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         placeholder="sagar@example.com"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-base sm:text-sm outline-none transition-all"
                       />
                     </div>
 
@@ -1461,7 +1462,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         value={number}
                         onChange={e => setNumber(e.target.value)}
                         placeholder="+91 XXXXX XXXXX"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-base sm:text-sm outline-none transition-all"
                       />
                     </div>
 
@@ -1473,7 +1474,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         value={profession}
                         onChange={e => setProfession(e.target.value)}
                         placeholder="e.g. Founder / Business Owner"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-base sm:text-sm outline-none transition-all"
                       />
                     </div>
 
@@ -1485,7 +1486,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         value={companyName}
                         onChange={e => setCompanyName(e.target.value)}
                         placeholder="e.g. Innovators AI HUB"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-sm outline-none transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-base sm:text-sm outline-none transition-all"
                       />
                     </div>
 
