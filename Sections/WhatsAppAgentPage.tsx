@@ -65,6 +65,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
     security: false,
     faq: false,
     deployment: false,
+    introduction: false,
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -278,108 +279,6 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
         </div>
 
         <div className="flex flex-col w-full">
-          {/* ========================================================================= */}
-          {/* SECTION 1: HERO VIEWPORT */}
-          {/* ========================================================================= */}
-          <section className="relative w-full max-w-[1400px] mx-auto px-gutter py-space-2xl md:py-space-3xl overflow-hidden">
-            <div className="absolute -top-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-emerald-100/70 via-emerald-50/40 to-transparent rounded-full blur-[100px] pointer-events-none -z-10"></div>
-            <div className="absolute bottom-10 left-10 w-[420px] h-[420px] bg-blue-50/70 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-
-            <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-space-2xl">
-              {/* Badges */}
-              <div className="flex flex-wrap items-center justify-center gap-2 mb-space-lg">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-sm">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-whatsapp-green"></span>
-                  </span>
-                  <span className="text-[11px] font-bold tracking-widest text-slate-800 uppercase">
-                    TRENDING <span className="text-primary-container font-extrabold">in GURUGRAM</span>
-                  </span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
-                  <span>Starts at ₹999/mo</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider shadow-sm">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                  </span>
-                  <span>New update : FREE Version is over, Sorry😔</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-primary-container text-[11px] font-bold tracking-wider uppercase">
-                  <span className="material-symbols-outlined text-[14px]">verified</span>
-                  <span>Trust the Innovator, First</span>
-                </div>
-              </div>
-
-              {/* Shortened Headline with Official WhatsApp Logo */}
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-space-md leading-[1.15]">
-                <span className="inline-flex items-center gap-3 align-baseline">
-                  <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#25D366] flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(37,211,102,0.35)] -mt-1">
-                    <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white" />
-                  </span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-green-600">WhatsApp</span> AI Agent
-                </span>
-              </h1>
-
-              {/* Humanized Subheadline */}
-              <p className="font-body-base text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed mb-space-xl">
-                Reply to customer inquiries in seconds, qualify leads automatically, and book appointments 24/7 — right inside WhatsApp.
-              </p>
-
-              {/* Primary Call to Action */}
-              <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
-                <button
-                  onClick={scrollToRentAgent}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_20px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"
-                >
-                  <WhatsAppIcon className="w-5 h-5 text-white fill-white" />
-                  Rent WhatsApp AI Agent
-                </button>
-              </div>
-
-              {/* Trust Bar / Integrations Strip */}
-              <div className="w-full pt-space-md flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-slate-600 text-xs font-semibold uppercase tracking-wider">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                  <WhatsAppIcon className="w-[18px] h-[18px] text-[#25D366] fill-[#25D366] shrink-0" />
-                  <span>Official WhatsApp Cloud API</span>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                  <span className="material-symbols-outlined text-crm-sync-gold text-[18px]">hub</span>
-                  <span>HubSpot &amp; Zoho Sync</span>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                  <span className="material-symbols-outlined text-read-cyan text-[18px]">speed</span>
-                  <span>99.9% Reliable Uptime</span>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                  <span className="material-symbols-outlined text-primary-container text-[18px]">code_off</span>
-                  <span>Zero Coding Required</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Interface Image Preview */}
-            <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative">
-              <img
-                alt="WhatsApp AI agent for customer support, appointment booking and CRM automation"
-                className="w-full h-auto object-contain rounded-2xl"
-                src="/whatsapp-agent-interface.webp"
-                width={2560}
-                height={1440}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-                style={{ imageRendering: '-webkit-optimize-contrast' }}
-              />
-            </div>
-          </section>
-
-          {/* ========================================================================= */}
-          {/* SECTION 2: DEDICATED WHATSAPP AI AGENT PRICING & AUTOMATION MATRIX */}
-          {/* Positioned directly below whatsapp-agent-interface.png */}
-          {/* ========================================================================= */}
           <section className="relative w-full max-w-[1000px] mx-auto px-gutter py-space-xl" id="rental-pricing">
             <div id="pricing" className="relative rounded-3xl bg-white border border-slate-200 shadow-xl p-6 sm:p-10 md:p-12 overflow-hidden">
               {/* Header Row: Identity, Rating, Price, and Action */}
@@ -547,6 +446,113 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
               </div>
             </div>
           </section>
+          {/* ========================================================================= */}
+          {/* SECTION 1: HERO VIEWPORT */}
+          {/* ========================================================================= */}
+          <section className="relative w-full max-w-[900px] mx-auto px-gutter py-space-xl">
+            <div className="rounded-3xl bg-white border border-slate-200/90 shadow-sm transition-all overflow-hidden mb-6">
+              <button type="button" onClick={() => toggleSection('introduction')} aria-expanded={Boolean(openSections.introduction)} aria-controls="introduction-details" className="w-full text-left p-6 sm:p-8 flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500 hover:bg-slate-50/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-primary-container shrink-0"><WhatsAppIcon className="w-6 h-6 text-primary-container fill-current" /></div>
+                  <h1 className="font-display text-xl sm:text-2xl font-bold text-slate-900">WhatsApp AI Agent</h1>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="hidden md:inline text-xs font-semibold text-slate-400">{openSections.introduction ? 'Collapse' : 'Tap to expand'}</span>
+                  <span className={`material-symbols-outlined text-slate-400 transition-transform duration-300 ${openSections.introduction ? "rotate-180 text-primary-container" : ""}`}>expand_more</span>
+                </div>
+              </button>
+              <AnimatePresence>
+                {openSections.introduction && (
+                  <motion.div id="introduction-details" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
+                    <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100 flex flex-col items-center text-center">
+              {/* Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-space-lg">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-sm">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-whatsapp-green"></span>
+                  </span>
+                  <span className="text-[11px] font-bold tracking-widest text-slate-800 uppercase">
+                    TRENDING <span className="text-primary-container font-extrabold">in GURUGRAM</span>
+                  </span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
+                  <span>Starts at ₹999/mo</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider shadow-sm">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                  </span>
+                  <span>New update : FREE Version is over, Sorry😔</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-primary-container text-[11px] font-bold tracking-wider uppercase">
+                  <span className="material-symbols-outlined text-[14px]">verified</span>
+                  <span>Trust the Innovator, First</span>
+                </div>
+              </div>
+
+              {/* Humanized Subheadline */}
+              <p className="font-body-base text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed mb-space-xl">
+                Reply to customer inquiries in seconds, qualify leads automatically, and book appointments 24/7 — right inside WhatsApp.
+              </p>
+
+              {/* Primary Call to Action */}
+              <div className="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto justify-center mb-space-xl">
+                <button
+                  onClick={scrollToRentAgent}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-white font-semibold text-base shadow-[0_8px_20px_rgba(34,197,94,0.35)] hover:bg-emerald-600 active:scale-95 transition-all cursor-pointer"
+                >
+                  <WhatsAppIcon className="w-5 h-5 text-white fill-white" />
+                  Rent WhatsApp AI Agent
+                </button>
+              </div>
+
+              {/* Trust Bar / Integrations Strip */}
+              <div className="w-full pt-space-md flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-slate-600 text-xs font-semibold uppercase tracking-wider">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                  <WhatsAppIcon className="w-[18px] h-[18px] text-[#25D366] fill-[#25D366] shrink-0" />
+                  <span>Official WhatsApp Cloud API</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                  <span className="material-symbols-outlined text-crm-sync-gold text-[18px]">hub</span>
+                  <span>HubSpot &amp; Zoho Sync</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                  <span className="material-symbols-outlined text-read-cyan text-[18px]">speed</span>
+                  <span>99.9% Reliable Uptime</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                  <span className="material-symbols-outlined text-primary-container text-[18px]">code_off</span>
+                  <span>Zero Coding Required</span>
+                </div>
+              </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Interface Image Preview */}
+            <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative">
+              <img
+                alt="WhatsApp AI agent for customer support, appointment booking and CRM automation"
+                className="w-full h-auto object-contain rounded-2xl"
+                src="/whatsapp-agent-interface.webp"
+                width={2560}
+                height={1440}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                style={{ imageRendering: '-webkit-optimize-contrast' }}
+              />
+            </div>
+          </section>
+
+          {/* ========================================================================= */}
+          {/* SECTION 2: DEDICATED WHATSAPP AI AGENT PRICING & AUTOMATION MATRIX */}
+          {/* ========================================================================= */}
+
 
           {/* ========================================================================= */}
           {/* COLLAPSIBLE SECTIONS CONTAINER */}
