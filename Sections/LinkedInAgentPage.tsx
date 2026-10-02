@@ -214,198 +214,8 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </section>
-{/*  HERO SECTION  */}
-<section className="relative w-full bg-gradient-to-b from-white via-slate-50/50 to-white py-12 lg:py-20 border-b border-slate-100">
-{/*  Subtle background blur touches  */}
-<div className="absolute top-10 left-1/3 -translate-x-1/2 w-96 h-96 rounded-full bg-emerald-100/40 blur-3xl pointer-events-none -z-10"></div>
-<div className="absolute top-20 right-10 w-80 h-80 rounded-full bg-blue-100/40 blur-3xl pointer-events-none -z-10"></div>
-<div className="max-w-[1280px] mx-auto px-4 md:px-8">
-<div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-{/*  LEFT COLUMN: Value proposition & CTAs  */}
-<div className="lg:col-span-6 flex flex-col gap-6">
-<div className="flex flex-col gap-4">
-<div className="flex items-center gap-2.5">
-<div className="w-11 h-11 rounded-2xl bg-[#0A66C2] flex items-center justify-center shadow-md shadow-blue-500/20 text-white shrink-0">
-<svg className="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28Z"></path></svg>
-</div>
-<span className="px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold uppercase tracking-wider">
-                    Autonomous Sales Co-Worker
-                  </span>
-</div>
-<h1 className="font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-slate-950 tracking-tight leading-[1.12]">
-                  LinkedIn AI <br/><span className="text-emerald-600">Outreach Agent</span>
-</h1>
-<p className="font-normal text-lg sm:text-xl text-slate-600 leading-relaxed font-body">
-                  Turn connections into conversations. AI-powered LinkedIn outreach for B2B businesses to personalize connections, automate follow-ups, and generate meaningful sales conversations.
-                </p>
-</div>
-{/*  Feature Bullets (Checkmarks)  */}
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-<div className="flex items-center gap-2.5">
-<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-<span className="material-symbols-outlined text-[15px] font-bold">check</span>
-</div>
-<span className="text-sm font-semibold text-slate-700">Hyper-personalized outreach</span>
-</div>
-<div className="flex items-center gap-2.5">
-<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-<span className="material-symbols-outlined text-[15px] font-bold">check</span>
-</div>
-<span className="text-sm font-semibold text-slate-700">AI prospect qualification</span>
-</div>
-<div className="flex items-center gap-2.5">
-<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-<span className="material-symbols-outlined text-[15px] font-bold">check</span>
-</div>
-<span className="text-sm font-semibold text-slate-700">Automated follow-ups</span>
-</div>
-<div className="flex items-center gap-2.5">
-<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-<span className="material-symbols-outlined text-[15px] font-bold">check</span>
-</div>
-<span className="text-sm font-semibold text-slate-700">Direct calendar booking</span>
-</div>
-</div>
-{/*  Metric highlight cards  */}
-<div className="grid grid-cols-2 gap-4 pt-1">
-<div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col">
-<div className="flex items-baseline gap-1.5">
-<span className="text-3xl sm:text-4xl font-extrabold text-emerald-600 tracking-tight">85%</span>
-<span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">High Intent</span>
-</div>
-<span className="text-xs font-semibold text-slate-500 mt-1">Connection Acceptance Rate</span>
-</div>
-<div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col">
-<div className="flex items-baseline gap-1.5">
-<span className="text-3xl sm:text-4xl font-extrabold text-blue-600 tracking-tight">3.5x</span>
-<span className="text-xs text-blue-700 font-semibold bg-blue-50 px-1.5 py-0.5 rounded">More Meetings</span>
-</div>
-<span className="text-xs font-semibold text-slate-500 mt-1">Booked directly on Calendar</span>
-</div>
-</div>
-{/*  Pricing and Action CTA Bar  */}
-<div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-  <button 
-    onClick={scrollToRentAgent}
-    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-base shadow-[0_8px_20px_rgba(16,185,129,0.35)] active:scale-95 transition-all cursor-pointer"
-  >
-    <span className="material-symbols-outlined text-[20px]">smart_toy</span>
-    Rent LinkedIn AI Agent
-  </button>
-</div>
-<div className="flex items-center gap-2 text-slate-500 text-xs">
-<span className="line-through text-slate-400">Regular: ₹6,999/mo</span>
-<span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">68% Launch Discount</span>
-<span className="text-slate-400">• Cancel Anytime</span>
-</div>
-</div>
-{/*  RIGHT COLUMN: LinkedIn Simulation Card (Light themed mockup)  */}
-<div className="lg:col-span-6 flex flex-col">
-<div className="relative rounded-3xl bg-white border border-slate-200/90 p-5 md:p-6 shadow-[0_12px_36px_rgba(15,23,42,0.08)] overflow-hidden">
-{/*  Ambient Subtle Gradient  */}
-<div className="absolute -top-16 -right-16 w-52 h-52 bg-emerald-100/50 rounded-full blur-3xl pointer-events-none"></div>
-{/*  Simulation Header  */}
-<div className="flex items-center justify-between pb-4 border-b border-slate-100">
-<div className="flex items-center gap-3">
-<div className="w-10 h-10 rounded-xl bg-[#0A66C2] flex items-center justify-center shadow-sm shadow-blue-500/20 text-white shrink-0">
-<svg className="w-5 h-5 fill-white" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28Z"></path></svg>
-</div>
-<div className="flex flex-col">
-<span className="font-bold text-[16px] text-slate-900 leading-none">LinkedIn AI Agent</span>
-<span className="text-xs text-slate-400 mt-1 font-medium">Enterprise Autonomous Co-Worker</span>
-</div>
-</div>
-<div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
-<span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Agent Active
-                  </div>
-</div>
-{/*  Live Conversation Thread  */}
-<div className="flex flex-col gap-3.5 pt-4">
-{/*  Prospect Card & Note  */}
-<div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col gap-2.5">
-<div className="flex items-center justify-between">
-<div className="flex items-center gap-2.5">
-<div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm flex items-center justify-center shadow-sm">
-                          RM
-                        </div>
-<div className="flex flex-col">
-<span className="font-bold text-sm text-slate-900 leading-tight">Rohit Mehta</span>
-<span className="text-xs text-slate-500 font-medium">Founder &amp; CEO • GrowthTech India</span>
-</div>
-</div>
-<span className="text-[11px] font-semibold text-slate-400">1st Degree</span>
-</div>
-<div className="p-2.5 rounded-xl bg-white border border-slate-200/80 text-slate-700 text-xs leading-relaxed font-body">
-                      "Hi Rohit, loved your recent insights on scaling B2B sales cycles without hiring bloated SDR teams. Would love to stay connected!"
-                    </div>
-<div className="flex items-center gap-3 pt-0.5 text-[11px]">
-<span className="flex items-center gap-1 text-slate-400 font-medium">
-<span className="material-symbols-outlined text-[14px] text-blue-500">done_all</span>
-                        Note Sent
-                      </span>
-<span className="text-slate-300">→</span>
-<span className="flex items-center gap-1 text-emerald-700 font-bold bg-emerald-100/70 px-2 py-0.5 rounded-full">
-<span className="material-symbols-outlined text-[13px]">verified</span>
-                        Connected!
-                      </span>
-</div>
-</div>
-{/*  Prospect Incoming Reply  */}
-<div className="flex items-start gap-2.5 max-w-[92%]">
-<div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-                      RM
-                    </div>
-<div className="flex flex-col gap-1">
-<span className="text-[11px] font-semibold text-slate-400">Rohit Mehta • 10:12 AM</span>
-<div className="p-3 rounded-2xl rounded-tl-sm bg-slate-100 text-slate-800 text-xs font-body leading-relaxed">
-                        Thanks for connecting! We're actually actively looking to scale outbound without adding 5 SDRs. How does your AI handle personalization?
-                      </div>
-</div>
-</div>
-{/*  AI Agent Autonomous Reply  */}
-<div className="flex flex-col items-end gap-1 ml-auto max-w-[92%]">
-<div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700">
-<span className="">Innovators AI Agent</span>
-<span className="material-symbols-outlined text-[14px]">smart_toy</span>
-</div>
-<div className="p-3.5 rounded-2xl rounded-tr-sm bg-emerald-500 text-white text-xs font-body leading-relaxed shadow-sm shadow-emerald-500/20">
-                      It reads prospect profiles, recent activity, and company updates to tailor notes in 1:1 human nuance. Would you like a quick 15-minute demo to see it live?
-                    </div>
-</div>
-{/*  Calendar Booking Widget within chat  */}
-<div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2.5 mt-1">
-<div className="flex items-center justify-between">
-<div className="flex items-center gap-2.5">
-<div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-<span className="material-symbols-outlined text-[20px]">calendar_month</span>
-</div>
-<div className="flex flex-col">
-<span className="text-xs font-bold text-slate-900">Book a 15-Min Live Demo</span>
-<span className="text-[11px] text-slate-500 font-medium">Synced with your Google Calendar</span>
-</div>
-</div>
-<button type="button" id="choose-time-btn" onClick={() => setConfirmationBanner(`Calendar synced! Demo slot reserved for ${selectedSlot}.`)} className="text-xs font-bold text-slate-900 hover:text-emerald-600 transition-colors">Select Time</button>
-</div>
-<div className="grid grid-cols-3 gap-2" id="time-slot-container">
-<button type="button" onClick={() => { setSelectedSlot("Tue, 10:30 AM"); setConfirmationBanner("Demo slot selected: Tue, 10:30 AM - Confirmation sent!"); }} className={`time-slot-btn py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedSlot === "Tue, 10:30 AM" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>Tue, 10:30 AM</button>
-<button type="button" onClick={() => { setSelectedSlot("Wed, 2:00 PM"); setConfirmationBanner("Demo slot selected: Wed, 2:00 PM - Confirmation sent!"); }} className={`time-slot-btn py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedSlot === "Wed, 2:00 PM" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>Wed, 2:00 PM</button>
-<button type="button" onClick={() => { setSelectedSlot("Thu, 11:00 AM"); setConfirmationBanner("Demo slot selected: Thu, 11:00 AM - Confirmation sent!"); }} className={`time-slot-btn py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedSlot === "Thu, 11:00 AM" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>Thu, 11:00 AM</button>
-</div>
-<div className="hidden p-2 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-semibold text-center" id="booking-confirmation-banner">
-                      Slot confirmed! Calendar invite automatically dispatched.
-                    </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-{/*  CARD ASSET & EXACT MATRIX FROM IMAGE_4  */}
-{/*  "One Agent. Countless Automation." reference section  */}
-<section className="w-full bg-slate-50/70 py-16 lg:py-20 border-b border-slate-200/70">
-<div className="max-w-[894px] mx-auto px-4">
+<section className="w-full bg-white py-6">
+<div className="max-w-[900px] mx-auto px-4">
 {/*  Exact Card Container as seen in DATA:IMAGE:IMAGE_4  */}
 <div className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xl shadow-slate-200/50 flex flex-col gap-8">
 {/*  Card Header: Icon, Title, Rating, Price, Rent Agent Button  */}
@@ -543,17 +353,223 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </section>
-{/*  3 DEEP PILLARS SECTION  */}
-<section className="w-full bg-white py-16 lg:py-24 border-b border-slate-100">
-<div className="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-16 lg:gap-24">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">smart_toy</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Autonomous Sales Co-Worker</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">LinkedIn AI Outreach Agent</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+{/*  Subtle background blur touches  */}
+<div className="absolute top-10 left-1/3 -translate-x-1/2 w-96 h-96 rounded-full bg-emerald-100/40 blur-3xl pointer-events-none -z-10"></div>
+<div className="absolute top-20 right-10 w-80 h-80 rounded-full bg-blue-100/40 blur-3xl pointer-events-none -z-10"></div>
+<div className="max-w-full mx-auto px-4 md:px-8">
+<div className="grid grid-cols-1 lg:grid-cols-1 gap-10 lg:gap-14 items-center">
+{/*  LEFT COLUMN: Value proposition & CTAs  */}
+<div className="lg:col-span-1 flex flex-col gap-6">
+<div className="flex flex-col gap-4">
+<div className="flex items-center gap-2.5">
+<div className="w-11 h-11 rounded-2xl bg-[#0A66C2] flex items-center justify-center shadow-md shadow-blue-500/20 text-white shrink-0">
+<svg className="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28Z"></path></svg>
+</div>
+<span className="px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold uppercase tracking-wider">
+                    Autonomous Sales Co-Worker
+                  </span>
+</div>
+<h1 className="font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-slate-950 tracking-tight leading-[1.12]">
+                  LinkedIn AI <br/><span className="text-emerald-600">Outreach Agent</span>
+</h1>
+<p className="font-normal text-lg sm:text-xl text-slate-600 leading-relaxed font-body">
+                  Turn connections into conversations. AI-powered LinkedIn outreach for B2B businesses to personalize connections, automate follow-ups, and generate meaningful sales conversations.
+                </p>
+</div>
+{/*  Feature Bullets (Checkmarks)  */}
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+<div className="flex items-center gap-2.5">
+<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span className="material-symbols-outlined text-[15px] font-bold">check</span>
+</div>
+<span className="text-sm font-semibold text-slate-700">Hyper-personalized outreach</span>
+</div>
+<div className="flex items-center gap-2.5">
+<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span className="material-symbols-outlined text-[15px] font-bold">check</span>
+</div>
+<span className="text-sm font-semibold text-slate-700">AI prospect qualification</span>
+</div>
+<div className="flex items-center gap-2.5">
+<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span className="material-symbols-outlined text-[15px] font-bold">check</span>
+</div>
+<span className="text-sm font-semibold text-slate-700">Automated follow-ups</span>
+</div>
+<div className="flex items-center gap-2.5">
+<div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span className="material-symbols-outlined text-[15px] font-bold">check</span>
+</div>
+<span className="text-sm font-semibold text-slate-700">Direct calendar booking</span>
+</div>
+</div>
+{/*  Metric highlight cards  */}
+<div className="grid grid-cols-2 gap-4 pt-1">
+<div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col">
+<div className="flex items-baseline gap-1.5">
+<span className="text-3xl sm:text-4xl font-extrabold text-emerald-600 tracking-tight">85%</span>
+<span className="text-xs text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">High Intent</span>
+</div>
+<span className="text-xs font-semibold text-slate-500 mt-1">Connection Acceptance Rate</span>
+</div>
+<div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col">
+<div className="flex items-baseline gap-1.5">
+<span className="text-3xl sm:text-4xl font-extrabold text-blue-600 tracking-tight">3.5x</span>
+<span className="text-xs text-blue-700 font-semibold bg-blue-50 px-1.5 py-0.5 rounded">More Meetings</span>
+</div>
+<span className="text-xs font-semibold text-slate-500 mt-1">Booked directly on Calendar</span>
+</div>
+</div>
+{/*  Pricing and Action CTA Bar  */}
+<div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+  <button 
+    onClick={scrollToRentAgent}
+    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-base shadow-[0_8px_20px_rgba(16,185,129,0.35)] active:scale-95 transition-all cursor-pointer"
+  >
+    <span className="material-symbols-outlined text-[20px]">smart_toy</span>
+    Rent LinkedIn AI Agent
+  </button>
+</div>
+<div className="flex items-center gap-2 text-slate-500 text-xs">
+<span className="line-through text-slate-400">Regular: ₹6,999/mo</span>
+<span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">68% Launch Discount</span>
+<span className="text-slate-400">• Cancel Anytime</span>
+</div>
+</div>
+{/*  RIGHT COLUMN: LinkedIn Simulation Card (Light themed mockup)  */}
+<div className="lg:col-span-1 flex flex-col">
+<div className="relative rounded-3xl bg-white border border-slate-200/90 p-5 md:p-6 shadow-[0_12px_36px_rgba(15,23,42,0.08)] overflow-hidden">
+{/*  Ambient Subtle Gradient  */}
+<div className="absolute -top-16 -right-16 w-52 h-52 bg-emerald-100/50 rounded-full blur-3xl pointer-events-none"></div>
+{/*  Simulation Header  */}
+<div className="flex items-center justify-between pb-4 border-b border-slate-100">
+<div className="flex items-center gap-3">
+<div className="w-10 h-10 rounded-xl bg-[#0A66C2] flex items-center justify-center shadow-sm shadow-blue-500/20 text-white shrink-0">
+<svg className="w-5 h-5 fill-white" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28Z"></path></svg>
+</div>
+<div className="flex flex-col">
+<span className="font-bold text-[16px] text-slate-900 leading-none">LinkedIn AI Agent</span>
+<span className="text-xs text-slate-400 mt-1 font-medium">Enterprise Autonomous Co-Worker</span>
+</div>
+</div>
+<div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
+<span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Agent Active
+                  </div>
+</div>
+{/*  Live Conversation Thread  */}
+<div className="flex flex-col gap-3.5 pt-4">
+{/*  Prospect Card & Note  */}
+<div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col gap-2.5">
+<div className="flex items-center justify-between">
+<div className="flex items-center gap-2.5">
+<div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm flex items-center justify-center shadow-sm">
+                          RM
+                        </div>
+<div className="flex flex-col">
+<span className="font-bold text-sm text-slate-900 leading-tight">Rohit Mehta</span>
+<span className="text-xs text-slate-500 font-medium">Founder &amp; CEO • GrowthTech India</span>
+</div>
+</div>
+<span className="text-[11px] font-semibold text-slate-400">1st Degree</span>
+</div>
+<div className="p-2.5 rounded-xl bg-white border border-slate-200/80 text-slate-700 text-xs leading-relaxed font-body">
+                      "Hi Rohit, loved your recent insights on scaling B2B sales cycles without hiring bloated SDR teams. Would love to stay connected!"
+                    </div>
+<div className="flex items-center gap-3 pt-0.5 text-[11px]">
+<span className="flex items-center gap-1 text-slate-400 font-medium">
+<span className="material-symbols-outlined text-[14px] text-blue-500">done_all</span>
+                        Note Sent
+                      </span>
+<span className="text-slate-300">→</span>
+<span className="flex items-center gap-1 text-emerald-700 font-bold bg-emerald-100/70 px-2 py-0.5 rounded-full">
+<span className="material-symbols-outlined text-[13px]">verified</span>
+                        Connected!
+                      </span>
+</div>
+</div>
+{/*  Prospect Incoming Reply  */}
+<div className="flex items-start gap-2.5 max-w-[92%]">
+<div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                      RM
+                    </div>
+<div className="flex flex-col gap-1">
+<span className="text-[11px] font-semibold text-slate-400">Rohit Mehta • 10:12 AM</span>
+<div className="p-3 rounded-2xl rounded-tl-sm bg-slate-100 text-slate-800 text-xs font-body leading-relaxed">
+                        Thanks for connecting! We're actually actively looking to scale outbound without adding 5 SDRs. How does your AI handle personalization?
+                      </div>
+</div>
+</div>
+{/*  AI Agent Autonomous Reply  */}
+<div className="flex flex-col items-end gap-1 ml-auto max-w-[92%]">
+<div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700">
+<span className="">Innovators AI Agent</span>
+<span className="material-symbols-outlined text-[14px]">smart_toy</span>
+</div>
+<div className="p-3.5 rounded-2xl rounded-tr-sm bg-emerald-500 text-white text-xs font-body leading-relaxed shadow-sm shadow-emerald-500/20">
+                      It reads prospect profiles, recent activity, and company updates to tailor notes in 1:1 human nuance. Would you like a quick 15-minute demo to see it live?
+                    </div>
+</div>
+{/*  Calendar Booking Widget within chat  */}
+<div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-2.5 mt-1">
+<div className="flex items-center justify-between">
+<div className="flex items-center gap-2.5">
+<div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+<span className="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<div className="flex flex-col">
+<span className="text-xs font-bold text-slate-900">Book a 15-Min Live Demo</span>
+<span className="text-[11px] text-slate-500 font-medium">Synced with your Google Calendar</span>
+</div>
+</div>
+<button type="button" id="choose-time-btn" onClick={() => setConfirmationBanner(`Calendar synced! Demo slot reserved for ${selectedSlot}.`)} className="text-xs font-bold text-slate-900 hover:text-emerald-600 transition-colors">Select Time</button>
+</div>
+<div className="grid grid-cols-3 gap-2" id="time-slot-container">
+<button type="button" onClick={() => { setSelectedSlot("Tue, 10:30 AM"); setConfirmationBanner("Demo slot selected: Tue, 10:30 AM - Confirmation sent!"); }} className={`time-slot-btn py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedSlot === "Tue, 10:30 AM" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>Tue, 10:30 AM</button>
+<button type="button" onClick={() => { setSelectedSlot("Wed, 2:00 PM"); setConfirmationBanner("Demo slot selected: Wed, 2:00 PM - Confirmation sent!"); }} className={`time-slot-btn py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedSlot === "Wed, 2:00 PM" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>Wed, 2:00 PM</button>
+<button type="button" onClick={() => { setSelectedSlot("Thu, 11:00 AM"); setConfirmationBanner("Demo slot selected: Thu, 11:00 AM - Confirmation sent!"); }} className={`time-slot-btn py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedSlot === "Thu, 11:00 AM" ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>Thu, 11:00 AM</button>
+</div>
+<div className="hidden p-2 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-semibold text-center" id="booking-confirmation-banner">
+                      Slot confirmed! Calendar invite automatically dispatched.
+                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</details>
+</section>
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">trending_up</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Features & Benefits</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">How The AI Agent Drives Results</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4 md:px-8 flex flex-col gap-16 lg:gap-24">
 <div className="text-center max-w-2xl mx-auto flex flex-col gap-2">
 <span className="text-xs font-bold uppercase tracking-widest text-emerald-600">Precision Engineering</span>
 <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">How The AI Agent Drives Results</h2>
 <p className="text-base text-slate-600 font-body">Deep architectural breakdown of the 3 automated outreach stages.</p>
 </div>
 {/*  PILLAR 1  */}
-<div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-<div className="lg:col-span-6 flex flex-col gap-4">
+<div className="grid grid-cols-1 lg:grid-cols-1 gap-10 items-center">
+<div className="lg:col-span-1 flex flex-col gap-4">
 <div className="flex items-center gap-2">
 <span className="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 font-bold text-xs">PILLAR 01</span>
 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Inbound Relevance</span>
@@ -583,7 +599,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  Visual Flow 1  */}
-<div className="lg:col-span-6 p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-4">
+<div className="lg:col-span-1 p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-4">
 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Execution Pipeline Flow</span>
 <div className="flex flex-col gap-2.5">
 <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
@@ -627,9 +643,9 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  PILLAR 2  */}
-<div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+<div className="grid grid-cols-1 lg:grid-cols-1 gap-10 items-center">
 {/*  Visual Flow 2  */}
-<div className="lg:col-span-6 order-2 lg:order-1 p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-3">
+<div className="lg:col-span-1 order-2 lg:order-1 p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-3">
 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Dynamic Follow-Up Sequence</span>
 <div className="space-y-2 font-body text-xs">
 <div className="p-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
@@ -658,7 +674,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
-<div className="lg:col-span-6 order-1 lg:order-2 flex flex-col gap-4">
+<div className="lg:col-span-1 order-1 lg:order-2 flex flex-col gap-4">
 <div className="flex items-center gap-2">
 <span className="px-2.5 py-1 rounded-md bg-blue-100 text-blue-800 font-bold text-xs">PILLAR 02</span>
 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Conversation Momentum</span>
@@ -689,8 +705,8 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  PILLAR 3  */}
-<div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-<div className="lg:col-span-6 flex flex-col gap-4">
+<div className="grid grid-cols-1 lg:grid-cols-1 gap-10 items-center">
+<div className="lg:col-span-1 flex flex-col gap-4">
 <div className="flex items-center gap-2">
 <span className="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 font-bold text-xs">PILLAR 03</span>
 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Conversion Velocity</span>
@@ -720,7 +736,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 {/*  Visual Flow 3  */}
-<div className="lg:col-span-6 p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-3">
+<div className="lg:col-span-1 p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm flex flex-col gap-3">
 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Zero-Friction Conversion Arc</span>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
 <div className="p-4 rounded-2xl bg-white border border-slate-200 flex flex-col gap-1.5 shadow-2xs">
@@ -747,10 +763,20 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
+</div>
+</details>
 </section>
-{/*  ACCOUNT SAFETY & COMPLIANCE (4 PILLARS)  */}
-<section className="w-full bg-slate-50/60 py-16 lg:py-20 border-b border-slate-100">
-<div className="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-10">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">security</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Safety & Trust</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Responsible LinkedIn Outreach</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4 md:px-8 flex flex-col gap-10">
 <div className="text-center max-w-2xl mx-auto flex flex-col gap-2">
 <span className="text-xs font-bold uppercase tracking-widest text-emerald-600">Enterprise Compliance</span>
 <h3 className="text-3xl font-extrabold text-slate-900">Responsible LinkedIn Outreach</h3>
@@ -797,10 +823,20 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
+</div>
+</details>
 </section>
-{/*  HOW THE PROCESS WORKS (6-STEP GRID)  */}
-<section className="w-full bg-white py-16 lg:py-20 border-b border-slate-100">
-<div className="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-10">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">account_tree</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">How It Works</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">How the LinkedIn AI Outreach Process Works</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4 md:px-8 flex flex-col gap-10">
 <div className="text-center max-w-2xl mx-auto flex flex-col gap-2">
 <span className="text-xs font-bold uppercase tracking-widest text-emerald-600">End-to-End Execution</span>
 <h3 className="text-3xl font-extrabold text-slate-900">How the LinkedIn AI Outreach Process Works</h3>
@@ -875,10 +911,20 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
+</div>
+</details>
 </section>
-{/*  TESTED ACROSS CORE SECTORS (USE CASES)  */}
-<section className="w-full bg-slate-50/60 py-16 lg:py-20 border-b border-slate-100">
-<div className="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-10">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">domain</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Business Use Cases</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Tested Across Core Growth Sectors</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4 md:px-8 flex flex-col gap-10">
 <div className="text-center max-w-2xl mx-auto flex flex-col gap-2">
 <span className="text-xs font-bold uppercase tracking-widest text-emerald-600">Industry Application</span>
 <h3 className="text-3xl font-extrabold text-slate-900">Tested Across Core Growth Sectors</h3>
@@ -938,10 +984,20 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
+</div>
+</details>
 </section>
-{/*  DEDICATED PRICING PACKAGE & RENTAL CARD  */}
-<section className="w-full bg-white py-16 lg:py-24 border-b border-slate-100" id="pricing-package">
-<div className="max-w-[894px] mx-auto px-4">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3" id="pricing-package">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">payments</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Rental Details</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Linkedin AI Agent Rental</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4">
 <div className="relative p-8 sm:p-12 rounded-3xl bg-white border-2 border-emerald-500/30 shadow-2xl shadow-emerald-500/10 overflow-hidden">
 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
 <div className="flex items-center gap-4">
@@ -1007,10 +1063,20 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
+</div>
+</details>
 </section>
-{/*  FAQS ACCORDION  */}
-<section className="w-full bg-slate-50/70 py-16 lg:py-20 border-b border-slate-100" id="faq-section">
-<div className="max-w-[800px] mx-auto px-4 md:px-8 flex flex-col gap-10">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3" id="faq-section">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">quiz</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Got Questions?</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Frequently Asked Questions</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4 md:px-8 flex flex-col gap-10">
 <div className="text-center flex flex-col gap-2">
 <span className="text-xs font-bold uppercase tracking-widest text-emerald-600">Everything Explained</span>
 <h3 className="text-3xl font-extrabold text-slate-900">Frequently Asked Questions</h3>
@@ -1029,10 +1095,20 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
   ))}
 </div>
 </div>
+</div>
+</details>
 </section>
-{/*  FINAL HIGH CONVERTING CTA BANNER  */}
-<section className="w-full bg-white py-16 lg:py-24">
-<div className="max-w-[1280px] mx-auto px-4 md:px-8">
+<section className="w-full max-w-[900px] mx-auto px-4 md:px-6 py-3">
+<details className="group rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
+<summary className="list-none [&::-webkit-details-marker]:hidden p-6 sm:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/50 focus-visible:outline-emerald-500">
+<div className="flex items-center gap-4 min-w-0">
+<div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-600 shrink-0"><span className="material-symbols-outlined text-2xl">rocket_launch</span></div>
+<div><span className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Get Started</span><h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Turn LinkedIn Outreach Into Meaningful Business Conversations</h2></div>
+</div>
+<div className="flex items-center gap-2 shrink-0"><span className="hidden md:inline text-xs font-semibold text-slate-400 group-open:hidden">Tap to expand</span><span className="hidden group-open:md:inline text-xs font-semibold text-slate-400">Collapse</span><span className="material-symbols-outlined text-slate-400 transition-transform group-open:rotate-180">expand_more</span></div>
+</summary>
+<div className="border-t border-slate-100 px-2 sm:px-4 py-6">
+<div className="max-w-full mx-auto px-4 md:px-8">
 <div className="relative p-10 sm:p-14 rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex flex-col items-center text-center gap-5 shadow-2xl shadow-emerald-600/20 overflow-hidden">
 <span className="px-4 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
               Autonomous Lead Generation
@@ -1066,6 +1142,8 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
+</div>
+</details>
 </section>
 </div>
 </main>
