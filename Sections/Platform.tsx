@@ -1066,7 +1066,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 style={{
                   fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                   fontWeight: 600,
-                  backgroundColor: '#000000',
+                  backgroundColor: '#25C667',
                   color: '#ffffff'
                 }}
                 className="px-4 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 select-none"
