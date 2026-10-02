@@ -550,7 +550,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
           {/* ========================================================================= */}
           {/* COLLAPSIBLE SECTIONS CONTAINER */}
           {/* ========================================================================= */}
-          <section className="relative w-full max-w-[1200px] mx-auto px-gutter py-space-xl">
+          <section className="relative w-full max-w-[1000px] mx-auto px-gutter py-space-xl">
             {/* Section 1 Accordion: Why Use a WhatsApp AI Agent? */}
             <div className="rounded-3xl bg-white border border-slate-200/90 shadow-sm transition-all overflow-hidden mb-6" id="features">
               <button
