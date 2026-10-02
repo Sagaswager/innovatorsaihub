@@ -64,6 +64,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
     useCases: false,
     security: false,
     faq: false,
+    deployment: false,
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1246,14 +1247,43 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
           {/* FINAL HIGH-CONVERSION CTA BANNER */}
           {/* ========================================================================= */}
           <section className="relative w-full max-w-[900px] mx-auto px-gutter pb-space-xl mb-space-2xl">
-            <div className="relative rounded-3xl bg-white p-6 sm:p-8 border border-slate-200/90 shadow-sm overflow-hidden text-center flex flex-col items-center">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 mb-space-md shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-whatsapp-green animate-pulse"></span>
-                <span className="text-[11px] font-bold text-primary-container uppercase tracking-wider">Immediate Deployment Available</span>
-              </div>
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-space-md max-w-3xl tracking-tight">
-                Ready to Automate Your WhatsApp Customer Communication?
-              </h2>
+            <div className="rounded-3xl bg-white border border-slate-200/90 shadow-sm transition-all overflow-hidden">
+              <button
+                type="button"
+                onClick={() => toggleSection('deployment')}
+                aria-expanded={Boolean(openSections.deployment)}
+                aria-controls="deployment-details"
+                className="w-full text-left p-6 sm:p-8 flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500 hover:bg-slate-50/50 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-primary-container shrink-0">
+                    <span className="material-symbols-outlined text-[24px]">rocket_launch</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-bold text-primary-container uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full">Immediate Deployment Available</span>
+                    <h2 className="font-display text-xl sm:text-2xl font-bold text-slate-900 mt-1">
+                      Ready to Automate Your WhatsApp Customer Communication?
+                    </h2>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="hidden md:inline text-xs font-semibold text-slate-400">
+                    {openSections.deployment ? 'Collapse' : 'Tap to expand'}
+                  </span>
+                  <span className={`material-symbols-outlined text-slate-400 transition-transform duration-300 ${openSections.deployment ? "rotate-180 text-primary-container" : ""}`}>expand_more</span>
+                </div>
+              </button>
+              <AnimatePresence>
+                {openSections.deployment && (
+                  <motion.div
+                    id="deployment-details"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100 text-center flex flex-col items-center">
               <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed mb-space-xl">
                 Your customers are already on WhatsApp. Give them the fast, friendly experience they expect while giving your team their time back to focus on what matters most.
               </p>
@@ -1289,6 +1319,10 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <span>Cancel Anytime</span>
                 </div>
               </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </section>
         </div>
