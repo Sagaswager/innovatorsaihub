@@ -550,7 +550,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
           {/* ========================================================================= */}
           {/* COLLAPSIBLE SECTIONS CONTAINER */}
           {/* ========================================================================= */}
-          <section className="relative w-full max-w-[1000px] mx-auto px-gutter py-space-xl">
+          <section className="relative w-full max-w-[900px] mx-auto px-gutter py-space-xl">
             {/* Section 1 Accordion: Why Use a WhatsApp AI Agent? */}
             <div className="rounded-3xl bg-white border border-slate-200/90 shadow-sm transition-all overflow-hidden mb-6" id="features">
               <button
@@ -1245,8 +1245,8 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
           {/* ========================================================================= */}
           {/* FINAL HIGH-CONVERSION CTA BANNER */}
           {/* ========================================================================= */}
-          <section className="relative w-full max-w-[1400px] mx-auto px-gutter py-space-2xl md:py-space-3xl mb-space-2xl">
-            <div className="relative rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-space-xl sm:p-space-2xl md:p-space-3xl border border-emerald-200/80 shadow-xl overflow-hidden text-center flex flex-col items-center">
+          <section className="relative w-full max-w-[900px] mx-auto px-gutter pb-space-xl mb-space-2xl">
+            <div className="relative rounded-3xl bg-white p-6 sm:p-8 border border-slate-200/90 shadow-sm overflow-hidden text-center flex flex-col items-center">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 mb-space-md shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-whatsapp-green animate-pulse"></span>
                 <span className="text-[11px] font-bold text-primary-container uppercase tracking-wider">Immediate Deployment Available</span>
