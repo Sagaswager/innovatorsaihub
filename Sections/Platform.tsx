@@ -1069,7 +1069,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   backgroundColor: '#25C667',
                   color: '#ffffff'
                 }}
-                className="px-4 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 select-none"
+                className="px-4 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md inline-flex items-center gap-2 select-none"
               >
                 <span className="flex h-2 w-2 relative shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
