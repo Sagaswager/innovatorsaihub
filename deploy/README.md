@@ -4,7 +4,7 @@ The website is a static React/Vite build served by Nginx. Existing UI files are 
 
 ## Bootstrap validation (before DNS changes)
 
-In Hostinger Docker Manager, choose Compose from URL and application name `innovatorsaihub-website`:
+In Hostinger Docker Manager, choose Compose from URL and application name `innovatorsaihub`:
 
 `https://github.com/Sagaswager/innovatorsaihub/blob/hostinger-vps/docker-compose.yml`
 
@@ -47,3 +47,21 @@ Once the website works behind the proxy, update only the relevant root and www D
 ## Validation limits
 
 Run container build/config and HTTP checks on the VPS if Docker is unavailable in the preparation environment. The existing external WhatsApp backend must also be reachable from that VPS; test its proxy after deployment.
+
+## Verified server configuration — 5 October 2026
+
+Traefik container `traefik-traefik-1` uses host networking and the Docker provider. Startup arguments confirm `web=:80`, `websecure=:443`, resolver `letsencrypt` with HTTP challenge on `web`, and a global web-to-websecure HTTPS redirect. Bootstrap returned HTTP 200 on 127.0.0.1:8088.
+
+For this server, use the standalone `deploy/compose.host-traefik.yml` in the existing Hostinger application `innovatorsaihub`. Replace/import the saved Compose definition before redeploying; a Git push alone does not update a dashboard-stored definition. Do not create a duplicate application or deploy the generic shared-network candidate.
+
+The website retains its single default bridge network and loopback debug port. Host-network Traefik can reach the bridge container IP on this Linux host; the Docker provider discovers the website via labels and forwards to internal port 80. No external proxy network is required for this setup. Verify actual reachability after redeployment. The HTTPS router matches apex and www and uses the confirmed resolver; the existing global entrypoint redirect handles HTTP.
+
+Before DNS cutover, test routing locally with SNI:
+
+```sh
+curl -kI --resolve www.innovatorsaihub.com:443:127.0.0.1 https://www.innovatorsaihub.com
+```
+
+This temporary test skips certificate verification because DNS still points to the previous host; it must not be treated as proof of valid HTTPS. Expect website HTTP 200. A 404 suggests router discovery problems; 502 suggests backend reachability problems. Check Traefik logs if needed.
+
+DNS is currently delegated from Namecheap to Vercel. Inspect Vercel's root/www A, AAAA, CNAME and CAA records before updating website targets to 187.127.187.153. The configured HTTP challenge cannot obtain a certificate until public DNS and port 80 reach this VPS. After cutover, test without `-k`, verify both hostnames, canonical redirects, SPA deep links and the WhatsApp proxy. Keep previous hosting available for rollback.
