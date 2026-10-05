@@ -65,3 +65,27 @@ curl -kI --resolve www.innovatorsaihub.com:443:127.0.0.1 https://www.innovatorsa
 This temporary test skips certificate verification because DNS still points to the previous host; it must not be treated as proof of valid HTTPS. Expect website HTTP 200. A 404 suggests router discovery problems; 502 suggests backend reachability problems. Check Traefik logs if needed.
 
 DNS is currently delegated from Namecheap to Vercel. Inspect Vercel's root/www A, AAAA, CNAME and CAA records before updating website targets to 187.127.187.153. The configured HTTP challenge cannot obtain a certificate until public DNS and port 80 reach this VPS. After cutover, test without `-k`, verify both hostnames, canonical redirects, SPA deep links and the WhatsApp proxy. Keep previous hosting available for rollback.
+
+## Deploy from a Windows PC
+
+The root `deploy.ps1` script runs the proven website rebuild/start steps over SSH, then waits for container health and checks loopback health plus public HTTPS. It uses the existing server Compose file at `/docker/innovatorsaihub/docker-compose.yml`. That file builds committed code from `hostinger-vps`; local edits are not uploaded.
+
+Download `deploy.ps1` from the `hostinger-vps` branch once. In PowerShell, open the folder containing it and run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\deploy.ps1
+```
+
+The execution-policy option applies only to this PowerShell process. Windows OpenSSH Client must be installed, and your PC must be able to connect to `root@187.127.187.153` on SSH port 22. The script prompts through SSH for your VPS password or key passphrase when needed; never put either in the repository. On the first connection, verify the server host-key fingerprint against the VPS before accepting it. Key authentication can avoid repeated VPS password entry; a passphrase-protected key may use ssh-agent.
+
+Optional commands:
+
+```powershell
+.\deploy.ps1 -DryRun
+.\deploy.ps1 -IdentityFile "$env:USERPROFILE\.ssh\id_ed25519"
+.\deploy.ps1 -SshPort 2222
+```
+
+The script stops on failure. A failed build does not replace the running website; a failure after container replacement can require recovery. It starts only the website service and does not restart shared Traefik or other applications. A short interruption can occur when the website container is replaced. A successful result confirms health/HTTPS, not every page or the requested visual change; inspect the website after a hard refresh.
+
+Running this file is manual deployment from your PC. Git pushes alone still do not trigger deployment. No live SSH run has been performed in the preparation environment; test the first connection on the user's PC. Use `-DryRun` to inspect the remote command without connecting.
