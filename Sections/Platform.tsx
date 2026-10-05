@@ -1054,10 +1054,10 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 style={{
                   fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                   fontWeight: 600,
-                  backgroundColor: '#000000',
+                  backgroundColor: '#166534',
                   color: '#ffffff'
                 }}
-                className="px-5 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md hover:bg-zinc-900 active:scale-95 transition-all cursor-pointer outline-none border border-zinc-800"
+                className="px-5 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md hover:bg-green-800 active:scale-95 transition-all cursor-pointer outline-none border border-green-800"
               >
                 Starts at ₹999/mo
               </motion.button>
@@ -1069,7 +1069,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   backgroundColor: '#25C667',
                   color: '#ffffff'
                 }}
-                className="px-4 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 select-none"
+                className="px-4 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md inline-flex items-center gap-2 select-none"
               >
                 <span className="flex h-2 w-2 relative shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
