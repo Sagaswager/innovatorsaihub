@@ -1,0 +1,12 @@
+# Bootstrap build: reachable only from the VPS until routing is confirmed.
+services:
+  website:
+    build:
+      # Explicit Git context works even if Hostinger fetches only this YAML.
+      context: https://github.com/Sagaswager/innovatorsaihub.git#hostinger-vps
+      args:
+        VITE_GA_MEASUREMENT_ID: ${VITE_GA_MEASUREMENT_ID:-G-FRNF7K23EF}
+        VITE_META_PIXEL_ID: ${VITE_META_PIXEL_ID:-}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${WEBSITE_PORT:-8088}:80"
