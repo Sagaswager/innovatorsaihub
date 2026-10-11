@@ -1,14 +1,14 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-Rebuild and deploy Innovators AI Hub on its existing Hostinger VPS over SSH.
+Deploy Innovators AI Hub to its existing Hostinger VPS with readiness checks and rollback.
 .EXAMPLE
-powershell -NoProfile -ExecutionPolicy Bypass -File .\deploy.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\deploy.ps1 -DryRun
 .EXAMPLE
-.\deploy.ps1 -IdentityFile "$env:USERPROFILE\.ssh\id_ed25519"
+.\deploy.ps1 -NonInteractive -IdentityFile "$env:USERPROFILE\.ssh\iah_deploy" -KnownHostsFile "$env:USERPROFILE\.ssh\known_hosts"
 .NOTES
-Deploys the branch in the VPS Compose file (currently hostinger-vps), not local
-uncommitted files. SSH credentials stay on your PC; no credentials belong here.
+Deploys committed code from the branch configured in the VPS Compose file.
+Credentials remain outside the repository.
 #>
 [CmdletBinding()]
 param(
@@ -23,29 +23,28 @@ param(
 
     [string]$IdentityFile,
 
+    [string]$KnownHostsFile,
+
+    [switch]$NonInteractive,
+
     [switch]$DryRun
 )
 
 $ErrorActionPreference = 'Stop'
+$scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$remoteScriptPath = Join-Path $scriptRoot 'deploy\remote-deploy.sh'
+if (-not (Test-Path -LiteralPath $remoteScriptPath -PathType Leaf)) {
+    throw "Remote deployment script not found: $remoteScriptPath"
+}
 
-# A single remote shell command avoids Windows/Linux stdin line-ending issues.
-# Each step must succeed before the next; a failed build leaves the running
-# website in place. Only the website service is recreated.
-$remoteSteps = @(
-    'set -eu',
-    'cd /docker/innovatorsaihub',
-    'docker compose -f docker-compose.yml config --quiet',
-    'docker compose -f docker-compose.yml build --no-cache website',
-    'docker compose -f docker-compose.yml up -d --no-deps --wait --wait-timeout 60 website',
-    'curl --fail --silent --show-error --max-time 15 --output /dev/null http://127.0.0.1:8088/healthz',
-    'curl --fail --silent --show-error --location --max-time 30 --retry 3 --retry-delay 2 --output /dev/null https://www.innovatorsaihub.com/'
-)
-$remoteCommand = $remoteSteps -join '; '
+$remoteScriptBase64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes($remoteScriptPath))
+$remoteCommand = "printf '%s' '$remoteScriptBase64' | base64 -d | bash -se"
 $target = "${SshUser}@${VpsHost}"
 
 if ($DryRun) {
     Write-Host "SSH target: $target (port $SshPort)"
-    Write-Host $remoteCommand
+    Write-Host "Remote script: $remoteScriptPath"
+    Write-Host 'Checks readiness, rebuilds only website, validates local/public health, and restores the prior image on post-build failure.'
     Write-Host 'Dry run only. No connection or deployment performed.'
     exit 0
 }
@@ -65,15 +64,35 @@ if ($IdentityFile) {
     if (-not (Test-Path -LiteralPath $IdentityFile -PathType Leaf)) {
         throw "SSH key file not found: $IdentityFile"
     }
-    $sshArguments += @('-i', (Resolve-Path -LiteralPath $IdentityFile).Path, '-o', 'IdentitiesOnly=yes')
+    $sshArguments += @(
+        '-i', (Resolve-Path -LiteralPath $IdentityFile).Path,
+        '-o', 'IdentitiesOnly=yes'
+    )
+}
+if ($KnownHostsFile) {
+    if (-not (Test-Path -LiteralPath $KnownHostsFile -PathType Leaf)) {
+        throw "Known-hosts file not found: $KnownHostsFile"
+    }
+    $sshArguments += @(
+        '-o', 'StrictHostKeyChecking=yes',
+        '-o', "UserKnownHostsFile=$((Resolve-Path -LiteralPath $KnownHostsFile).Path)"
+    )
+}
+if ($NonInteractive) {
+    if (-not $IdentityFile -or -not $KnownHostsFile) {
+        throw '-NonInteractive requires both -IdentityFile and -KnownHostsFile.'
+    }
+    $sshArguments += @('-o', 'BatchMode=yes')
 }
 
 Write-Host "Deploying committed website code to $target..."
-Write-Host 'SSH may ask for the VPS password or key passphrase. Enter it in this terminal.'
+if (-not $NonInteractive) {
+    Write-Host 'SSH may ask for the VPS password or key passphrase. Enter it in this terminal.'
+}
 & $sshCommand.Source @sshArguments $target $remoteCommand
 if ($LASTEXITCODE -ne 0) {
     throw "Deployment or verification failed (SSH exit code $LASTEXITCODE). Read the error above."
 }
 
-Write-Host 'Deployment completed; container health and public HTTPS checks passed.' -ForegroundColor Green
+Write-Host 'Deployment completed; readiness, container health and public HTTPS checks passed.' -ForegroundColor Green
 Write-Host 'Open https://www.innovatorsaihub.com/ and press Ctrl+Shift+R to inspect the change.'

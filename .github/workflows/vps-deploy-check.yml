@@ -1,0 +1,25 @@
+name: Check VPS deployment safety
+
+on:
+  pull_request:
+    branches: [hostinger-vps]
+    paths:
+      - 'deploy/**'
+      - 'deploy.ps1'
+      - '.github/workflows/deploy-vps.yml'
+      - '.github/workflows/vps-deploy-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deployment-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell and rollback scenarios
+        shell: bash
+        run: |
+          bash -n deploy/remote-deploy.sh
+          bash deploy/remote-deploy.test.sh
