@@ -259,7 +259,7 @@ const App: React.FC = () => {
             "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent",
             "offers": {
               "@type": "Offer",
-              "price": "999",
+              "price": "1,000",
               "priceCurrency": "INR",
               "availability": "https://schema.org/InStock",
               "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent"
@@ -368,7 +368,7 @@ const App: React.FC = () => {
             "url": "https://www.innovatorsaihub.com/linkedin-ai-agent",
             "offers": {
               "@type": "Offer",
-              "price": "999",
+              "price": "1,000",
               "priceCurrency": "INR",
               "availability": "https://schema.org/InStock",
               "url": "https://www.innovatorsaihub.com/linkedin-ai-agent"
@@ -466,14 +466,14 @@ const App: React.FC = () => {
       trackMetaEvent('ViewContent', {
         content_name: 'WhatsApp AI Agent',
         content_category: 'AI Agents',
-        value: 999,
+        value: 1000,
         currency: 'INR',
       });
     } else if (currentPage === 'linkedin-ai-agent') {
       trackMetaEvent('ViewContent', {
         content_name: 'LinkedIn AI Agent',
         content_category: 'AI Agents',
-        value: 999,
+        value: 1000,
         currency: 'INR',
       });
     }
