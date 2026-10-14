@@ -140,7 +140,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
       profession,
       companyName,
       agent: 'WhatsApp AI Agent',
-      price: '₹1,000/mo',
+      price: '₹999/mo',
       timestamp: new Date().toISOString()
     };
 
@@ -163,7 +163,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
       localStorage.setItem('platform_user', JSON.stringify({ name, email }));
 
       setIsSubmitted(true);
-      trackAgentRental('WhatsApp AI Agent', '₹1,000/mo', {
+      trackAgentRental('WhatsApp AI Agent', '₹999/mo', {
         name,
         email,
         phone: number,
@@ -302,7 +302,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <div className="flex flex-col items-end">
                     <div className="flex items-baseline gap-1">
                       <span className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 leading-none">
-                        ₹1,000
+                        ₹999
                       </span>
                       <span className="text-xs text-slate-500 font-medium">/mo</span>
                     </div>
@@ -477,7 +477,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   </span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
-                  <span>Starts at ₹1,000/mo</span>
+                  <span>Starts at ₹999/mo</span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider shadow-sm">
                   <span className="relative flex h-2 w-2">
@@ -1459,7 +1459,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Enter your details below to rent your WhatsApp AI Agent for <strong className="text-slate-800">₹1,000/mo</strong>.
+                      Enter your details below to rent your WhatsApp AI Agent for <strong className="text-slate-800">₹999/mo</strong>.
                     </p>
                   </div>
 
@@ -1541,7 +1541,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                           <span>Submitting Request...</span>
                         </>
                       ) : (
-                        <span>Submit &amp; Rent Agent (₹1,000/mo)</span>
+                        <span>Submit &amp; Rent Agent (₹999/mo)</span>
                       )}
                     </button>
                   </form>
