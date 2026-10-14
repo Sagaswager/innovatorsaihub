@@ -2,32 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, User, ChevronDown, LogIn, UserPlus, Sparkles, MessageSquare, Linkedin, PhoneCall, Bot, X, Check, Loader2, ChevronLeft } from 'lucide-react';
 
-/*
-GOOGLE APPS SCRIPT FOR GOOGLE SHEET:
-Copy and paste this script into Extensions -> Apps Script inside your Google Sheet (https://docs.google.com/spreadsheets/d/1iYGkYrr97s9GjYAAbGrcdlzxPe-fycA-S-QQ-y_TPuw/edit?usp=sharing):
-
-function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.postData.contents);
-  
-  // Appends row with columns: Name, Mail, Number, Profession, Company Name
-  sheet.appendRow([
-    data.name,
-    data.email,
-    data.number,
-    data.profession,
-    data.companyName
-  ]);
-  
-  return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader("Access-Control-Allow-Origin", "*");
-}
-
-Make sure to click Deploy -> New Deployment -> Web App. Set Access to "Anyone" and paste the deployed URL into SCRIPT_URL below!
-*/
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec";
+import {
+  normalizeEmail,
+  isValidEmail,
+  verifyAccount,
+  registerAccount,
+  findLocalUser,
+  rememberUser,
+  SUPPORT_WHATSAPP,
+} from '../authApi';
 
 const aiCoWorkers = [
   {
@@ -641,106 +624,110 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
     }
   }, []);
 
+  // Sign the person in: remember them locally, then continue where they were headed.
+  const finishSignIn = (userName: string, cleanEmail: string) => {
+    rememberUser({ name: userName, email: cleanEmail });
+    setCurrentUser({ name: userName, email: cleanEmail });
+    setEmail('');
+    setIsModalOpen(false);
+    setIsSubmitting(false);
+
+    const postLoginRedirect = sessionStorage.getItem('post_login_redirect');
+    if (postLoginRedirect) {
+      sessionStorage.removeItem('post_login_redirect');
+      window.location.href = postLoginRedirect;
+      return;
+    }
+
+    if (pendingAction === 'join') {
+      navigateTo?.('join');
+      setPendingAction(null);
+    } else {
+      alert(userName ? `Welcome back, ${userName}!` : 'Welcome back!');
+    }
+  };
+
   // Handle Register/Login submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError('');
 
+    const cleanEmail = normalizeEmail(email);
+    if (!isValidEmail(cleanEmail)) {
+      setSubmitError('Please enter a valid email address, e.g. name@gmail.com');
+      setIsSubmitting(false);
+      return;
+    }
+
     if (modalMode === 'register') {
-      const userData = {
+      // The account is written to the Google Sheet, so it works from any device later.
+      const result = await registerAccount({
         name,
-        email,
-        mail: email,
+        email: cleanEmail,
         number,
         profession,
-        companyName
-      };
+        companyName,
+        source: 'platform-modal',
+      });
 
-      try {
-        // Post data to Google Apps Script Web App
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors', // standard Apps Script redirect handling
-          headers: {
-            'Content-Type': 'text/plain',
-          },
-          body: JSON.stringify(userData)
-        });
-
-        // Store user database locally to simulate backend persistence
-        const existingUsersRaw = localStorage.getItem('platform_registered_users');
-        const existingUsers = existingUsersRaw ? JSON.parse(existingUsersRaw) : [];
-
-        // Save user if not already in list
-        if (!existingUsers.some((u: any) => u.email === email)) {
-          existingUsers.push(userData);
-          localStorage.setItem('platform_registered_users', JSON.stringify(existingUsers));
-        }
-
-        // Login user session
-        localStorage.setItem('platform_user', JSON.stringify({ name, email }));
-        setCurrentUser({ name, email });
-
-        // Reset form & close modal
-        setName('');
-        setEmail('');
-        setNumber('');
-        setProfession('');
-        setCompanyName('');
-        setIsModalOpen(false);
-        
-        const postLoginRedirect = sessionStorage.getItem('post_login_redirect');
-        if (postLoginRedirect) {
-          sessionStorage.removeItem('post_login_redirect');
-          window.location.href = postLoginRedirect;
-          return;
-        }
-
-        if (pendingAction === 'join') {
-          navigateTo?.('join');
-          setPendingAction(null);
-        } else {
-          alert(`Account created successfully! Welcome, ${name}!`);
-        }
-
-      } catch (err) {
-        console.error("Submission failed:", err);
-        setSubmitError('Failed to register. Please check your internet connection.');
-      } finally {
+      if (!result.ok) {
+        setSubmitError(result.message);
         setIsSubmitting(false);
+        return;
       }
-    } else {
-      // Login flow: Lookup email in local registered list
-      const existingUsersRaw = localStorage.getItem('platform_registered_users');
-      const existingUsers = existingUsersRaw ? JSON.parse(existingUsersRaw) : [];
 
-      const foundUser = existingUsers.find((u: any) => u.email === email);
-
-      if (foundUser) {
-        localStorage.setItem('platform_user', JSON.stringify({ name: foundUser.name, email: foundUser.email }));
-        setCurrentUser({ name: foundUser.name, email: foundUser.email });
-        setEmail('');
-        setIsModalOpen(false);
-        
-        const postLoginRedirect = sessionStorage.getItem('post_login_redirect');
-        if (postLoginRedirect) {
-          sessionStorage.removeItem('post_login_redirect');
-          window.location.href = postLoginRedirect;
-          return;
-        }
-
-        if (pendingAction === 'join') {
-          navigateTo?.('join');
-          setPendingAction(null);
-        } else {
-          alert(`Welcome back, ${foundUser.name}!`);
-        }
-      } else {
-        setSubmitError('Email not found. Click "Get Started" to register this email first!');
-      }
+      rememberUser({ name, email: cleanEmail });
+      setCurrentUser({ name, email: cleanEmail });
+      setName('');
+      setEmail('');
+      setNumber('');
+      setProfession('');
+      setCompanyName('');
+      setIsModalOpen(false);
       setIsSubmitting(false);
+
+      const postLoginRedirect = sessionStorage.getItem('post_login_redirect');
+      if (postLoginRedirect) {
+        sessionStorage.removeItem('post_login_redirect');
+        window.location.href = postLoginRedirect;
+        return;
+      }
+
+      if (pendingAction === 'join') {
+        navigateTo?.('join');
+        setPendingAction(null);
+      } else {
+        alert(
+          result.created
+            ? `Account created successfully! Welcome, ${name}!`
+            : `Welcome back, ${name}! We refreshed your account details.`
+        );
+      }
+      return;
     }
+
+    // Sign in. The browser cache is just a shortcut; the sheet decides.
+    const cached = findLocalUser(cleanEmail);
+    if (cached) {
+      finishSignIn(cached.name, cleanEmail);
+      return;
+    }
+
+    const found = await verifyAccount(cleanEmail);
+    if (found.status === 'found') {
+      finishSignIn(found.name, cleanEmail);
+      return;
+    }
+
+    if (found.status === 'not_found') {
+      setSubmitError(`We have no account for ${cleanEmail} yet.`);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setSubmitError(found.message);
+    setIsSubmitting(false);
   };
 
   return (
@@ -1470,14 +1457,38 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 <p className="text-[11px] text-zinc-600 mt-1">
                   {modalMode === 'register'
                     ? 'Enter your details below to rent your AI Co-worker team.'
-                    : 'Enter your email id to access your AI login account.'}
+                    : 'Enter the email you signed up with. We check it against our account list.'}
                 </p>
               </div>
 
               {/* Error feedback */}
               {submitError && (
                 <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-100 text-red-600 text-xs font-medium">
-                  {submitError}
+                  <p>{submitError}</p>
+                  {modalMode === 'login' && (
+                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSubmitError('');
+                          setModalMode('register');
+                        }}
+                        className="underline font-bold text-red-700 hover:text-red-800"
+                      >
+                        Create an account with this email
+                      </button>
+                      <a
+                        href={`https://wa.me/${SUPPORT_WHATSAPP}?text=${encodeURIComponent(
+                          `Hi, I can't sign in to innovatorsaihub.com with ${email}`
+                        )}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline font-bold text-red-700 hover:text-red-800"
+                      >
+                        Message us on WhatsApp
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1501,6 +1512,9 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <input
                         type="email"
                         required
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        spellCheck={false}
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         placeholder="sagar@example.com"
@@ -1550,6 +1564,9 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                     <input
                       type="email"
                       required
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                      spellCheck={false}
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder="sagar@example.com"
@@ -1567,7 +1584,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   {isSubmitting ? (
                     <>
                       <Loader2 size={14} className="animate-spin" />
-                      <span>Saving to Sheet...</span>
+                      <span>{modalMode === 'register' ? 'Saving your account...' : 'Checking your account...'}</span>
                     </>
                   ) : (
                     <span>{modalMode === 'register' ? 'Submit & Create Account' : 'Verify Email & Sign In'}</span>

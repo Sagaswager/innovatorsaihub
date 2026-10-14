@@ -28,13 +28,12 @@ import {
   Users,
 } from 'lucide-react';
 import { trackEvent } from '../analytics';
+import { registerAccount } from '../authApi';
 
 interface EventRegistrationProps {
   isDarkMode: boolean;
 }
 
-const GOOGLE_SHEET_URL =
-  'https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec';
 
 const countryCodes = [
   { code: '+91', name: 'IN (+91)' },
@@ -161,27 +160,23 @@ const EventRegistration: React.FC<EventRegistrationProps> = () => {
 
     setRegisteredUser(userData);
 
-    const payload = {
-      name: formData.name,
-      mail: formData.email,
-      number: fullPhoneNumber,
-      profession: formData.designation,
-      companyName: formData.company,
-    };
-
     try {
       trackEvent('event_registration_lead', {
         company: formData.company,
       });
 
-      await fetch(GOOGLE_SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-        body: JSON.stringify(payload),
+      const lead = await registerAccount({
+        name: formData.name,
+        email: formData.email,
+        number: fullPhoneNumber,
+        profession: formData.designation,
+        companyName: formData.company,
+        agent: 'AI for Business Event',
+        source: 'event-registration-lead',
       });
+      if (!lead.ok) {
+        console.error('Lead submission error:', lead.message);
+      }
 
       trackEvent('event_lead_success', {
         email: formData.email,
@@ -222,27 +217,27 @@ const EventRegistration: React.FC<EventRegistrationProps> = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    const payload = {
-      fullName: registeredUser.name,
+    // Saved to the account sheet - the same email can sign in to the platform later.
+    const result = await registerAccount({
+      name: registeredUser.name,
       email: registeredUser.email,
-      contactNumber: registeredUser.phone,
-      subject: 'AI for Business (PAYMENT VERIFICATION COMPLETED)',
-      location: registeredUser.city,
-      message: `Company: ${registeredUser.company} | Designation: ${registeredUser.designation} | UTR / Txn Ref ID: ${txnId} | Paid: ₹899`,
-    };
+      number: registeredUser.phone,
+      profession: registeredUser.designation,
+      companyName: registeredUser.company,
+      notes: `AI for Business event | City: ${registeredUser.city} | UTR / Txn Ref: ${txnId} | Paid: \u20b9899`,
+      agent: 'AI for Business Event',
+      price: '\u20b9899',
+      source: 'event-registration',
+    });
+
+    if (!result.ok) {
+      console.error('Payment confirmation error:', result.message);
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      trackEvent('payment_verification_attempt', { txnId });
-
-      await fetch(GOOGLE_SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
       setSubmitStatus('success');
 
       trackEvent('payment_verification_success', {

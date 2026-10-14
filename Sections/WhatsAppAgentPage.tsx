@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, Loader2 } from 'lucide-react';
 import { trackAgentRental, trackContact, trackEvent } from '../analytics';
+import {
+  normalizeEmail,
+  isValidEmail,
+  registerAccount,
+  rememberUser,
+} from '../authApi';
 
 interface WhatsAppAgentPageProps {
   isDarkMode?: boolean;
@@ -54,7 +60,6 @@ const WHATSAPP_FAQS = [
 ];
 
 const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = false, navigateTo }) => {
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4dF7wuetgSnMA2Dw0nkwunHeZaroNaYJeP5XAAf4pmxtqZQPsNWo1tNH9nc3rprTm/exec";
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
@@ -132,50 +137,42 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
     setIsSubmitting(true);
     setSubmitError('');
 
-    const userData = {
+    const cleanEmail = normalizeEmail(email);
+    if (!isValidEmail(cleanEmail)) {
+      setSubmitError('Please enter a valid email address, e.g. name@gmail.com');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Written to the account sheet, so this email can sign in later from any device.
+    const result = await registerAccount({
       name,
-      email,
-      mail: email,
+      email: cleanEmail,
       number,
       profession,
       companyName,
       agent: 'WhatsApp AI Agent',
       price: '₹999/mo',
-      timestamp: new Date().toISOString()
-    };
+      source: 'whatsapp-agent-page',
+    });
 
-    try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-        body: JSON.stringify(userData)
-      });
-
-      const existingUsersRaw = localStorage.getItem('platform_registered_users');
-      const existingUsers = existingUsersRaw ? JSON.parse(existingUsersRaw) : [];
-      if (!existingUsers.some((u: any) => u.email === email)) {
-        existingUsers.push(userData);
-        localStorage.setItem('platform_registered_users', JSON.stringify(existingUsers));
-      }
-      localStorage.setItem('platform_user', JSON.stringify({ name, email }));
-
-      setIsSubmitted(true);
-      trackAgentRental('WhatsApp AI Agent', '₹999/mo', {
-        name,
-        email,
-        phone: number,
-        profession,
-        companyName,
-      });
-    } catch (err) {
-      console.error("Submission failed:", err);
-      setSubmitError('Failed to submit rental request. Please try again or reach out on WhatsApp.');
-    } finally {
+    if (!result.ok) {
+      setSubmitError(`${result.message} You can also reach us on WhatsApp.`);
       setIsSubmitting(false);
+      return;
     }
+
+    rememberUser({ name, email: cleanEmail });
+    setIsSubmitted(true);
+    setIsSubmitting(false);
+
+    trackAgentRental('WhatsApp AI Agent', '₹999/mo', {
+      name,
+      email: cleanEmail,
+      phone: number,
+      profession,
+      companyName,
+    });
   };
 
   return (
@@ -1487,6 +1484,9 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       <input
                         type="email"
                         required
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        spellCheck={false}
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         placeholder="sagar@example.com"
