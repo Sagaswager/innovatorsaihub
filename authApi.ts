@@ -42,7 +42,7 @@ export const normalizeEmail = (value: string): string => (value || '').trim().to
 export const isValidEmail = (value: string): boolean =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(value));
 
-async function request(url: string, init?: RequestInit, timeoutMs = 15000): Promise<Response> {
+async function request(url: string, init?: RequestInit, timeoutMs = 20000): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
