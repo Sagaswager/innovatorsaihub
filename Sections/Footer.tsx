@@ -33,6 +33,7 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) 
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-10 text-[10px] font-bold tracking-[0.4em] uppercase">
           <button onClick={() => navigateTo?.('services')} className="text-white/40 hover:text-white transition-all">Rent AI Co-worker</button>
           <button onClick={() => navigateTo?.('register')} className="text-white/40 hover:text-white transition-all">Event</button>
+          <button onClick={() => navigateTo?.('privacy')} className="text-white/40 hover:text-white transition-all">Privacy policy</button>
           <a 
             href="/linkedin-ai-agent" 
             onClick={(e) => {

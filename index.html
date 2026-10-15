@@ -27,28 +27,18 @@
     <!-- ======================================================= -->
     <!--  Tracking Configuration                                 -->
     <!-- ======================================================= -->
-    <!-- Google Tag Manager / Google Analytics (GA4) - Initialized on idle to eliminate mobile TBT -->
+    <!-- Google Analytics (GA4) — consent mode default DENIED.
+         The tag itself is only injected by consent.ts after the visitor clicks "Allow",
+         so no analytics storage is created before consent. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-FRNF7K23EF');
-
-      (function() {
-        function loadGtag() {
-          if (window.__GTAG_LOADED__) return;
-          window.__GTAG_LOADED__ = true;
-          var s = document.createElement('script');
-          s.async = true;
-          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FRNF7K23EF';
-          document.head.appendChild(s);
-        }
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(function() { setTimeout(loadGtag, 1000); });
-        } else {
-          window.addEventListener('load', function() { setTimeout(loadGtag, 1000); });
-        }
-      })();
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied'
+      });
     </script>
 
     <!-- Open Graph / Facebook -->

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, User, ChevronDown, LogIn, UserPlus, Sparkles, MessageSquare, Linkedin, PhoneCall, Bot, X, Check, Loader2, ChevronLeft } from 'lucide-react';
 
@@ -11,6 +11,12 @@ import {
   rememberUser,
   SUPPORT_WHATSAPP,
 } from '../authApi';
+import MyPlanModal, { type PlanId, type BillingCycle } from './MyPlanModal';
+import AccountSettingsModal from './AccountSettingsModal';
+import AgentReviews from './AgentReviews';
+import { fetchAllReviewStats } from '../authApi';
+import GoogleSignInButton from './GoogleSignInButton';
+import { isGoogleSignInConfigured, type GoogleProfile } from '../googleAuth';
 
 const aiCoWorkers = [
   {
@@ -557,6 +563,54 @@ const aiCoWorkers = [
   }
 ];
 
+/* ------------------------------------------------------------------ *
+ * Task 9 — "Trending In" locations
+ * ------------------------------------------------------------------ */
+
+const TRENDING_LOCATIONS = ["New York", "Mexico", "Tokyo", "Bangalore", "Mumbai"];
+
+/**
+ * Curated trending picks per city. This is an editorial selection of which agent
+ * a market asks about most — it is NOT a measured popularity metric, so the UI
+ * never prints numbers next to it.
+ */
+const TRENDING_PICKS: Record<string, string[]> = {
+  "New York": ["Linkedin AI Agent", "Gmail AI Agent", "Voice Calling AI Agent"],
+  Mexico: ["Whatsapp AI Agent", "Instagram AI Agent", "Lead Gen AI Agent"],
+  Tokyo: ["Browser Automation Agent", "Computer Vision Agent", "RAG AI Agent"],
+  Bangalore: ["Lead Gen AI Agent", "Marketing AI Agent", "Customer Support AI Agent"],
+  Mumbai: ["Instagram AI Agent", "Content Writer AI Agent", "SEO AI Agent"],
+};
+
+/** Fisher-Yates over a copy; used so the rotation order is not always identical. */
+const shuffleLocations = (list: string[], seed: number): string[] => {
+  const copy = [...list];
+  let random = seed * 9301 + 49297;
+  const next = () => {
+    random = (random * 9301 + 49297) % 233280;
+    return random / 233280;
+  };
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(next() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+
+/** Respects the operating system "reduce motion" preference. */
+const usePrefersReducedMotion = (): boolean => {
+  const [reduced, setReduced] = React.useState(false);
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(query.matches);
+    const onChange = (event: MediaQueryListEvent) => setReduced(event.matches);
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+  return reduced;
+};
+
 interface PlatformProps {
   isDarkMode: boolean;
   navigateTo?: (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent' | any) => void;
@@ -565,6 +619,11 @@ interface PlatformProps {
 const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCreditsOpen, setIsCreditsOpen] = useState(false);
+  const [isMyPlanOpen, setIsMyPlanOpen] = useState(false);
+  const [isAccountSettingsOpen, setIsAccountSettingsOpen] = useState(false);
+  // Task 8: real rating averages, when an agent has reviews. Cards fall back to the
+  // static display value until the first review arrives.
+  const [reviewStats, setReviewStats] = useState<Record<string, { average: number; count: number }>>({});
 
   // Task 6: close the Add Balance popup on Escape (click-outside is handled by the
   // overlay rendered alongside the popup).
@@ -588,16 +647,105 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   // Selected agent for custom details page
   const [selectedAgent, setSelectedAgent] = useState<any | null>(null);
 
-  // Locations for sliding header animation
-  const locations = ["Noida", "New Delhi", "Gurugram"];
+  // Task 9 — Trending In: shuffled rotation, manual selection, reduced-motion aware.
   const [locationIndex, setLocationIndex] = useState(0);
+  const [locationPaused, setLocationPaused] = useState(false);
+  const [shuffleSeed, setShuffleSeed] = useState(1);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  const locationOrder = useMemo(() => shuffleLocations(TRENDING_LOCATIONS, shuffleSeed), [shuffleSeed]);
+  const activeLocation = locationOrder[locationIndex % locationOrder.length];
+  const trendingAgents = (TRENDING_PICKS[activeLocation] || [])
+    .map((title) => aiCoWorkers.find((agent) => agent.title === title))
+    .filter(Boolean) as typeof aiCoWorkers;
 
   useEffect(() => {
+    // A manual choice wins: no auto-advance once the visitor has picked a city,
+    // and no motion at all when the OS asks for reduced motion.
+    if (locationPaused || prefersReducedMotion) return;
     const timer = setInterval(() => {
-      setLocationIndex((prev) => (prev + 1) % locations.length);
-    }, 3000);
+      setLocationIndex((prev) => {
+        if (prev + 1 >= locationOrder.length) {
+          setShuffleSeed((seed) => seed + 1);
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 2600);
     return () => clearInterval(timer);
+  }, [locationPaused, prefersReducedMotion, locationOrder.length]);
+
+  useEffect(() => {
+    let alive = true;
+    fetchAllReviewStats().then((stats) => {
+      if (alive) setReviewStats(stats || {});
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
+
+  /** Displayed rating for a card: real average when reviews exist, else the static value. */
+  const ratingFor = (title: string) => {
+    const real = reviewStats[title];
+    if (real && real.count > 0) return { value: real.average.toFixed(1), count: String(real.count) };
+    return null;
+  };
+
+  // Task 2 — Google sign-in: an existing verified email signs in, a new one registers.
+  const handleGoogleProfile = async (profile: GoogleProfile) => {
+    setIsSubmitting(true);
+    setSubmitError('');
+    try {
+      const existing = await verifyAccount(profile.email);
+      if (existing.status === 'error') {
+        setSubmitError(existing.message);
+        return;
+      }
+      if (existing.status === 'found') {
+        const user = { name: existing.name || profile.name, email: normalizeEmail(profile.email) };
+        rememberUser(user);
+        setCurrentUser(user);
+        setIsModalOpen(false);
+        return;
+      }
+      const created = await registerAccount({
+        name: profile.name,
+        email: profile.email,
+        source: 'google-signin',
+        notes: 'Signed up with Google',
+      });
+      if (!created.ok) {
+        setSubmitError(created.message || 'Could not create your account.');
+        return;
+      }
+      const user = { name: profile.name, email: normalizeEmail(profile.email) };
+      rememberUser(user);
+      setCurrentUser(user);
+      setIsModalOpen(false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Task 10 — plan upgrade hands off to the existing rent/signup flow (no payment here).
+  const handlePlanUpgrade = (plan: PlanId, billing: BillingCycle) => {
+    setIsMyPlanOpen(false);
+    console.log('[My Plan] selected', plan, billing);
+    if (currentUser) {
+      navigateTo?.('services');
+    } else {
+      setPendingAction('plan');
+      setModalMode('register');
+      setIsModalOpen(true);
+    }
+  };
+
+  const selectLocation = (city: string) => {
+    const index = locationOrder.indexOf(city);
+    if (index >= 0) setLocationIndex(index);
+    setLocationPaused(true);
+  };
 
   // Form Field states
   const [name, setName] = useState('');
@@ -918,6 +1066,28 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <button
                         onClick={() => {
                           setIsDropdownOpen(false);
+                          setIsMyPlanOpen(true);
+                        }}
+                        className="w-full px-4 py-2.5 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-950 text-xs font-semibold rounded-xl flex items-center gap-2.5 transition-all outline-none"
+                      >
+                        <Sparkles size={13} className="text-zinc-400" />
+                        <span>My Plan</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setIsAccountSettingsOpen(true);
+                        }}
+                        className="w-full px-4 py-2.5 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-950 text-xs font-semibold rounded-xl flex items-center gap-2.5 transition-all outline-none"
+                      >
+                        <User size={13} className="text-zinc-400" />
+                        <span>Account Settings</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
                           localStorage.removeItem('platform_user');
                           setCurrentUser(null);
                           alert("Signed out successfully!");
@@ -952,6 +1122,17 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       >
                         <UserPlus size={13} className="text-zinc-400" />
                         <span>Get Started</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setIsMyPlanOpen(true);
+                        }}
+                        className="w-full px-4 py-2.5 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-950 text-xs font-semibold rounded-xl flex items-center gap-2.5 transition-all outline-none"
+                      >
+                        <Sparkles size={13} className="text-zinc-400" />
+                        <span>My Plan</span>
                       </button>
                     </>
                   )}
@@ -1035,6 +1216,17 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 AI Agent Co-Worker
               </h2>
             </div>
+
+            {/* Task 5: platform tagline */}
+            <p
+              style={{
+                fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                fontWeight: 600,
+              }}
+              className="mt-3 md:mt-4 text-base md:text-2xl text-zinc-700 tracking-tight leading-snug select-text"
+            >
+              Give the goal. AI Agent gets it done.
+            </p>
 
             {/* Left Side Aligned Starts At Button & Update Label (Triggers Get Started glassy Form) */}
             <div className="flex flex-wrap items-center gap-3 text-left mt-6">
@@ -1207,28 +1399,82 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               in
             </span>
 
-            {/* Sliding Location with Simple Gradient Color */}
-            <div className="h-[2rem] md:h-[2.5rem] relative overflow-hidden min-w-[110px] md:min-w-[160px] inline-flex items-center text-left">
+            {/* Sliding location — slides normally, cross-fades under reduced motion */}
+            <div className="h-[2rem] md:h-[2.5rem] relative overflow-hidden min-w-[130px] md:min-w-[190px] inline-flex items-center text-left">
               <AnimatePresence mode="wait">
                 <motion.span
-                  key={locations[locationIndex]}
-                  initial={{ y: -15, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 15, opacity: 0 }} // exit downwards: vanish towards downside
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  key={activeLocation}
+                  initial={prefersReducedMotion ? { opacity: 0 } : { y: -15, opacity: 0 }}
+                  animate={prefersReducedMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
+                  exit={prefersReducedMotion ? { opacity: 0 } : { y: 15, opacity: 0 }} // exit downwards: vanish towards downside
+                  transition={{ duration: prefersReducedMotion ? 0.15 : 0.4, ease: "easeInOut" }}
                   className="absolute inset-0 flex items-center justify-start bg-gradient-to-r from-emerald-400 via-green-500 to-teal-500 bg-clip-text text-transparent font-sans tracking-tight uppercase"
                   style={{
                     fontSize: 'clamp(0.9rem, 2.2vw, 1.5rem)',
                     fontWeight: 900,
                   }}
                 >
-                  {locations[locationIndex]}
+                  {activeLocation}
                 </motion.span>
               </AnimatePresence>
             </div>
           </div>
 
-          <div className="relative inline-block mb-10 z-10">
+          {/* Selectable city chips — choosing one pauses the rotation */}
+          <div
+            className="flex flex-wrap items-center justify-center gap-2 mb-5"
+            role="tablist"
+            aria-label="Trending locations"
+          >
+            {locationOrder.map((city) => {
+              const isActive = city === activeLocation;
+              return (
+                <button
+                  key={city}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => selectLocation(city)}
+                  className={`px-3 py-1.5 rounded-full text-[11px] md:text-xs font-bold uppercase tracking-wide transition-all outline-none ${
+                    isActive
+                      ? 'bg-zinc-950 text-white shadow-sm'
+                      : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                  }`}
+                >
+                  {city}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Agents trending for the selected location */}
+          <div className="mb-8">
+            <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-zinc-500 mb-3">
+              Trending in {activeLocation}
+            </p>
+            <div className="flex flex-wrap items-stretch justify-center gap-3">
+              {trendingAgents.map((agent) => (
+                <button
+                  key={agent.title}
+                  type="button"
+                  onClick={() => setSelectedAgent(agent)}
+                  className="flex items-center gap-3 bg-white border border-zinc-200 hover:border-zinc-300 hover:shadow-md rounded-2xl px-4 py-3 text-left transition-all active:scale-95 outline-none"
+                >
+                  <span className="w-8 h-8 rounded-xl bg-blue-500/[0.10] flex items-center justify-center text-zinc-700 shrink-0">
+                    {agent.logo}
+                  </span>
+                  <span className="flex flex-col">
+                    <span className="text-xs md:text-sm font-semibold text-zinc-900">{agent.title}</span>
+                    <span className="text-[10px] text-zinc-500 font-medium">
+                      ★ {agent.rating} ({agent.reviews})
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative inline-block mb-6 z-10">
             <h2 
               className="text-[12px] md:text-[15px] font-bold text-zinc-950 tracking-wider uppercase"
             >
@@ -1267,7 +1513,14 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <div className="w-full h-44 bg-blue-500/[0.05] group-hover:bg-blue-500/[0.10] flex items-center justify-center relative select-none border-b border-blue-200/20 transition-colors duration-300">
                         {/* Rating badge */}
                         <div className="absolute top-3 right-3 bg-white text-[10px] md:text-xs font-semibold text-zinc-700 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm border border-zinc-100/60">
-                          <span className="text-yellow-500">★</span> {item.rating.split(" ")[0]} <span className="text-zinc-600">({item.reviews.split(" ")[0]})</span>
+                          {ratingFor(item.title) ? (
+                            <>
+                              <span className="text-yellow-500">★</span> {ratingFor(item.title)!.value}{' '}
+                              <span className="text-zinc-600">({ratingFor(item.title)!.count})</span>
+                            </>
+                          ) : (
+                            <span className="text-zinc-500">New</span>
+                          )}
                         </div>
                         {/* Logo Wrapper */}
                         <div className="flex items-center justify-center p-6 text-zinc-800 transition-transform duration-300 group-hover:scale-110">
@@ -1425,6 +1678,16 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Task 8: ratings & reviews for this agent */}
+                    <AgentReviews
+                      agentTitle={selectedAgent.title}
+                      currentUser={currentUser}
+                      onRequireSignIn={() => {
+                        setModalMode('login');
+                        setIsModalOpen(true);
+                      }}
+                    />
 
                     {/* tag line footer */}
                     <div className="mt-6 pt-6 border-t border-zinc-100 text-center">
@@ -1587,6 +1850,22 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   </div>
                 )}
 
+                {/* Task 2: Continue with Google */}
+                {isGoogleSignInConfigured() && (
+                  <>
+                    <GoogleSignInButton
+                      onProfile={handleGoogleProfile}
+                      onError={(message) => setSubmitError(message)}
+                      disabled={isSubmitting}
+                    />
+                    <div className="flex items-center gap-3 my-5">
+                      <span className="h-px flex-1 bg-zinc-200" />
+                      <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">or</span>
+                      <span className="h-px flex-1 bg-zinc-200" />
+                    </div>
+                  </>
+                )}
+
                 {/* Primary Action Button (Sign Up / Sign In) */}
                 <button
                   type="submit"
@@ -1620,6 +1899,32 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Task 11: account settings + deletion */}
+      {isAccountSettingsOpen && currentUser && (
+        <AccountSettingsModal
+          currentUser={currentUser}
+          onClose={() => setIsAccountSettingsOpen(false)}
+          onDeleted={() => {
+            setIsAccountSettingsOpen(false);
+            setCurrentUser(null);
+            alert('Your account has been deleted. You have been signed out.');
+          }}
+          onOpenMyPlan={() => {
+            setIsAccountSettingsOpen(false);
+            setIsMyPlanOpen(true);
+          }}
+        />
+      )}
+
+      {/* Task 10: My Plan subscription modal */}
+      {isMyPlanOpen && (
+        <MyPlanModal
+          onClose={() => setIsMyPlanOpen(false)}
+          onUpgrade={handlePlanUpgrade}
+          currentPlan={((currentUser as any)?.plan === 'pro' ? 'pro' : (currentUser as any)?.plan === 'standard' ? 'standard' : null)}
+        />
+      )}
 
     </section>
   );

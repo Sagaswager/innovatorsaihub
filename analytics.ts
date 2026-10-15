@@ -24,6 +24,8 @@ declare global {
   }
 }
 
+import { analyticsAllowed, GA_MEASUREMENT_ID } from './consent';
+
 // Standard Meta Pixel Event Types
 export type StandardMetaEvent =
   | 'PageView'
@@ -40,7 +42,7 @@ export type StandardMetaEvent =
 
 // Tracking Configuration
 export const TRACKING_CONFIG = {
-  gaMeasurementId: (import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-FRNF7K23EF').trim(),
+  gaMeasurementId: GA_MEASUREMENT_ID,
   metaPixelId: (
     import.meta.env.VITE_META_PIXEL_ID ||
     (typeof window !== 'undefined' ? window.__META_PIXEL_ID__ : '') ||
@@ -120,6 +122,8 @@ export const initMetaPixel = (pixelId?: string) => {
  */
 export const initTracking = () => {
   if (typeof window === 'undefined' || window.__TRACKING_INITIALIZED__) return;
+  // Optional tracking must not start before the visitor allows analytics storage.
+  if (!analyticsAllowed()) return;
   window.__TRACKING_INITIALIZED__ = true;
   initMetaPixel();
 };
