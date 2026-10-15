@@ -9,8 +9,18 @@
  * hidden rather than shown broken.
  */
 
+/**
+ * Public OAuth client id for the site (Google Cloud project "8 april project",
+ * client "Innovators AI Hub Website", created 2026-10-15). A browser client id is
+ * public by design — it is visible in every page that renders the button — so it
+ * ships as the default and can be overridden with VITE_GOOGLE_CLIENT_ID.
+ * Authorised JavaScript origins: https://www.innovatorsaihub.com, https://innovatorsaihub.com
+ */
+const DEFAULT_GOOGLE_CLIENT_ID =
+  '542373103324-32qemvel3agkj8n4763069v12vvmtnql.apps.googleusercontent.com';
+
 export const GOOGLE_CLIENT_ID = (
-  (import.meta.env && import.meta.env.VITE_GOOGLE_CLIENT_ID) || ''
+  (import.meta.env && import.meta.env.VITE_GOOGLE_CLIENT_ID) || DEFAULT_GOOGLE_CLIENT_ID
 ).trim();
 
 export const isGoogleSignInConfigured = (): boolean => GOOGLE_CLIENT_ID.length > 0;
