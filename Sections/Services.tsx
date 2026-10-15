@@ -224,7 +224,6 @@ const Services: React.FC<ServicesProps> = ({ isDarkMode, isFullPage = false, sel
                     <p className="text-[11px] font-light text-white/50 leading-relaxed mb-4">{agent.description}</p>
                   </div>
                   <div className="text-left">
-                    <p className="text-xs font-semibold text-white/70 mb-3">{agent.price}</p>
                     <button
                       onClick={() => {
                         toggleAgent?.(agent.id);

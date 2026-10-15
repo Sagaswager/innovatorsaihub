@@ -565,6 +565,17 @@ interface PlatformProps {
 const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCreditsOpen, setIsCreditsOpen] = useState(false);
+
+  // Task 6: close the Add Balance popup on Escape (click-outside is handled by the
+  // overlay rendered alongside the popup).
+  useEffect(() => {
+    if (!isCreditsOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsCreditsOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isCreditsOpen]);
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
 
   // Modal states
@@ -769,6 +780,13 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           {/* Credits Popover Menu matching the screenshot exactly */}
           <AnimatePresence>
             {isCreditsOpen && (
+              <>
+              {/* Click-outside catcher: closes the popup without swallowing clicks elsewhere */}
+              <div
+                className="fixed inset-0 z-40 cursor-default"
+                onClick={() => setIsCreditsOpen(false)}
+                aria-hidden="true"
+              />
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 8 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -824,6 +842,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   Every new user receives a welcome bonus of <span className="text-zinc-900 font-bold">₹2,000</span>. When you rent any AI Agent, this balance will automatically be used to pay your bills.
                 </p>
               </motion.div>
+              </>
             )}
           </AnimatePresence>
         </div>
@@ -1266,14 +1285,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                           </h3>
                         </div>
 
-                        <div className="flex items-center justify-between mt-4">
-                          <div className="flex items-baseline gap-1 select-text font-medium">
-                            <span className="text-xl text-zinc-950">₹{item.price}</span>
-                            <span className="text-xs text-zinc-600">/mo</span>
-                            {item.originalPrice && (
-                              <span className="text-xs line-through text-zinc-600 ml-2">₹{item.originalPrice}</span>
-                            )}
-                          </div>
+                        <div className="flex items-center justify-end mt-4">
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
@@ -1575,7 +1587,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   </div>
                 )}
 
-                {/* Primary Action Button (Submit/Create Account) */}
+                {/* Primary Action Button (Sign Up / Sign In) */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -1587,7 +1599,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <span>{modalMode === 'register' ? 'Saving your account...' : 'Checking your account...'}</span>
                     </>
                   ) : (
-                    <span>{modalMode === 'register' ? 'Submit & Create Account' : 'Verify Email & Sign In'}</span>
+                    <span>{modalMode === 'register' ? 'Sign Up' : 'Sign In'}</span>
                   )}
                 </button>
 
@@ -1600,7 +1612,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   }}
                   className="w-full py-3 rounded-xl border border-zinc-200 hover:bg-zinc-50 text-zinc-800 text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 outline-none mt-2"
                 >
-                  {modalMode === 'register' ? 'Sign In instead' : 'Create Account / Get Started'}
+                  {modalMode === 'register' ? 'Sign In instead' : 'Sign Up instead'}
                 </button>
               </form>
 
