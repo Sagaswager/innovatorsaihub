@@ -569,19 +569,6 @@ const aiCoWorkers = [
 
 const TRENDING_LOCATIONS = ["New York", "Mexico", "Tokyo", "Bangalore", "Mumbai"];
 
-/**
- * Curated trending picks per city. This is an editorial selection of which agent
- * a market asks about most — it is NOT a measured popularity metric, so the UI
- * never prints numbers next to it.
- */
-const TRENDING_PICKS: Record<string, string[]> = {
-  "New York": ["Linkedin AI Agent", "Gmail AI Agent", "Voice Calling AI Agent"],
-  Mexico: ["Whatsapp AI Agent", "Instagram AI Agent", "Lead Gen AI Agent"],
-  Tokyo: ["Browser Automation Agent", "Computer Vision Agent", "RAG AI Agent"],
-  Bangalore: ["Lead Gen AI Agent", "Marketing AI Agent", "Customer Support AI Agent"],
-  Mumbai: ["Instagram AI Agent", "Content Writer AI Agent", "SEO AI Agent"],
-};
-
 /** Fisher-Yates over a copy; used so the rotation order is not always identical. */
 const shuffleLocations = (list: string[], seed: number): string[] => {
   const copy = [...list];
@@ -647,22 +634,16 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   // Selected agent for custom details page
   const [selectedAgent, setSelectedAgent] = useState<any | null>(null);
 
-  // Task 9 — Trending In: shuffled rotation, manual selection, reduced-motion aware.
+  // Task 9 — "Trending in <city>" headline: shuffled rotation, reduced-motion aware.
   const [locationIndex, setLocationIndex] = useState(0);
-  const [locationPaused, setLocationPaused] = useState(false);
   const [shuffleSeed, setShuffleSeed] = useState(1);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const locationOrder = useMemo(() => shuffleLocations(TRENDING_LOCATIONS, shuffleSeed), [shuffleSeed]);
   const activeLocation = locationOrder[locationIndex % locationOrder.length];
-  const trendingAgents = (TRENDING_PICKS[activeLocation] || [])
-    .map((title) => aiCoWorkers.find((agent) => agent.title === title))
-    .filter(Boolean) as typeof aiCoWorkers;
-
   useEffect(() => {
-    // A manual choice wins: no auto-advance once the visitor has picked a city,
-    // and no motion at all when the OS asks for reduced motion.
-    if (locationPaused || prefersReducedMotion) return;
+    // No motion when the OS asks for reduced motion.
+    if (prefersReducedMotion) return;
     const timer = setInterval(() => {
       setLocationIndex((prev) => {
         if (prev + 1 >= locationOrder.length) {
@@ -673,7 +654,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
       });
     }, 2600);
     return () => clearInterval(timer);
-  }, [locationPaused, prefersReducedMotion, locationOrder.length]);
+  }, [prefersReducedMotion, locationOrder.length]);
 
   useEffect(() => {
     let alive = true;
@@ -739,12 +720,6 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
       setModalMode('register');
       setIsModalOpen(true);
     }
-  };
-
-  const selectLocation = (city: string) => {
-    const index = locationOrder.indexOf(city);
-    if (index >= 0) setLocationIndex(index);
-    setLocationPaused(true);
   };
 
   // Form Field states
@@ -1417,60 +1392,6 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   {activeLocation}
                 </motion.span>
               </AnimatePresence>
-            </div>
-          </div>
-
-          {/* Selectable city chips — choosing one pauses the rotation */}
-          <div
-            className="flex flex-wrap items-center justify-center gap-2 mb-5"
-            role="tablist"
-            aria-label="Trending locations"
-          >
-            {locationOrder.map((city) => {
-              const isActive = city === activeLocation;
-              return (
-                <button
-                  key={city}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => selectLocation(city)}
-                  className={`px-3 py-1.5 rounded-full text-[11px] md:text-xs font-bold uppercase tracking-wide transition-all outline-none ${
-                    isActive
-                      ? 'bg-zinc-950 text-white shadow-sm'
-                      : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
-                  }`}
-                >
-                  {city}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Agents trending for the selected location */}
-          <div className="mb-8">
-            <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-zinc-500 mb-3">
-              Trending in {activeLocation}
-            </p>
-            <div className="flex flex-wrap items-stretch justify-center gap-3">
-              {trendingAgents.map((agent) => (
-                <button
-                  key={agent.title}
-                  type="button"
-                  onClick={() => setSelectedAgent(agent)}
-                  className="flex items-center gap-3 bg-white border border-zinc-200 hover:border-zinc-300 hover:shadow-md rounded-2xl px-4 py-3 text-left transition-all active:scale-95 outline-none"
-                >
-                  <span className="w-8 h-8 rounded-xl bg-blue-500/[0.10] flex items-center justify-center text-zinc-700 shrink-0">
-                    {agent.logo}
-                  </span>
-                  <span className="flex flex-col">
-                    <span className="text-xs md:text-sm font-semibold text-zinc-900">{agent.title}</span>
-                    <span className="text-[10px] text-zinc-500 font-medium">
-                      ★ {agent.rating} ({agent.reviews})
-                    </span>
-                  </span>
-                </button>
-              ))}
             </div>
           </div>
 
