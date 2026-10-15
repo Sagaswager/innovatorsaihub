@@ -158,10 +158,6 @@ const AgentTeams: React.FC<AgentTeamsProps> = ({ selectedAgents, toggleAgent, na
               </div>
 
               <div>
-                {/* Price */}
-                <p className="text-sm font-semibold text-white/70 mb-4">
-                  {agent.price}
-                </p>
                 {/* CTA Button */}
                 <PillButton
                   onClick={() => {

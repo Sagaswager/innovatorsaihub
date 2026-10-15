@@ -5,6 +5,7 @@ import Footer from './Sections/Footer';
 import Platform from './Sections/Platform';
 import SnowEffect from './Sections/SnowEffect';
 import { initTracking, trackPageView, trackMetaEvent } from './analytics';
+import { CONSENT_EVENT, loadAnalytics } from './consent';
 
 // Code-split secondary routes and modals to minimize initial bundle size
 const Hero = lazy(() => import('./Sections/Hero'));
@@ -20,6 +21,8 @@ const JoinTeam = lazy(() => import('./Sections/JoinTeam'));
 const AdminDashboard = lazy(() => import('./Sections/AdminDashboard'));
 const WhatsAppAgentPage = lazy(() => import('./Sections/WhatsAppAgentPage'));
 const LinkedInAgentPage = lazy(() => import('./Sections/LinkedInAgentPage'));
+const ConsentBanner = lazy(() => import('./Sections/ConsentBanner'));
+const PrivacyPolicy = lazy(() => import('./Sections/PrivacyPolicy'));
 
 export type Page = 
   | 'home' 
@@ -31,7 +34,8 @@ export type Page =
   | 'join' 
   | 'admin'
   | 'whatsapp-ai-agent'
-  | 'linkedin-ai-agent';
+  | 'linkedin-ai-agent'
+  | 'privacy';
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
@@ -104,7 +108,8 @@ const App: React.FC = () => {
         'join',
         'admin',
         'whatsapp-ai-agent',
-        'linkedin-ai-agent'
+        'linkedin-ai-agent',
+        'privacy'
       ];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
@@ -120,9 +125,20 @@ const App: React.FC = () => {
     // Run once on initial load to set page state based on the pathname
     handlePopState();
     initTracking();
+    // Loads GA4 only if this visitor already allowed analytics storage.
+    loadAnalytics();
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Start optional tracking the moment a visitor allows analytics storage.
+  useEffect(() => {
+    const onConsentChange = (event: Event) => {
+      if ((event as CustomEvent<string>).detail === 'granted') initTracking();
+    };
+    window.addEventListener(CONSENT_EVENT, onConsentChange);
+    return () => window.removeEventListener(CONSENT_EVENT, onConsentChange);
   }, []);
 
   useEffect(() => {
@@ -136,6 +152,11 @@ const App: React.FC = () => {
         title = 'AI Agent Teams & Business Automation | Innovators AI HUB';
         description = "Build AI agent teams for business automation, sales and customer workflows. Discover custom AI automation solutions from Innovators AI HUB. Get started.";
         ogImage = 'https://www.innovatorsaihub.com/platform_hero.webp';
+        break;
+
+      case 'privacy':
+        title = 'Privacy Policy | Innovators AI HUB';
+        description = 'How Innovators AI HUB handles account details and analytics, and how to change your analytics consent.';
         break;
 
       case 'portfolio':
@@ -484,7 +505,7 @@ const App: React.FC = () => {
     };
   }, [currentPage]);
 
-  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent';
+  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent' || currentPage === 'privacy';
 
   useEffect(() => {
     if (isLightPage) {
@@ -687,12 +708,28 @@ const App: React.FC = () => {
               <LinkedInAgentPage isDarkMode={isDarkMode} navigateTo={navigateTo} />
             </motion.div>
           )}
+
+          {currentPage === 'privacy' && (
+            <motion.div
+              key="privacy-page"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
+            >
+              <PrivacyPolicy navigateTo={navigateTo} />
+            </motion.div>
+          )}
         </AnimatePresence>
       </Suspense>
     </main>
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && currentPage !== 'privacy' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}
+
+      {/* Task 4: analytics consent popup */}
+      <Suspense fallback={null}>
+        <ConsentBanner onOpenPrivacy={() => navigateTo('privacy' as Page)} />
+      </Suspense>
 
       {/* Floating Chat/Social Buttons */}
       <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-3 select-none pointer-events-none">

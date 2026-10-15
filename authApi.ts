@@ -136,3 +136,135 @@ export function rememberUser(user: Account): void {
     /* ignore */
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * Agent reviews (Task 8) and account deletion (Task 11)
+ * Same endpoint, different actions.
+ * ------------------------------------------------------------------ */
+
+export type Review = {
+  name: string;
+  rating: number;
+  review: string;
+  at: string;
+};
+
+export type ReviewStats = {
+  agent: string;
+  average: number;
+  count: number;
+  distribution: Record<string, number>;
+  reviews: Review[];
+};
+
+const EMPTY_STATS = (agent: string): ReviewStats => ({
+  agent,
+  average: 0,
+  count: 0,
+  distribution: { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 },
+  reviews: [],
+});
+
+/** Real ratings for one agent: average, count, 1-5 breakdown, recent written reviews. */
+export async function fetchReviews(agent: string): Promise<ReviewStats> {
+  try {
+    const res = await request(`${AUTH_URL}?action=reviews&agent=${encodeURIComponent(agent)}`, undefined, 15000);
+    const data = await res.json();
+    if (data && data.status === 'ok' && data.stats) {
+      return { ...EMPTY_STATS(agent), ...data.stats };
+    }
+  } catch (err) {
+    /* offline or the endpoint is not deployed yet — callers fall back gracefully */
+  }
+  return EMPTY_STATS(agent);
+}
+
+/** Ratings for every agent that has at least one review, keyed by agent name. */
+export async function fetchAllReviewStats(): Promise<Record<string, { average: number; count: number }>> {
+  try {
+    const res = await request(`${AUTH_URL}?action=reviews`, undefined, 15000);
+    const data = await res.json();
+    if (data && data.status === 'ok' && data.agents) return data.agents;
+  } catch (err) {
+    /* ignore */
+  }
+  return {};
+}
+
+export type SubmitReviewResult =
+  | { ok: true; updated: boolean; stats: ReviewStats }
+  | { ok: false; message: string };
+
+/** One review per email per agent — a repeat submission updates the existing row. */
+export async function submitReview(input: {
+  agent: string;
+  rating: number;
+  review?: string;
+  email: string;
+  name?: string;
+}): Promise<SubmitReviewResult> {
+  const clean = normalizeEmail(input.email);
+  if (!isValidEmail(clean)) return { ok: false, message: 'Sign in with a valid email to review an agent.' };
+  if (!(input.rating >= 1 && input.rating <= 5)) return { ok: false, message: 'Choose a rating from 1 to 5 stars.' };
+  try {
+    const res = await request(AUTH_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'review',
+        agent: input.agent,
+        rating: input.rating,
+        review: input.review || '',
+        email: clean,
+        mail: clean,
+        name: input.name || '',
+      }),
+    });
+    const data = await res.json();
+    if (data && data.status === 'success') {
+      return {
+        ok: true,
+        updated: Boolean(data.updated),
+        stats: { ...EMPTY_STATS(input.agent), ...(data.stats || {}) },
+      };
+    }
+    return { ok: false, message: (data && data.message) || 'Could not save your review.' };
+  } catch (err) {
+    return { ok: false, message: 'Could not reach the review service. Check your connection and try again.' };
+  }
+}
+
+export type DeleteAccountResult = { ok: boolean; message?: string };
+
+/**
+ * Archives the account: it is removed from the sign-in index and its signup rows are
+ * marked Deleted, so it can no longer access anything, while the record is retained.
+ */
+export async function deleteAccount(email: string, source = 'website'): Promise<DeleteAccountResult> {
+  const clean = normalizeEmail(email);
+  if (!isValidEmail(clean)) return { ok: false, message: 'A valid email is required.' };
+  try {
+    const res = await request(AUTH_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'delete_account', email: clean, mail: clean, source }),
+    });
+    const data = await res.json();
+    if (data && data.status === 'success') return { ok: true };
+    return { ok: false, message: (data && data.message) || 'Could not delete the account.' };
+  } catch (err) {
+    return { ok: false, message: 'Could not reach the account service. Check your connection and try again.' };
+  }
+}
+
+/** Clears the local session + cached account so a deleted account is gone from this browser too. */
+export function forgetUser(email: string): void {
+  const target = normalizeEmail(email);
+  try {
+    localStorage.removeItem(LOCAL_SESSION_KEY);
+    const users = readLocalUsers().filter((u: any) => normalizeEmail(u && (u.email || u.mail)) !== target);
+    localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(users));
+  } catch (err) {
+    /* ignore */
+  }
+}
