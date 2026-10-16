@@ -268,3 +268,39 @@ export function forgetUser(email: string): void {
     /* ignore */
   }
 }
+
+/* ---- launch offer: post-and-tag proof screenshot ------------------------- */
+
+export type OfferProofResult = { ok: boolean; message?: string; url?: string };
+
+/**
+ * Sends the screenshot of the customer's post to the sheet. Apps Script stores
+ * the image in Drive ("Innovators AI Hub - Offer Proofs") and logs a row.
+ */
+export async function submitOfferProof(input: {
+  email: string;
+  name?: string;
+  plan?: string;
+  payable?: number;
+  /** data URL, e.g. "data:image/png;base64,..." */
+  screenshot: string;
+  filename?: string;
+}): Promise<OfferProofResult> {
+  const clean = normalizeEmail(input.email);
+  if (!isValidEmail(clean)) return { ok: false, message: 'Enter a valid email address.' };
+  try {
+    const res = await request(AUTH_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'offer_proof', ...input, email: clean, mail: clean }),
+    }, 60000);
+    const data = await res.json();
+    if (data.status === 'success') return { ok: true, url: data.url };
+    return { ok: false, message: data.message || 'Could not upload the screenshot.' };
+  } catch (err) {
+    return {
+      ok: false,
+      message: 'Could not upload the screenshot. Check your connection and try again.',
+    };
+  }
+}

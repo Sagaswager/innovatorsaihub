@@ -23,6 +23,7 @@ const WhatsAppAgentPage = lazy(() => import('./Sections/WhatsAppAgentPage'));
 const LinkedInAgentPage = lazy(() => import('./Sections/LinkedInAgentPage'));
 const ConsentBanner = lazy(() => import('./Sections/ConsentBanner'));
 const PrivacyPolicy = lazy(() => import('./Sections/PrivacyPolicy'));
+const MyPlanPage = lazy(() => import('./Sections/MyPlanPage'));
 
 export type Page = 
   | 'home' 
@@ -35,6 +36,7 @@ export type Page =
   | 'admin'
   | 'whatsapp-ai-agent'
   | 'linkedin-ai-agent'
+  | 'my-plan'
   | 'privacy';
 
 const App: React.FC = () => {
@@ -109,6 +111,7 @@ const App: React.FC = () => {
         'admin',
         'whatsapp-ai-agent',
         'linkedin-ai-agent',
+        'my-plan',
         'privacy'
       ];
       if (validPages.includes(path as Page)) {
@@ -154,6 +157,10 @@ const App: React.FC = () => {
         ogImage = 'https://www.innovatorsaihub.com/platform_hero.webp';
         break;
 
+      case 'my-plan':
+        title = 'Choose your plan | Innovators AI HUB';
+        description = 'Pick the plan that suits you, apply your ₹2,000 welcome balance, claim ₹2,000 OFF by posting about Innovators AI Hub, and pay by UPI.';
+        break;
       case 'privacy':
         title = 'Privacy Policy | Innovators AI HUB';
         description = 'How Innovators AI HUB handles account details and analytics, and how to change your analytics consent.';
@@ -709,6 +716,17 @@ const App: React.FC = () => {
             </motion.div>
           )}
 
+          {currentPage === 'my-plan' && (
+            <motion.div
+              key="my-plan-page"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
+            >
+              <MyPlanPage navigateTo={navigateTo as any} />
+            </motion.div>
+          )}
+
           {currentPage === 'privacy' && (
             <motion.div
               key="privacy-page"
@@ -722,7 +740,7 @@ const App: React.FC = () => {
         </AnimatePresence>
       </Suspense>
     </main>
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && currentPage !== 'privacy' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && currentPage !== 'my-plan' && currentPage !== 'privacy' && (
         <Footer isDarkMode={isDarkMode} currentPage={currentPage as any} navigateTo={navigateTo as any} />
       )}
 

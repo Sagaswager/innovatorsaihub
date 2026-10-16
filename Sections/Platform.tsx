@@ -11,7 +11,6 @@ import {
   rememberUser,
   SUPPORT_WHATSAPP,
 } from '../authApi';
-import MyPlanModal, { type PlanId, type BillingCycle } from './MyPlanModal';
 import AccountSettingsModal from './AccountSettingsModal';
 import AgentReviews from './AgentReviews';
 import { fetchAllReviewStats } from '../authApi';
@@ -606,7 +605,6 @@ interface PlatformProps {
 const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCreditsOpen, setIsCreditsOpen] = useState(false);
-  const [isMyPlanOpen, setIsMyPlanOpen] = useState(false);
   const [isAccountSettingsOpen, setIsAccountSettingsOpen] = useState(false);
   // Task 8: real rating averages, when an agent has reviews. Cards fall back to the
   // static display value until the first review arrives.
@@ -706,19 +704,6 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
       setIsModalOpen(false);
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  // Task 10 — plan upgrade hands off to the existing rent/signup flow (no payment here).
-  const handlePlanUpgrade = (plan: PlanId, billing: BillingCycle) => {
-    setIsMyPlanOpen(false);
-    console.log('[My Plan] selected', plan, billing);
-    if (currentUser) {
-      navigateTo?.('services');
-    } else {
-      setPendingAction('plan');
-      setModalMode('register');
-      setIsModalOpen(true);
     }
   };
 
@@ -1041,7 +1026,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <button
                         onClick={() => {
                           setIsDropdownOpen(false);
-                          setIsMyPlanOpen(true);
+                          navigateTo?.('my-plan');
                         }}
                         className="w-full px-4 py-2.5 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-950 text-xs font-semibold rounded-xl flex items-center gap-2.5 transition-all outline-none"
                       >
@@ -1102,7 +1087,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       <button
                         onClick={() => {
                           setIsDropdownOpen(false);
-                          setIsMyPlanOpen(true);
+                          navigateTo?.('my-plan');
                         }}
                         className="w-full px-4 py-2.5 hover:bg-zinc-50 text-zinc-700 hover:text-zinc-950 text-xs font-semibold rounded-xl flex items-center gap-2.5 transition-all outline-none"
                       >
@@ -1833,17 +1818,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           }}
           onOpenMyPlan={() => {
             setIsAccountSettingsOpen(false);
-            setIsMyPlanOpen(true);
+            navigateTo?.('my-plan');
           }}
-        />
-      )}
-
-      {/* Task 10: My Plan subscription modal */}
-      {isMyPlanOpen && (
-        <MyPlanModal
-          onClose={() => setIsMyPlanOpen(false)}
-          onUpgrade={handlePlanUpgrade}
-          currentPlan={((currentUser as any)?.plan === 'pro' ? 'pro' : (currentUser as any)?.plan === 'standard' ? 'standard' : null)}
         />
       )}
 
