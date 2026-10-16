@@ -43,6 +43,12 @@ export const PLAN_CONFIG = {
   socialPlatforms: 'Instagram, LinkedIn or X',
   /** UPI QR shown on the payment step. */
   paymentQr: '/payment-qr.jpg',
+  /** The welcome balance is spent once, on the first upgrade. */
+  balanceNote: 'One-time welcome bonus — used on your first upgrade',
+  balanceUsedNote: 'Already used on your first upgrade. Add balance to top up.',
+  /** Script the customer reads on camera before posting the offer video. */
+  videoScript: `Hey, everyone
+i found India ka apna AI Agentic platform, Innovators ai Hub, ye ek Ai innovators ki community h inka chhota sa sapna h, inhe india ki technology industry me kaam krke india ko grow krna, maine Innovators AI HUB pr apne business growth ke liye Multiple AI Agents ki team rent pr li h 3000/- month, AI Agents are doing good job, i m feeling happy it reduced so much stress from my work time. keep building & growing team, we are with you.`,
   plans: [
     {
       id: 'monthly',
@@ -89,17 +95,26 @@ export type Quote = {
   payable: number;
 };
 
+export type QuoteOptions = {
+  /** the "+₹2,000 OFF" launch offer has been claimed */
+  offerApplied: boolean;
+  /** the account still has its one-time welcome balance */
+  balanceAvailable: boolean;
+};
+
 /**
- * Prices a plan. The welcome balance always applies; the launch offer only once
- * the user has claimed it by posting and uploading a screenshot.
+ * Prices a plan. The welcome balance applies once per account; the launch offer
+ * only once the user has claimed it by posting the video and uploading a shot.
  */
-export const quotePlan = (plan: Plan, offerApplied: boolean): Quote => {
+export const quotePlan = (plan: Plan, opts: QuoteOptions): Quote => {
   const listTotal = plan.monthly * plan.months;
-  const balance = Math.min(PLAN_CONFIG.welcomeBalance, listTotal);
-  const offer = offerApplied ? Math.min(PLAN_CONFIG.launchOffer, listTotal - balance) : 0;
+  const balance = opts.balanceAvailable ? Math.min(PLAN_CONFIG.welcomeBalance, listTotal) : 0;
+  const offer = opts.offerApplied ? Math.min(PLAN_CONFIG.launchOffer, listTotal - balance) : 0;
   const raw = listTotal - balance - offer;
   const payable =
-    plan.id === 'monthly' && offerApplied ? PLAN_CONFIG.monthlyLaunchPayable : raw;
+    plan.id === 'monthly' && opts.offerApplied && opts.balanceAvailable
+      ? PLAN_CONFIG.monthlyLaunchPayable
+      : raw;
   return { listTotal, balance, offer, payable };
 };
 

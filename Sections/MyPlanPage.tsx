@@ -1,37 +1,43 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Check,
-  Crown,
-  Zap,
+  Copy,
+  Loader2,
+  QrCode,
   Upload,
   Instagram,
   Linkedin,
   Twitter,
-  Loader2,
-  QrCode,
-  PartyPopper,
-  ShieldCheck,
 } from 'lucide-react';
 import {
   PLAN_CONFIG,
   formatINR,
   planById,
-  planPriceLabel,
   quotePlan,
   type PlanId,
 } from './planConfig';
-import { normalizeEmail, isValidEmail, registerAccount, submitOfferProof } from '../authApi';
+import {
+  normalizeEmail,
+  isValidEmail,
+  registerAccount,
+  submitOfferProof,
+  fetchBalance,
+} from '../authApi';
 
 /* ------------------------------------------------------------------ *
- * "My Plan" — a full page (saga, 2026-10-16; it used to be a modal).
+ * "My Plan" — a standalone page (saga, 2026-10-16).
  *
- * Three steps:
- *   plans  — pick a plan, see the welcome balance on every card
- *   offer  — claim "+₹2,000 OFF": post about us, tag @innovatorsaihub,
- *            upload a screenshot of the post
+ * White, self-contained layout: no site header, no site footer, no floating
+ * buttons, no navigation into the rest of the site. It owns its own UI.
+ *
+ *   plans  — pick a plan; "+₹2,000 OFF" sits inside each card
+ *   offer  — read the script, record the video, post it, tag
+ *            @innovatorsaihub, upload a screenshot
  *   pay    — scan the UPI QR for the payable amount
+ *
+ * The welcome balance is one-time per account: ₹2,000 until the first upgrade,
+ * ₹0 afterwards until the customer tops up.
  * ------------------------------------------------------------------ */
 
 type Step = 'plans' | 'offer' | 'pay' | 'done';
@@ -46,7 +52,10 @@ const readSession = (): { name: string; email: string } => {
   try {
     const raw = localStorage.getItem('platform_user');
     const parsed = raw ? JSON.parse(raw) : null;
-    return { name: String((parsed && parsed.name) || ''), email: normalizeEmail((parsed && parsed.email) || '') };
+    return {
+      name: String((parsed && parsed.name) || ''),
+      email: normalizeEmail((parsed && parsed.email) || ''),
+    };
   } catch {
     return { name: '', email: '' };
   }
@@ -59,27 +68,40 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
   const [selectedId, setSelectedId] = useState<PlanId>('monthly');
   const [email, setEmail] = useState(session.email);
   const [name, setName] = useState(session.name);
-  const [screenshot, setScreenshot] = useState<string>('');
-  const [screenshotName, setScreenshotName] = useState<string>('');
+  const [balance, setBalance] = useState(PLAN_CONFIG.welcomeBalance);
+  const [balanceUsed, setBalanceUsed] = useState(false);
+  const [screenshot, setScreenshot] = useState('');
+  const [screenshotName, setScreenshotName] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
   const [proofUrl, setProofUrl] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const balanceAvailable = balance > 0 && !balanceUsed;
   const selected = planById(selectedId);
-  const quote = quotePlan(selected, offerApplied);
-  const goBack = () => {
-    if (step === 'plans') {
-      if (navigateTo) navigateTo('platform');
-      return;
-    }
-    setError('');
-    setStep(step === 'pay' ? 'offer' : 'plans');
-  };
+  const quote = quotePlan(selected, { offerApplied, balanceAvailable });
+  const plainQuote = quotePlan(selected, { offerApplied: false, balanceAvailable });
+  const withOfferQuote = quotePlan(selected, { offerApplied: true, balanceAvailable });
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
+
+  const refreshBalance = async (address: string) => {
+    const clean = normalizeEmail(address);
+    if (!isValidEmail(clean)) return;
+    const result = await fetchBalance(clean);
+    if (!result.ok) return;
+    setBalance(result.balance);
+    setBalanceUsed(result.used);
+    if (result.used) setOfferApplied(false);
+  };
+
+  useEffect(() => {
+    if (session.email) void refreshBalance(session.email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const pickFile = (file: File | null) => {
     setError('');
@@ -99,6 +121,37 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
     };
     reader.onerror = () => setError('Could not read that image. Please try another one.');
     reader.readAsDataURL(file);
+  };
+
+  const copyScript = async () => {
+    const text = PLAN_CONFIG.videoScript;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        throw new Error('no clipboard api');
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+      return;
+    } catch {
+      // fall back to a hidden textarea + execCommand
+      try {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        document.body.removeChild(area);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } catch {
+        setError('Could not copy automatically — select the script and copy it manually.');
+      }
+    }
   };
 
   const submitProof = async () => {
@@ -139,188 +192,215 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
       source: 'plan-upgrade',
       agent: selected.name,
       price: String(quote.payable),
-      notes: `Plan upgrade started · offer proof: ${proofUrl || 'not uploaded'}`,
+      notes: `Plan upgrade started · offer: ${offerApplied ? '₹2,000 OFF claimed' : 'no offer'} · proof: ${proofUrl || 'none'}`,
     });
     setBusy(false);
+    setBalance(0);
+    setBalanceUsed(true);
     setStep('done');
   };
 
-  const shell =
-    'min-h-screen w-full px-4 pt-24 pb-16 md:px-8 md:pt-28 md:pb-24';
-  const panel =
-    'w-full max-w-6xl mx-auto rounded-[32px] p-5 md:p-10 shadow-2xl';
-
-  const cardFor = (planId: PlanId, icon: React.ReactNode, featured?: boolean) => {
+  const cardFor = (planId: PlanId) => {
     const plan = planById(planId);
-    const q = quotePlan(plan, offerApplied);
-    const isSelected = selectedId === planId;
+    const q = quotePlan(plan, { offerApplied, balanceAvailable });
+    const without = quotePlan(plan, { offerApplied: false, balanceAvailable });
     return (
       <div
         key={planId}
-        className={`relative flex flex-col rounded-[28px] p-5 md:p-6 border shadow-sm transition-all ${
-          featured ? 'border-amber-200' : 'border-white/80 bg-white/85'
-        } ${isSelected ? 'ring-2 ring-slate-900/70' : ''}`}
-        style={
-          featured
-            ? { background: 'linear-gradient(150deg, #fff7ed 0%, #ffe4c7 45%, #ffd0a8 100%)' }
-            : { background: 'rgba(255,255,255,0.86)' }
-        }
+        className={`flex flex-col rounded-3xl border bg-white p-6 shadow-sm transition-shadow hover:shadow-lg ${
+          plan.featured ? 'border-amber-300' : 'border-slate-200'
+        }`}
       >
-        {featured && (
-          <span className="absolute -top-2 right-5 px-3 py-1 rounded-full bg-amber-600 text-white text-[10px] font-bold uppercase tracking-wider">
-            Best value
-          </span>
-        )}
-
-        <div className="flex items-center gap-2 mb-3">
-          <span className="w-7 h-7 rounded-full bg-white/90 flex items-center justify-center shadow-sm">{icon}</span>
-          <h3 className="text-lg md:text-xl font-black text-slate-900">{plan.name}</h3>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-lg font-bold text-slate-900">{plan.name}</h3>
+          {plan.featured && (
+            <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-800">
+              Best value
+            </span>
+          )}
         </div>
+        <p className="mt-1 text-xs font-medium text-slate-500">{plan.tagline}</p>
 
-        <p className="text-[11px] md:text-xs text-slate-600 font-medium mb-4">{plan.tagline}</p>
-
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl md:text-3xl font-black text-slate-900">{formatINR(plan.monthly)}</span>
-          <span className="text-[11px] md:text-xs text-slate-600 font-semibold">/month</span>
+        <div className="mt-5 flex items-baseline gap-1.5">
+          <span className="text-3xl font-black tracking-tight text-slate-900">
+            {formatINR(plan.monthly)}
+          </span>
+          <span className="text-xs font-semibold text-slate-500">/month</span>
         </div>
         {plan.months > 1 && (
-          <p className="text-[11px] text-slate-600 font-semibold mt-1">
+          <p className="mt-1 text-[11px] font-semibold text-slate-500">
             {formatINR(plan.monthly * plan.months)} billed for {plan.months} months
           </p>
         )}
 
-        {/* Balance + offer breakdown */}
-        <div className="mt-4 rounded-2xl bg-white/70 border border-white/90 p-3.5 space-y-2">
-          <div className="flex items-center justify-between text-[11px] md:text-xs">
-            <span className="text-slate-600 font-medium">Available balance</span>
-            <span className="font-bold text-emerald-700">−{formatINR(q.balance)}</span>
-          </div>
-          {offerApplied && (
-            <div className="flex items-center justify-between text-[11px] md:text-xs">
-              <span className="text-slate-600 font-medium">Post &amp; tag offer</span>
-              <span className="font-bold text-emerald-700">−{formatINR(q.offer)}</span>
+        <div className="mt-5 space-y-2 rounded-2xl bg-slate-50 p-4">
+          {balanceAvailable && (
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-medium text-slate-600">Welcome balance</span>
+              <span className="font-bold text-emerald-600">−{formatINR(q.balance)}</span>
             </div>
           )}
-          <div className="flex items-center justify-between pt-2 border-t border-slate-200/80">
-            <span className="text-[11px] md:text-xs font-bold text-slate-800">You pay</span>
-            <span className="text-lg md:text-xl font-black text-slate-900">{formatINR(q.payable)}</span>
+          {offerApplied && (
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-medium text-slate-600">Post &amp; tag offer</span>
+              <span className="font-bold text-emerald-600">−{formatINR(q.offer)}</span>
+            </div>
+          )}
+          <div className="flex items-center justify-between border-t border-slate-200 pt-2">
+            <span className="text-xs font-bold text-slate-800">You pay</span>
+            <span className="text-xl font-black text-slate-900">{formatINR(q.payable)}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-[11px] md:text-xs font-semibold text-slate-700 mt-4 mb-5">
-          <Check size={13} className="text-emerald-600" />
-          <span>{plan.credits}</span>
-        </div>
+        <div className="mt-5 space-y-2.5">
+          {offerApplied ? (
+            <div className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 py-3 text-xs font-bold text-emerald-700">
+              <Check size={15} />
+              {formatINR(PLAN_CONFIG.launchOffer)} OFF applied
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedId(planId);
+                setError('');
+                setStep('offer');
+              }}
+              className="w-full rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 py-3.5 text-sm font-black text-slate-900 shadow-md shadow-amber-500/30 transition-all hover:from-amber-300 hover:to-amber-400 active:scale-[0.98]"
+            >
+              Apply {formatINR(PLAN_CONFIG.launchOffer)} OFF
+            </button>
+          )}
 
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedId(planId);
-            setError('');
-            setStep('offer');
-          }}
-          className="mt-auto w-full py-3 rounded-2xl bg-slate-950 hover:bg-slate-800 text-white text-xs md:text-sm font-bold transition-all active:scale-[0.98] outline-none"
-        >
-          {planId === 'pro' ? 'Upgrade to Pro' : 'Upgrade'}
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedId(planId);
+              setError('');
+              setStep('pay');
+            }}
+            className="w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-[0.98]"
+          >
+            {offerApplied
+              ? `Continue to payment · ${formatINR(q.payable)}`
+              : `Upgrade · ${formatINR(without.payable)}`}
+          </button>
+
+          {!offerApplied && (
+            <p className="text-center text-[11px] font-medium text-slate-400">
+              Skip the offer and pay {formatINR(without.payable)} — no video needed
+            </p>
+          )}
+        </div>
       </div>
     );
   };
 
   return (
-    <div
-      className={shell}
-      style={{
-        background:
-          'radial-gradient(120% 80% at 15% 0%, #eef6ff 0%, #dbeafe 35%, #c7d2fe 70%, #b8c6fb 100%)',
-      }}
-    >
-      <div className={panel} style={{ background: 'rgba(255,255,255,0.45)' }}>
-        <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
+    <div className="min-h-screen w-full bg-white">
+      <div className="mx-auto w-full max-w-6xl px-5 py-8 md:px-8 md:py-12">
+        {/* top row: exit on the left, focused balance on the right */}
+        <div className="flex items-start justify-between gap-6">
           <button
             type="button"
-            onClick={goBack}
-            className="inline-flex items-center gap-2 text-xs md:text-sm font-bold text-slate-700 hover:text-slate-900 transition-all outline-none"
+            aria-label="Back"
+            onClick={() => {
+              if (step === 'plans') {
+                navigateTo && navigateTo('platform');
+              } else {
+                setError('');
+                setStep(step === 'pay' ? (offerApplied ? 'offer' : 'plans') : 'plans');
+              }
+            }}
+            className="mt-1 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-800"
           >
             <ArrowLeft size={16} />
-            {step === 'plans' ? 'Back to platform' : 'Back'}
           </button>
-          {step !== 'plans' && (
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-500">
-              {step === 'offer' ? 'Step 1 of 2' : step === 'pay' ? 'Step 2 of 2' : 'Done'}
+
+          <div className="text-right">
+            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Available balance
             </span>
-          )}
+            <div className="flex items-baseline justify-end gap-1">
+              <span
+                className={`text-3xl font-black tracking-tight md:text-4xl ${
+                  balanceAvailable ? 'text-slate-900' : 'text-slate-300'
+                }`}
+              >
+                {formatINR(balance)}
+              </span>
+            </div>
+            <span className="text-[11px] font-medium text-slate-400">
+              {balanceAvailable ? PLAN_CONFIG.balanceNote : PLAN_CONFIG.balanceUsedNote}
+            </span>
+          </div>
         </div>
 
         {/* ---------------- step: plans ---------------- */}
         {step === 'plans' && (
           <>
-            <h1 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900">Choose your plan</h1>
-            <p className="text-xs md:text-sm text-slate-600 mt-2 font-medium">
-              Pick a plan that best suits you. Upgrade or downgrade at any time.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 mt-6 md:mt-8">
-              <button
-                type="button"
-                onClick={() => setOfferApplied((on) => !on)}
-                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs md:text-sm font-bold border transition-all outline-none ${
-                  offerApplied
-                    ? 'bg-emerald-600 border-emerald-600 text-white'
-                    : 'bg-white/80 border-white text-slate-800 hover:bg-white'
-                }`}
-              >
-                {offerApplied ? <Check size={15} /> : <Zap size={15} />}
-                {offerApplied ? `${formatINR(PLAN_CONFIG.launchOffer)} OFF applied` : `+${formatINR(PLAN_CONFIG.launchOffer)} OFF`}
-              </button>
-
-              <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white/70 border border-white text-[11px] md:text-xs font-semibold text-slate-700">
-                <ShieldCheck size={14} className="text-emerald-600" />
-                Available balance {formatINR(PLAN_CONFIG.welcomeBalance)} — welcome bonus on every new account
-              </div>
-            </div>
-
-            {offerApplied && (
-              <p className="text-[11px] md:text-xs text-slate-600 font-medium mt-3">
-                {formatINR(PLAN_CONFIG.launchOffer)} OFF is applied to your price. Claim it on the next step by posting
-                about Innovators AI Hub on {PLAN_CONFIG.socialPlatforms} and tagging{' '}
-                <span className="font-bold text-slate-800">{PLAN_CONFIG.socialHandle}</span>.
+            <div className="mt-8 max-w-2xl md:mt-10">
+              <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                Choose your plan
+              </h1>
+              <p className="mt-3 text-sm font-medium text-slate-500">
+                Pick a plan that best suits you. Upgrade or downgrade at any time.
               </p>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mt-6">
-              {cardFor('monthly', <Zap size={16} className="text-zinc-900" />)}
-              {cardFor('quarterly', <Zap size={16} className="text-zinc-900" />)}
-              {cardFor('pro', <Crown size={16} className="text-amber-700" />, true)}
             </div>
 
-            <p className="text-[10px] md:text-[11px] text-slate-600 mt-5 leading-relaxed">
-              Prices are in INR. Your {formatINR(PLAN_CONFIG.welcomeBalance)} welcome balance is applied automatically
-              and is shown on every plan. The {formatINR(PLAN_CONFIG.launchOffer)} post-and-tag offer is credited once
-              our team verifies your screenshot. Need help choosing? Book a demo and we will map it to your workflow.
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+              {cardFor('monthly')}
+              {cardFor('quarterly')}
+              {cardFor('pro')}
+            </div>
+
+            <p className="mt-6 text-[11px] leading-relaxed text-slate-400">
+              Prices are in INR. Your {formatINR(PLAN_CONFIG.welcomeBalance)} welcome balance is a one-time
+              bonus and is spent on your first upgrade. The {formatINR(PLAN_CONFIG.launchOffer)} post-and-tag
+              offer is credited once our team verifies your video.
             </p>
           </>
         )}
 
         {/* ---------------- step: offer ---------------- */}
         {step === 'offer' && (
-          <div className="max-w-2xl">
-            <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">
+          <div className="mt-8 max-w-3xl md:mt-10">
+            <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
               Claim {formatINR(PLAN_CONFIG.launchOffer)} OFF
             </h1>
-            <p className="text-xs md:text-sm text-slate-600 mt-2 font-medium">
-              {selected.name} plan · {planPriceLabel(selected)} — you pay{' '}
-              <span className="font-bold text-slate-900">{formatINR(quote.payable)}</span> with the offer.
+            <p className="mt-3 text-sm font-medium text-slate-500">
+              {selected.name} plan · you pay{' '}
+              <span className="font-bold text-slate-900">{formatINR(withOfferQuote.payable)}</span> instead of{' '}
+              {formatINR(withOfferQuote.listTotal)} once your video is verified.
             </p>
 
-            <ol className="mt-6 space-y-3">
+            <div className="mt-7 rounded-3xl border border-slate-200 bg-slate-50 p-5 md:p-6">
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                  Read this on camera
+                </span>
+                <button
+                  type="button"
+                  onClick={copyScript}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-[11px] font-bold text-slate-700 transition-colors hover:border-slate-400"
+                >
+                  {copied ? <Check size={13} /> : <Copy size={13} />}
+                  {copied ? 'Copied' : 'Copy script'}
+                </button>
+              </div>
+              <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-slate-800">
+                {PLAN_CONFIG.videoScript}
+              </p>
+            </div>
+
+            <ol className="mt-7 space-y-3">
               {[
-                <>Post about <span className="font-bold text-slate-800">Innovators AI Hub</span> on {PLAN_CONFIG.socialPlatforms}.</>,
-                <>Tag <span className="font-bold text-slate-800">{PLAN_CONFIG.socialHandle}</span> in the post.</>,
-                <>Upload a screenshot of the live post below.</>,
+                'Record a short video reading the script above.',
+                `Post it on ${PLAN_CONFIG.socialPlatforms} and tag ${PLAN_CONFIG.socialHandle}.`,
+                'Upload a screenshot of the live post below.',
               ].map((line, index) => (
-                <li key={index} className="flex items-start gap-3 text-xs md:text-sm text-slate-700">
-                  <span className="w-6 h-6 shrink-0 rounded-full bg-slate-900 text-white text-[11px] font-bold flex items-center justify-center">
+                <li key={index} className="flex items-start gap-3 text-sm text-slate-700">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-900 text-[11px] font-bold text-white">
                     {index + 1}
                   </span>
                   <span className="pt-0.5">{line}</span>
@@ -328,50 +408,57 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
               ))}
             </ol>
 
-            <div className="flex items-center gap-3 mt-4 text-slate-500">
+            <div className="mt-4 flex items-center gap-3 text-slate-400">
               <Instagram size={16} />
               <Linkedin size={16} />
               <Twitter size={16} />
-              <span className="text-[11px] md:text-xs font-semibold">{PLAN_CONFIG.socialHandle}</span>
+              <span className="text-[11px] font-semibold">{PLAN_CONFIG.socialHandle}</span>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Your name</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                  Your name
+                </span>
                 <input
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   placeholder="Full name"
-                  className="mt-1 w-full rounded-2xl border border-white bg-white/85 px-4 py-3 text-sm text-slate-800 outline-none focus:border-slate-400"
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition-colors focus:border-slate-400"
                 />
               </label>
               <label className="block">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Email</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                  Email
+                </span>
                 <input
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
+                  onBlur={(event) => void refreshBalance(event.target.value)}
                   placeholder="you@company.com"
-                  className="mt-1 w-full rounded-2xl border border-white bg-white/85 px-4 py-3 text-sm text-slate-800 outline-none focus:border-slate-400"
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition-colors focus:border-slate-400"
                 />
               </label>
             </div>
 
-            <div className="mt-4 rounded-3xl border-2 border-dashed border-slate-300 bg-white/70 p-5 text-center">
+            <div className="mt-5 rounded-3xl border-2 border-dashed border-slate-300 bg-white p-6 text-center">
               <input
                 ref={fileRef}
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(event) => pickFile(event.target.files && event.target.files[0] ? event.target.files[0] : null)}
+                onChange={(event) =>
+                  pickFile(event.target.files && event.target.files[0] ? event.target.files[0] : null)
+                }
               />
               {screenshot ? (
                 <div className="flex flex-col items-center gap-3">
                   <img src={screenshot} alt="Your post screenshot" className="max-h-52 rounded-2xl shadow-sm" />
-                  <span className="text-[11px] text-slate-600 font-medium">{screenshotName}</span>
+                  <span className="text-[11px] font-medium text-slate-500">{screenshotName}</span>
                   <button
                     type="button"
                     onClick={() => fileRef.current && fileRef.current.click()}
-                    className="text-[11px] font-bold text-slate-700 underline underline-offset-4"
+                    className="text-[11px] font-bold text-slate-600 underline underline-offset-4"
                   >
                     Choose a different image
                   </button>
@@ -380,7 +467,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
                 <button
                   type="button"
                   onClick={() => fileRef.current && fileRef.current.click()}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-slate-200 text-xs md:text-sm font-bold text-slate-800 hover:bg-slate-50 transition-all"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
                 >
                   <Upload size={15} />
                   Upload screenshot
@@ -388,24 +475,37 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
               )}
             </div>
 
-            {error && <p className="text-xs font-semibold text-red-600 mt-4">{error}</p>}
+            {error && <p className="mt-4 text-xs font-semibold text-red-600">{error}</p>}
 
-            <button
-              type="button"
-              onClick={submitProof}
-              disabled={busy}
-              className="mt-5 w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800 disabled:opacity-60 text-white text-xs md:text-sm font-bold transition-all active:scale-[0.98] outline-none"
-            >
-              {busy ? (
-                <span className="inline-flex items-center gap-2">
-                  <Loader2 size={15} className="animate-spin" /> Uploading…
-                </span>
-              ) : (
-                'Upload screenshot & continue'
-              )}
-            </button>
-            <p className="text-[10px] md:text-[11px] text-slate-500 mt-3">
-              Our team verifies the screenshot within 24 hours. If the post is not live, the offer is reversed and the
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <button
+                type="button"
+                onClick={submitProof}
+                disabled={busy}
+                className="rounded-2xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 disabled:opacity-60 active:scale-[0.98]"
+              >
+                {busy ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Loader2 size={15} className="animate-spin" /> Uploading…
+                  </span>
+                ) : (
+                  'Upload & continue'
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setError('');
+                  setOfferApplied(false);
+                  setStep('pay');
+                }}
+                className="text-xs font-semibold text-slate-400 underline underline-offset-4 transition-colors hover:text-slate-600"
+              >
+                Skip the offer — pay {formatINR(plainQuote.payable)}
+              </button>
+            </div>
+            <p className="mt-3 text-[11px] text-slate-400">
+              Our team verifies the video within 24 hours. If the post is not live, the offer is reversed and the
               full price applies.
             </p>
           </div>
@@ -413,50 +513,54 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
 
         {/* ---------------- step: pay ---------------- */}
         {step === 'pay' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div className="mt-8 grid grid-cols-1 items-start gap-10 md:mt-10 md:grid-cols-2">
             <div>
-              <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">
+              <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
                 Pay {formatINR(quote.payable)}
               </h1>
-              <p className="text-xs md:text-sm text-slate-600 mt-2 font-medium">
+              <p className="mt-3 text-sm font-medium text-slate-500">
                 Scan the QR with any UPI app — GPay, PhonePe, Paytm — and pay{' '}
                 <span className="font-bold text-slate-900">{formatINR(quote.payable)}</span>.
               </p>
 
-              <div className="mt-5 rounded-2xl bg-white/80 border border-white p-4 text-[11px] md:text-xs text-slate-700 space-y-1.5">
+              <div className="mt-6 space-y-2 rounded-2xl border border-slate-200 p-4 text-xs text-slate-600">
                 <div className="flex justify-between">
                   <span>{selected.name} plan</span>
-                  <span className="font-semibold">{formatINR(quote.listTotal)}</span>
+                  <span className="font-semibold text-slate-800">{formatINR(quote.listTotal)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Welcome balance</span>
-                  <span className="font-semibold text-emerald-700">−{formatINR(quote.balance)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Post &amp; tag offer</span>
-                  <span className="font-semibold text-emerald-700">−{formatINR(quote.offer)}</span>
-                </div>
-                <div className="flex justify-between pt-2 border-t border-slate-200">
+                {quote.balance > 0 && (
+                  <div className="flex justify-between">
+                    <span>Welcome balance</span>
+                    <span className="font-semibold text-emerald-600">−{formatINR(quote.balance)}</span>
+                  </div>
+                )}
+                {quote.offer > 0 && (
+                  <div className="flex justify-between">
+                    <span>Post &amp; tag offer</span>
+                    <span className="font-semibold text-emerald-600">−{formatINR(quote.offer)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between border-t border-slate-200 pt-2">
                   <span className="font-bold text-slate-900">You pay</span>
                   <span className="font-black text-slate-900">{formatINR(quote.payable)}</span>
                 </div>
               </div>
 
-              <div className="mt-5 flex items-start gap-2 text-[10px] md:text-[11px] text-slate-600">
-                <QrCode size={14} className="mt-0.5 shrink-0 text-slate-500" />
+              <div className="mt-5 flex items-start gap-2 text-[11px] text-slate-400">
+                <QrCode size={14} className="mt-0.5 shrink-0" />
                 <span>
                   Add your email in the UPI note if your app allows it — it makes matching your payment instant.
-                  {proofUrl ? ' Your offer screenshot is already with our team.' : ''}
+                  {proofUrl ? ' Your video screenshot is already with our team.' : ''}
                 </span>
               </div>
 
-              {error && <p className="text-xs font-semibold text-red-600 mt-4">{error}</p>}
+              {error && <p className="mt-4 text-xs font-semibold text-red-600">{error}</p>}
 
               <button
                 type="button"
                 onClick={confirmPayment}
                 disabled={busy}
-                className="mt-5 w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800 disabled:opacity-60 text-white text-xs md:text-sm font-bold transition-all active:scale-[0.98] outline-none"
+                className="mt-6 rounded-2xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 disabled:opacity-60 active:scale-[0.98]"
               >
                 {busy ? (
                   <span className="inline-flex items-center gap-2">
@@ -468,13 +572,13 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
               </button>
             </div>
 
-            <div className="rounded-[28px] bg-white p-5 md:p-6 shadow-lg border border-white flex flex-col items-center">
+            <div className="flex flex-col items-center rounded-3xl border border-slate-200 p-6">
               <img
                 src={PLAN_CONFIG.paymentQr}
                 alt="UPI QR code to pay for your Innovators AI Hub plan"
                 className="w-full max-w-[280px] rounded-2xl"
               />
-              <span className="mt-4 text-[11px] md:text-xs font-bold uppercase tracking-wider text-slate-500">
+              <span className="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
                 Scan &amp; pay {formatINR(quote.payable)}
               </span>
             </div>
@@ -483,25 +587,21 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
 
         {/* ---------------- step: done ---------------- */}
         {step === 'done' && (
-          <div className="max-w-xl">
-            <span className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
-              <PartyPopper size={22} className="text-emerald-700" />
+          <div className="mt-8 max-w-xl md:mt-10">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50">
+              <Check size={22} className="text-emerald-600" />
             </span>
-            <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 mt-5">
+            <h1 className="mt-5 text-3xl font-black tracking-tight text-slate-900">
               Thanks — we are on it
             </h1>
-            <p className="text-xs md:text-sm text-slate-600 mt-3 font-medium">
-              We have your {selected.name} plan request and your payment confirmation. Our team verifies the payment and
-              your offer screenshot, then activates the plan — usually within 24 hours. We will email{' '}
+            <p className="mt-4 text-sm font-medium text-slate-500">
+              We have your {selected.name} plan request and your payment confirmation. Our team verifies the payment
+              and your video, then activates the plan — usually within 24 hours. We will email{' '}
               <span className="font-bold text-slate-800">{email}</span>.
             </p>
-            <button
-              type="button"
-              onClick={() => navigateTo && navigateTo('platform')}
-              className="mt-6 px-6 py-3 rounded-2xl bg-slate-950 hover:bg-slate-800 text-white text-xs md:text-sm font-bold transition-all outline-none"
-            >
-              Back to platform
-            </button>
+            <p className="mt-4 text-xs text-slate-400">
+              Your welcome balance has been used on this upgrade. You can add balance any time from your account.
+            </p>
           </div>
         )}
       </div>

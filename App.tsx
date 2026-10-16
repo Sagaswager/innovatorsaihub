@@ -512,7 +512,7 @@ const App: React.FC = () => {
     };
   }, [currentPage]);
 
-  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent' || currentPage === 'privacy';
+  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent' || currentPage === 'privacy' || currentPage === 'my-plan';
 
   useEffect(() => {
     if (isLightPage) {
@@ -565,7 +565,7 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && (
+      {currentPage !== 'platform' && currentPage !== 'whatsapp-ai-agent' && currentPage !== 'linkedin-ai-agent' && currentPage !== 'my-plan' && (
         <Header 
           isDarkMode={isDarkMode} 
           currentPage={currentPage}
@@ -749,7 +749,8 @@ const App: React.FC = () => {
         <ConsentBanner onOpenPrivacy={() => navigateTo('privacy' as Page)} />
       </Suspense>
 
-      {/* Floating Chat/Social Buttons */}
+      {/* Floating Chat/Social Buttons — not on the standalone plan page */}
+      {currentPage !== 'my-plan' && (
       <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-3 select-none pointer-events-none">
         {/* Instagram Floating Icon */}
         <div className="relative group pointer-events-auto">
@@ -789,6 +790,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
+      )}
 
 
     </div>

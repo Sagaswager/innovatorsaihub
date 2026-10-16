@@ -304,3 +304,33 @@ export async function submitOfferProof(input: {
     };
   }
 }
+
+/* ---- one-time welcome balance ------------------------------------------- */
+
+export type BalanceResult = {
+  ok: boolean;
+  /** rupees left to spend — 2,000 until the account's first upgrade, then 0 */
+  balance: number;
+  used: boolean;
+  plan?: string;
+  since?: string;
+  message?: string;
+};
+
+/** Asks the sheet how much welcome balance this account has left. */
+export async function fetchBalance(email: string): Promise<BalanceResult> {
+  const clean = normalizeEmail(email);
+  if (!isValidEmail(clean)) {
+    return { ok: false, balance: 0, used: false, message: 'Enter a valid email address.' };
+  }
+  try {
+    const res = await request(`${AUTH_URL}?action=balance&email=${encodeURIComponent(clean)}`);
+    const data = await res.json();
+    if (data.status === 'ok') {
+      return { ok: true, balance: Number(data.balance) || 0, used: !!data.used, plan: data.plan, since: data.since };
+    }
+    return { ok: false, balance: 0, used: false, message: data.message || 'Could not read your balance.' };
+  } catch (err) {
+    return { ok: false, balance: 0, used: false, message: 'Could not reach the account service.' };
+  }
+}
