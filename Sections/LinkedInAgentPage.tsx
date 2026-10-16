@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, Loader2 } from 'lucide-react';
 import { trackAgentRental, trackEvent } from '../analytics';
+import DemoVideo from './DemoVideo';
 import {
   normalizeEmail,
   isValidEmail,
@@ -240,14 +241,24 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </button>
 </div>
 </div>
-{/*  Subheading and summary  */}
-<div className="flex flex-col gap-2">
+{/*  Subheading and summary, with the demo screen on the right  */}
+<div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+<div className="flex flex-col gap-2 lg:flex-1">
 <h3 className="font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight">
                 One Agent. Countless Automation.
               </h3>
 <p className="font-normal text-base text-slate-600 leading-relaxed font-body">
                 Let our LinkedIn AI Agent automate your outreach, lead generation, and posting on LinkedIn while you focus on closing deals.
               </p>
+</div>
+{/*  Demo — click to expand, minimise to put it back  */}
+<div className="w-full sm:max-w-[320px] lg:w-[290px] lg:shrink-0">
+<DemoVideo
+  driveId="1dk-NQxxL0gmTU4gUP4TEoC8vP2itk8qf"
+  title="LinkedIn AI Agent demo"
+  label="Watch demo"
+/>
+</div>
 </div>
 {/*  Two-column Comparison Matrix (Exact matching Image_4)  */}
 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
