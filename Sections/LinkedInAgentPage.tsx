@@ -225,6 +225,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 <div className="flex items-center gap-4 self-end sm:self-center">
 <div className="flex flex-col items-end">
+<span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Starts at</span>
 <div className="flex items-baseline gap-1">
 <span className="font-extrabold text-3xl text-slate-900 leading-none">₹999</span>
 <span className="text-xs font-semibold text-slate-500">/mo</span>
@@ -1004,6 +1005,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 <div className="flex flex-col items-start sm:items-end">
+<span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Starts at</span>
 <div className="flex items-baseline gap-2">
 <span className="text-4xl sm:text-5xl font-extrabold text-slate-900">₹999</span>
 <span className="text-sm font-semibold text-slate-500">/month</span>
@@ -1128,7 +1130,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
               </span>
 <span className="flex items-center gap-1.5">
 <span className="material-symbols-outlined text-[16px] text-white">check_circle</span>
-                ₹999 / month Flat Rate
+                Starts at ₹999 / month
               </span>
 </div>
 </div>
@@ -1276,7 +1278,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Enter your details below to rent your LinkedIn AI Agent for <strong className="text-slate-800">₹999/mo</strong>.
+                      Enter your details below to rent your LinkedIn AI Agent — starts at <strong className="text-slate-800">₹999/mo</strong>.
                     </p>
                   </div>
 
@@ -1363,7 +1365,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
                           <span>Submitting Request...</span>
                         </>
                       ) : (
-                        <span>Submit &amp; Rent Agent (₹999/mo)</span>
+                        <span>Submit &amp; Rent Agent (Starts at ₹999/mo)</span>
                       )}
                     </button>
                   </form>
