@@ -236,12 +236,15 @@ export const trackAgentRental = (
   // Extract digits for numeric currency tracking (e.g. "₹2,999/mo" -> 2999)
   const numericPrice = Number(price.replace(/[^0-9]/g, '')) || 0;
 
+  // Keep first-party contact details in the lead store; never forward them to GA4/Meta.
+  // Preserve the argument for existing rental form callers.
+  void customerData;
+
   trackLead(`rental_${agentName.toLowerCase().replace(/\s+/g, '_')}`, {
     agent_name: agentName,
     price_string: price,
     value: numericPrice,
     currency: 'INR',
-    ...customerData,
   });
 };
 
