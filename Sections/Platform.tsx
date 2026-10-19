@@ -14,6 +14,7 @@ import {
 import AccountSettingsModal from './AccountSettingsModal';
 import AgentReviews from './AgentReviews';
 import { fetchAllReviewStats } from '../authApi';
+import { trackEvent } from '../analytics';
 import GoogleSignInButton from './GoogleSignInButton';
 import { isGoogleSignInConfigured, type GoogleProfile } from '../googleAuth';
 
@@ -972,6 +973,20 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           <span>Join Team</span>
         </button>
 
+        {/* Multi-AI Agent — opens the self-hosted AI platform at ai.innovatorsaihub.com */}
+        <a
+          id="platform-multi-ai-agent-link"
+          href="https://ai.innovatorsaihub.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackEvent('cta_clicked', { button_name: 'multi_ai_agent_header', location: 'platform_header' })}
+          style={{ backgroundColor: '#25C667' }}
+          className="text-white hover:opacity-90 border border-zinc-800 rounded-full px-5 py-2 text-xs font-bold tracking-wide hover:scale-105 active:scale-95 transition-all duration-200 inline-flex items-center gap-2 outline-none shadow-sm"
+        >
+          <Bot size={13} className="text-white" />
+          <span>Multi-AI Agent</span>
+        </a>
+
         {/* Book Demo Button (Black with zoom-in scale effect) */}
         <a
           href="https://calendar.app.google/D4VcVM3GVSh4PAia6"
@@ -1235,6 +1250,27 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 </span>
                 <span>New update : FREE Version is over, Sorry😔</span>
               </div>
+
+              {/* Multi-AI Agent — the platform behind the button */}
+              <motion.a
+                id="platform-hero-multi-ai-agent"
+                href="https://ai.innovatorsaihub.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(37, 198, 103, 0.45)" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => trackEvent('cta_clicked', { button_name: 'multi_ai_agent_hero', location: 'platform_hero' })}
+                style={{
+                  fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                  fontWeight: 700,
+                  backgroundColor: '#25C667',
+                  color: '#ffffff'
+                }}
+                className="px-5 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 cursor-pointer outline-none"
+              >
+                <Bot size={14} />
+                <span>Multi-AI Agent</span>
+              </motion.a>
             </div>
 
           </div>
