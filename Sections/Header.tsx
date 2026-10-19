@@ -117,6 +117,16 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
             >
               WhatsApp AI Agent
             </a>
+            <a 
+              id="header-multi-ai-agent-link"
+              href="https://ai.innovatorsaihub.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors cursor-pointer hover:text-emerald-400"
+              onClick={() => trackEvent('cta_clicked', { button_name: 'multi_ai_agent_header', location: 'header' })}
+            >
+              Multi-AI Agent
+            </a>
           </nav>
 
           {/* Header Actions (Right) */}
@@ -270,6 +280,26 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
                   >
                     <span className="text-2xl md:text-3xl font-light tracking-wide text-zinc-300 group-hover:text-white">
                       WhatsApp AI Agent
+                    </span>
+                    <ArrowRight size={18} className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </motion.a>
+
+                  {/* Multi-AI Agent (self-hosted Lemma instance) */}
+                  <motion.a
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: (navItems.length + 2) * 0.05 }}
+                    href="https://ai.innovatorsaihub.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      trackEvent('cta_clicked', { button_name: 'multi_ai_agent_menu', location: 'mobile_menu' });
+                    }}
+                    className="group flex items-center justify-between py-2 text-left outline-none border-b border-white/5 pb-3 cursor-pointer"
+                  >
+                    <span className="text-2xl md:text-3xl font-light tracking-wide text-zinc-300 group-hover:text-white">
+                      Multi-AI Agent
                     </span>
                     <ArrowRight size={18} className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
                   </motion.a>

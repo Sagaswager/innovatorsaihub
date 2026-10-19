@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import PillButton from './PillButton';
 import { trackEvent } from '../analytics';
 
@@ -137,16 +137,31 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode, navigateTo }) => {
         transition={{ delay: 1.6, duration: 1 }}
         className="relative z-10 mt-10 md:mt-14 flex flex-col items-center gap-5 w-full max-w-[1400px]"
       >
-        <PillButton 
-          as="a"
-          href="https://calendar.app.google/D4VcVM3GVSh4PAia6"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="!px-16 !py-8 !text-2xl md:!text-3xl"
-          onClick={() => trackEvent('cta_clicked', { button_name: 'book_demo_hero', location: 'hero' })}
-        >
-          Book Demo Call <ArrowRight size={28} className="group-hover:translate-x-1 transition-transform ml-3" />
-        </PillButton>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5">
+          <PillButton 
+            as="a"
+            href="https://calendar.app.google/D4VcVM3GVSh4PAia6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="!px-16 !py-8 !text-2xl md:!text-3xl"
+            onClick={() => trackEvent('cta_clicked', { button_name: 'book_demo_hero', location: 'hero' })}
+          >
+            Book Demo Call <ArrowRight size={28} className="group-hover:translate-x-1 transition-transform ml-3" />
+          </PillButton>
+
+          {/* Multi-AI Agent — the self-hosted Lemma instance on the VPS */}
+          <PillButton
+            as="a"
+            id="hero-multi-ai-agent-link"
+            href="https://ai.innovatorsaihub.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="!px-10 !py-7 !text-xl md:!text-2xl ring-1 ring-emerald-400/50"
+            onClick={() => trackEvent('cta_clicked', { button_name: 'multi_ai_agent_hero', location: 'hero' })}
+          >
+            Multi-AI Agent <Sparkles size={24} className="ml-2 text-emerald-300 group-hover:rotate-12 transition-transform" />
+          </PillButton>
+        </div>
 
         {/* Social Icons just below the button */}
         <div className="flex items-center gap-4 mt-3">
