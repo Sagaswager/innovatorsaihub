@@ -296,16 +296,6 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
 
                 <div className="flex items-center gap-5 w-full md:w-auto justify-between md:justify-end">
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Starts at</span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 leading-none">
-                        ₹999
-                      </span>
-                      <span className="text-xs text-slate-500 font-medium">/mo</span>
-                    </div>
-                    <span className="text-xs text-slate-400 line-through mt-0.5">₹4,999</span>
-                  </div>
                   <button
                     id="rent-agent-pricing-btn"
                     onClick={handleRentAgent}
@@ -473,9 +463,6 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <span className="text-[11px] font-bold tracking-widest text-slate-800 uppercase">
                     TRENDING <span className="text-primary-container font-extrabold">in GURUGRAM</span>
                   </span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider uppercase shadow-sm">
-                  <span>Starts at ₹999/mo</span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-[11px] font-bold tracking-wider shadow-sm">
                   <span className="relative flex h-2 w-2">
@@ -1457,7 +1444,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Enter your details below to rent your WhatsApp AI Agent — starts at <strong className="text-slate-800">₹999/mo</strong>.
+                      Enter your details below to rent your WhatsApp AI Agent.
                     </p>
                   </div>
 
@@ -1542,7 +1529,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                           <span>Submitting Request...</span>
                         </>
                       ) : (
-                        <span>Submit &amp; Rent Agent (Starts at ₹999/mo)</span>
+                        <span>Submit &amp; Rent Agent</span>
                       )}
                     </button>
                   </form>
