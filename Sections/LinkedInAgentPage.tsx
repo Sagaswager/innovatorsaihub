@@ -225,14 +225,6 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 <div className="flex items-center gap-4 self-end sm:self-center">
-<div className="flex flex-col items-end">
-<span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">Starts at</span>
-<div className="flex items-baseline gap-1">
-<span className="font-extrabold text-3xl text-slate-900 leading-none">₹999</span>
-<span className="text-xs font-semibold text-slate-500">/mo</span>
-</div>
-<span className="text-xs font-medium text-slate-400 line-through mt-0.5">₹6,999</span>
-</div>
 <button
   onClick={handleRentAgent}
   className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer"
@@ -444,9 +436,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
   </button>
 </div>
 <div className="flex items-center gap-2 text-slate-500 text-xs">
-<span className="line-through text-slate-400">Regular: ₹6,999/mo</span>
-<span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">68% Launch Discount</span>
-<span className="text-slate-400">• Cancel Anytime</span>
+<span className="text-slate-400">Cancel Anytime</span>
 </div>
 </div>
 {/*  RIGHT COLUMN: LinkedIn Simulation Card (Light themed mockup)  */}
@@ -1015,14 +1005,6 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 </div>
 </div>
 </div>
-<div className="flex flex-col items-start sm:items-end">
-<span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Starts at</span>
-<div className="flex items-baseline gap-2">
-<span className="text-4xl sm:text-5xl font-extrabold text-slate-900">₹999</span>
-<span className="text-sm font-semibold text-slate-500">/month</span>
-</div>
-<span className="text-xs text-slate-400 line-through mt-0.5">₹6,999 /mo regular</span>
-</div>
 </div>
 {/*  Features Checklist  */}
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-6 font-body text-sm text-slate-700">
@@ -1138,10 +1120,6 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <span className="flex items-center gap-1.5">
 <span className="material-symbols-outlined text-[16px] text-white">check_circle</span>
                 Cancel Anytime
-              </span>
-<span className="flex items-center gap-1.5">
-<span className="material-symbols-outlined text-[16px] text-white">check_circle</span>
-                Starts at ₹999 / month
               </span>
 </div>
 </div>
@@ -1289,7 +1267,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Enter your details below to rent your LinkedIn AI Agent — starts at <strong className="text-slate-800">₹999/mo</strong>.
+                      Enter your details below to rent your LinkedIn AI Agent.
                     </p>
                   </div>
 
@@ -1376,7 +1354,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
                           <span>Submitting Request...</span>
                         </>
                       ) : (
-                        <span>Submit &amp; Rent Agent (Starts at ₹999/mo)</span>
+                        <span>Submit &amp; Rent Agent</span>
                       )}
                     </button>
                   </form>
