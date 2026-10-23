@@ -78,6 +78,17 @@ const readSession = (): { name: string; email: string } => {
   }
 };
 
+
+/** The agent app's "My Plan" link lands here as /my-plan?tab=linkedin. */
+const readTrackFromUrl = (): 'team' | 'linkedin' => {
+  try {
+    const tab = new URLSearchParams(window.location.search).get('tab');
+    return tab === 'linkedin' ? 'linkedin' : 'team';
+  } catch {
+    return 'team';
+  }
+};
+
 const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
   const session = useMemo(readSession, []);
   const [step, setStep] = useState<Step>('plans');
@@ -96,7 +107,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
   const fileRef = useRef<HTMLInputElement>(null);
 
   /* ---- LinkedIn AI Agent Plan (the app's subscribe page, ported) ---- */
-  const [track, setTrack] = useState<'team' | 'linkedin'>('team');
+  const [track, setTrack] = useState<'team' | 'linkedin'>(() => readTrackFromUrl());
   const [liPlanId, setLiPlanId] = useState<LinkedInPlanId>('growth');
   const [liCurrency, setLiCurrency] = useState<Currency>('INR');
   const [liCoupon, setLiCoupon] = useState('');
@@ -492,7 +503,8 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
         </div>
 
         {/* ---------------- the two plan groups ---------------- */}
-        <div className="mt-8 inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
+        <div className="mt-8 flex w-full justify-center">
+        <div className="inline-flex max-w-full rounded-full border border-slate-200 bg-slate-50 p-1">
           {([
             ['team', 'AI Team Plan'],
             ['linkedin', 'LinkedIn AI Agent Plan'],
@@ -511,6 +523,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
               {label}
             </button>
           ))}
+        </div>
         </div>
 
         {/* ---------------- step: plans ---------------- */}
@@ -794,7 +807,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
                   Select your subscription plan
                 </h1>
                 <p className="mt-3 text-sm font-medium text-slate-500">
-                  Upgrade to premium to unlock advanced automated outreach and AI capabilities.
+                  Upgrade to pro Annual to unlock advanced automated outreach and AI capabilities.
                 </p>
               </div>
 
