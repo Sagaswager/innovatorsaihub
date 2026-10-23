@@ -123,3 +123,134 @@ export const planPriceLabel = (plan: Plan): string =>
   plan.months === 1
     ? `${formatINR(plan.monthly)}/month`
     : `${formatINR(plan.monthly)}/month · ${formatINR(plan.monthly * plan.months)} for ${plan.months} months`;
+
+
+/* ------------------------------------------------------------------ *
+ * LinkedIn AI Agent subscription — moved here 2026-10-23.
+ *
+ * saga's instruction: on /my-plan there are now two plan groups, "AI Team
+ * Plan" (the plans above) and "LinkedIn AI Agent Plan", whose plans are the
+ * ones from the LinkedIn AI Agent app's "Subscribe now" page (payment.html on
+ * the app at innovatorslinai.duckdns.org). The page was ported, not embedded,
+ * so these numbers are the app's numbers and stay the source of truth here.
+ *
+ * The app keeps its own copy for the in-app page; if a price changes, change
+ * it in both places (the app's copy lives in payment.html, `basePlans`).
+ *
+ * INR is the source of truth. USD is derived at a fixed rate, exactly as the
+ * app did, so the two always agree.
+ * ------------------------------------------------------------------ */
+
+export type LinkedInPlanId = 'growth' | 'scale' | 'pro-annual';
+
+export type LinkedInPlan = {
+  id: LinkedInPlanId;
+  name: string;
+  /** e.g. "90 Days + 10 Days" — the bonus days are part of the offer */
+  duration: string;
+  /** billed months, used for the coupon's per-month split */
+  months: number;
+  /** INR per 30 days */
+  rate: number;
+  /** INR for the whole term */
+  total: number;
+  /** INR per 30 days before the discount */
+  originalRate: number;
+  /** INR for the whole term before the discount */
+  originalTotal: number;
+  /** INR saved over the term */
+  save: number;
+  /** percent off, as advertised */
+  savePerc: number;
+  badge?: string;
+  featured?: boolean;
+  features: string[];
+};
+
+export const LINKEDIN_PLAN_CONFIG = {
+  /** USD is derived from INR at this fixed rate — the app used the same one. */
+  inrPerUsd: 83,
+  /** The one coupon the app honoured, kept at the same real value. */
+  couponCode: 'AIAGENT',
+  couponOffInr: 830,
+  paymentQr: '/payment-qr.jpg',
+  whatsappConfirm:
+    'https://wa.me/919873641909?text=I%20have%20made%20the%20payment.%20Here%20is%20the%20screenshot.',
+  /** Where the customer links their LinkedIn account once the plan is active. */
+  dashboardUrl: 'https://innovatorslinai.duckdns.org/dashboard.html',
+  plans: [
+    {
+      id: 'growth',
+      name: 'Growth',
+      duration: '90 Days + 10 Days',
+      months: 3,
+      rate: 9000,
+      total: 27000,
+      originalRate: 12600,
+      originalTotal: 37800,
+      save: 10800,
+      savePerc: 40,
+      features: [
+        '1 LinkedIn Account',
+        '1,000 AI Messages / month',
+        'Smart Lead Search',
+        'Post Auto-Reactions',
+        'Priority Email Support',
+      ],
+    },
+    {
+      id: 'scale',
+      name: 'Scale',
+      duration: '180 Days + 20 Days',
+      months: 6,
+      rate: 8100,
+      total: 48600,
+      originalRate: 12600,
+      originalTotal: 75600,
+      save: 27000,
+      savePerc: 50,
+      badge: 'Most Popular',
+      featured: true,
+      features: [
+        '1 LinkedIn Account',
+        '2,500 AI Messages / month',
+        'Smart Lead Search & Filter',
+        'Post Auto-Reactions',
+        'Multi-Account Running',
+        '24/7 Priority Support',
+      ],
+    },
+    {
+      id: 'pro-annual',
+      name: 'Pro Annual',
+      duration: '360 Days + 30 Days',
+      months: 12,
+      rate: 7200,
+      total: 86400,
+      originalRate: 12600,
+      originalTotal: 151200,
+      save: 64800,
+      savePerc: 60,
+      badge: 'Best Value',
+      features: [
+        '1 LinkedIn Account',
+        'Unlimited AI Messages',
+        'Advanced Smart Lead Gen',
+        'Post Auto-Reactions',
+        'Dedicated Manager',
+        'WhatsApp Priority Team',
+      ],
+    },
+  ] as LinkedInPlan[],
+} as const;
+
+export type Currency = 'INR' | 'USD';
+
+export const linkedinPlanById = (id: LinkedInPlanId): LinkedInPlan =>
+  LINKEDIN_PLAN_CONFIG.plans.find((plan) => plan.id === id) || LINKEDIN_PLAN_CONFIG.plans[0];
+
+/** ₹27,000 or $325 — the same amount, rendered in the chosen currency. */
+export const formatAmount = (inr: number, currency: Currency): string =>
+  currency === 'USD'
+    ? `$${Math.round(inr / LINKEDIN_PLAN_CONFIG.inrPerUsd).toLocaleString('en-US')}`
+    : `${PLAN_CONFIG.currency}${Math.round(inr).toLocaleString('en-IN')}`;
