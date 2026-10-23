@@ -3,7 +3,9 @@ import {
   ArrowLeft,
   Check,
   Copy,
+  ExternalLink,
   Loader2,
+  MessageCircle,
   QrCode,
   Upload,
   Instagram,
@@ -11,10 +13,16 @@ import {
   Twitter,
 } from 'lucide-react';
 import {
+  LINKEDIN_PLAN_CONFIG,
   PLAN_CONFIG,
+  formatAmount,
   formatINR,
+  linkedinPlanById,
   planById,
   quotePlan,
+  type Currency,
+  type LinkedInPlan,
+  type LinkedInPlanId,
   type PlanId,
 } from './planConfig';
 import {
@@ -35,6 +43,15 @@ import {
  *   offer  — read the script, record the video, post it, tag
  *            @innovatorsaihub, upload a screenshot
  *   pay    — scan the UPI QR for the payable amount
+ *
+ * Two plan groups (saga, 2026-10-23), switched with the pills at the top:
+ *   AI Team Plan          — the plans above, with the balance + offer
+ *   LinkedIn AI Agent Plan — the LinkedIn AI Agent app's "Subscribe now" page,
+ *                            ported (not embedded) and restyled to this page:
+ *                            Growth / Scale / Pro Annual, USD-INR toggle,
+ *                            coupon AIAGENT, UPI QR, confirm-with-team.
+ *                            Payment is recorded and the team activates the
+ *                            subscription; linking LinkedIn stays in the app.
  *
  * The welcome balance is one-time per account: ₹2,000 until the first upgrade,
  * ₹0 afterwards until the customer tops up.
@@ -78,15 +95,32 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
   const [proofUrl, setProofUrl] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
 
+  /* ---- LinkedIn AI Agent Plan (the app's subscribe page, ported) ---- */
+  const [track, setTrack] = useState<'team' | 'linkedin'>('team');
+  const [liPlanId, setLiPlanId] = useState<LinkedInPlanId>('growth');
+  const [liCurrency, setLiCurrency] = useState<Currency>('INR');
+  const [liCoupon, setLiCoupon] = useState('');
+  const [liCouponApplied, setLiCouponApplied] = useState(false);
+  const [liActivated, setLiActivated] = useState(false);
+  const [liDone, setLiDone] = useState(false);
+  const checkoutRef = useRef<HTMLDivElement>(null);
+
   const balanceAvailable = balance > 0 && !balanceUsed;
   const selected = planById(selectedId);
   const quote = quotePlan(selected, { offerApplied, balanceAvailable });
   const plainQuote = quotePlan(selected, { offerApplied: false, balanceAvailable });
   const withOfferQuote = quotePlan(selected, { offerApplied: true, balanceAvailable });
 
+  const liPlan = linkedinPlanById(liPlanId);
+  const liRate = liCouponApplied
+    ? liPlan.rate - Math.round(LINKEDIN_PLAN_CONFIG.couponOffInr / liPlan.months)
+    : liPlan.rate;
+  const liTotal = liCouponApplied ? liPlan.total - LINKEDIN_PLAN_CONFIG.couponOffInr : liPlan.total;
+  const liStruckTotal = liCouponApplied ? liPlan.total : liPlan.originalTotal;
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [step]);
+  }, [step, track, liDone]);
 
   const refreshBalance = async (address: string) => {
     const clean = normalizeEmail(address);
@@ -200,6 +234,110 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
     setStep('done');
   };
 
+  const applyCoupon = () => {
+    setError('');
+    if (liCoupon.trim().toUpperCase() !== LINKEDIN_PLAN_CONFIG.couponCode) {
+      setLiCouponApplied(false);
+      setError('That coupon code is not valid.');
+      return;
+    }
+    setLiCouponApplied(true);
+  };
+
+  const confirmLinkedInPayment = async () => {
+    setError('');
+    if (!isValidEmail(email)) {
+      setError('Enter the email address on your LinkedIn AI Agent account so we can match the payment.');
+      return;
+    }
+    setBusy(true);
+    await registerAccount({
+      name,
+      email,
+      source: 'linkedin-plan-upgrade',
+      agent: 'LinkedIn AI Agent',
+      price: String(liTotal),
+      notes: `LinkedIn AI Agent plan · ${liPlan.name} (${liPlan.duration}) · ${formatAmount(
+        liTotal,
+        liCurrency
+      )}${liCouponApplied ? ` · coupon ${LINKEDIN_PLAN_CONFIG.couponCode}` : ''}`,
+    });
+    setBusy(false);
+    setLiDone(true);
+  };
+
+  const linkedInCard = (plan: LinkedInPlan) => {
+    const active = plan.id === liPlanId;
+    return (
+      <div
+        key={plan.id}
+        className={`relative flex flex-col rounded-3xl border bg-white p-6 shadow-sm transition-all hover:shadow-lg ${
+          active ? 'border-slate-900 ring-1 ring-slate-900' : plan.featured ? 'border-amber-300' : 'border-slate-200'
+        }`}
+      >
+        {plan.badge && (
+          <span className="absolute -top-3 right-6 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+            {plan.badge}
+          </span>
+        )}
+
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-lg font-bold text-slate-900">{plan.name}</h3>
+            <p className="mt-1 text-xs font-medium text-slate-500">{plan.duration}</p>
+          </div>
+          {active && (
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-900 text-white">
+              <Check size={13} />
+            </span>
+          )}
+        </div>
+
+        <div className="mt-5 flex items-baseline gap-2">
+          <span className="text-3xl font-black tracking-tight text-slate-900">
+            {formatAmount(plan.rate, liCurrency)}
+          </span>
+          <span className="text-xs font-semibold text-slate-500">/30 days</span>
+          <span className="text-xs font-semibold text-slate-300 line-through">
+            {formatAmount(plan.originalRate, liCurrency)}
+          </span>
+        </div>
+        <p className="mt-1 text-[11px] font-semibold text-slate-500">
+          Total {formatAmount(plan.total, liCurrency)}
+        </p>
+        <span className="mt-3 inline-flex w-fit rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700">
+          Save {formatAmount(plan.save, liCurrency)} ({plan.savePerc}% off)
+        </span>
+
+        <ul className="mt-5 flex-1 space-y-2 border-t border-slate-100 pt-5">
+          {plan.features.map((feature) => (
+            <li key={feature} className="flex items-start gap-2 text-xs font-medium text-slate-600">
+              <Check size={14} className="mt-0.5 shrink-0 text-emerald-600" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <button
+          type="button"
+          onClick={() => {
+            setLiPlanId(plan.id);
+            setError('');
+            setLiDone(false);
+            if (checkoutRef.current) checkoutRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+          className={`mt-6 w-full rounded-2xl py-3.5 text-sm font-bold transition-all active:scale-[0.98] ${
+            active
+              ? 'bg-slate-900 text-white'
+              : 'border border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+          }`}
+        >
+          {active ? 'Selected' : 'Choose plan'}
+        </button>
+      </div>
+    );
+  };
+
   const cardFor = (planId: PlanId) => {
     const plan = planById(planId);
     const q = quotePlan(plan, { offerApplied, balanceAvailable });
@@ -305,6 +443,11 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
             type="button"
             aria-label="Back"
             onClick={() => {
+              if (track === 'linkedin' && liDone) {
+                setError('');
+                setLiDone(false);
+                return;
+              }
               if (step === 'plans') {
                 navigateTo && navigateTo('platform');
               } else {
@@ -317,6 +460,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
             <ArrowLeft size={16} />
           </button>
 
+          {track === 'team' && (
           <div className="text-right">
             <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
               Available balance
@@ -334,10 +478,33 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
               {balanceAvailable ? PLAN_CONFIG.balanceNote : PLAN_CONFIG.balanceUsedNote}
             </span>
           </div>
+          )}
+        </div>
+
+        {/* ---------------- the two plan groups ---------------- */}
+        <div className="mt-8 inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
+          {([
+            ['team', 'AI Team Plan'],
+            ['linkedin', 'LinkedIn AI Agent Plan'],
+          ] as const).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => {
+                setTrack(key);
+                setError('');
+              }}
+              className={`rounded-full px-4 py-2 text-xs font-bold transition-colors md:text-sm ${
+                track === key ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* ---------------- step: plans ---------------- */}
-        {step === 'plans' && (
+        {track === 'team' && step === 'plans' && (
           <>
             <div className="mt-8 max-w-2xl md:mt-10">
               <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
@@ -363,7 +530,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
         )}
 
         {/* ---------------- step: offer ---------------- */}
-        {step === 'offer' && (
+        {track === 'team' && step === 'offer' && (
           <div className="mt-8 max-w-3xl md:mt-10">
             <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
               Claim {formatINR(PLAN_CONFIG.launchOffer)} OFF
@@ -512,7 +679,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
         )}
 
         {/* ---------------- step: pay ---------------- */}
-        {step === 'pay' && (
+        {track === 'team' && step === 'pay' && (
           <div className="mt-8 grid grid-cols-1 items-start gap-10 md:mt-10 md:grid-cols-2">
             <div>
               <h1 className="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
@@ -586,7 +753,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
         )}
 
         {/* ---------------- step: done ---------------- */}
-        {step === 'done' && (
+        {track === 'team' && step === 'done' && (
           <div className="mt-8 max-w-xl md:mt-10">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50">
               <Check size={22} className="text-emerald-600" />
@@ -602,6 +769,229 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
             <p className="mt-4 text-xs text-slate-400">
               Your welcome balance has been used on this upgrade. You can add balance any time from your account.
             </p>
+          </div>
+        )}
+
+        {/* ---------------- LinkedIn AI Agent Plan (ported from the app) ---------------- */}
+        {track === 'linkedin' && !liDone && (
+          <>
+            <div className="mt-8 flex flex-col gap-5 md:mt-10 md:flex-row md:items-end md:justify-between">
+              <div className="max-w-2xl">
+                <span className="inline-flex items-center gap-2 rounded-full bg-[#0A66C2]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#0A66C2]">
+                  <Linkedin size={12} /> LinkedIn AI Agent
+                </span>
+                <h1 className="mt-4 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+                  Select your subscription plan
+                </h1>
+                <p className="mt-3 text-sm font-medium text-slate-500">
+                  Upgrade to premium to unlock advanced automated outreach and AI capabilities.
+                </p>
+              </div>
+
+              <div className="inline-flex self-start rounded-full border border-slate-200 bg-slate-50 p-1 md:self-auto">
+                {(['INR', 'USD'] as Currency[]).map((currency) => (
+                  <button
+                    key={currency}
+                    type="button"
+                    onClick={() => setLiCurrency(currency)}
+                    className={`rounded-full px-4 py-2 text-xs font-bold transition-colors ${
+                      liCurrency === currency ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    {currency === 'INR' ? 'INR (₹)' : 'USD ($)'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+              {LINKEDIN_PLAN_CONFIG.plans.map((plan) => linkedInCard(plan))}
+            </div>
+
+            <p className="mt-6 text-[11px] leading-relaxed text-slate-400">
+              {liCurrency === 'INR'
+                ? 'Prices are in INR, billed per 30 days.'
+                : `Prices are in USD at ${formatINR(LINKEDIN_PLAN_CONFIG.inrPerUsd)} to the dollar.`}{' '}
+              One LinkedIn account per plan; the bonus days are included in the term. The subscription runs on your
+              own LinkedIn account — nothing is posted or messaged without it.
+            </p>
+
+            <div ref={checkoutRef} className="mt-10 grid grid-cols-1 items-start gap-10 md:grid-cols-2">
+              <div>
+                <h2 className="text-2xl font-black tracking-tight text-slate-900 md:text-3xl">Confirm payment</h2>
+                <p className="mt-3 text-sm font-medium text-slate-500">
+                  Selected plan:{' '}
+                  <span className="font-bold text-slate-800">
+                    {liPlan.name} ({liPlan.duration})
+                  </span>
+                </p>
+
+                <div className="mt-6 rounded-2xl border border-slate-200 p-4">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-slate-400 line-through">
+                      {formatAmount(liStruckTotal, liCurrency)}
+                    </span>
+                    <span className="text-2xl font-black text-slate-900">{formatAmount(liTotal, liCurrency)}</span>
+                    <span className="text-[11px] font-semibold text-slate-500">total</span>
+                  </div>
+                  <p className="mt-1 text-[11px] font-semibold text-slate-500">
+                    Rate {formatAmount(liRate, liCurrency)} / 30 days
+                    {liCouponApplied ? ` · coupon ${LINKEDIN_PLAN_CONFIG.couponCode} applied` : ''}
+                  </p>
+                </div>
+
+                <div className="mt-5">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                    Coupon code
+                  </span>
+                  <div className="mt-2 flex gap-2">
+                    <input
+                      value={liCoupon}
+                      onChange={(event) => setLiCoupon(event.target.value.toUpperCase())}
+                      placeholder="e.g. AIAGENT"
+                      className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm uppercase text-slate-800 outline-none transition-colors focus:border-slate-400"
+                    />
+                    <button
+                      type="button"
+                      onClick={applyCoupon}
+                      className="rounded-2xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-800 transition-colors hover:border-slate-400"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                      Your name
+                    </span>
+                    <input
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
+                      placeholder="Full name"
+                      className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition-colors focus:border-slate-400"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                      Email on the agent account
+                    </span>
+                    <input
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      placeholder="you@company.com"
+                      className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition-colors focus:border-slate-400"
+                    />
+                  </label>
+                </div>
+
+                {error && <p className="mt-4 text-xs font-semibold text-red-600">{error}</p>}
+
+                {liActivated ? (
+                  <div className="mt-6 space-y-3">
+                    <button
+                      type="button"
+                      onClick={confirmLinkedInPayment}
+                      disabled={busy}
+                      className="w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 disabled:opacity-60 active:scale-[0.98]"
+                    >
+                      {busy ? (
+                        <span className="inline-flex items-center gap-2">
+                          <Loader2 size={15} className="animate-spin" /> Saving…
+                        </span>
+                      ) : (
+                        'Payment done — activate my plan'
+                      )}
+                    </button>
+                    <a
+                      href={LINKEDIN_PLAN_CONFIG.whatsappConfirm}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 py-3.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-100"
+                    >
+                      <MessageCircle size={15} /> Confirm with the team
+                    </a>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setError('');
+                      setLiActivated(true);
+                    }}
+                    className="mt-6 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-[0.98]"
+                  >
+                    Activate now
+                  </button>
+                )}
+
+                <p className="mt-3 text-[11px] text-slate-400">
+                  Pay with any UPI app — GPay, PhonePe, Paytm. Add your email in the payment note if your app allows
+                  it; it makes matching your payment instant.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center rounded-3xl border border-slate-200 p-6">
+                {liActivated ? (
+                  <>
+                    <img
+                      src={LINKEDIN_PLAN_CONFIG.paymentQr}
+                      alt="UPI QR code to pay for your LinkedIn AI Agent plan"
+                      className="w-full max-w-[280px] rounded-2xl"
+                    />
+                    <span className="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                      Scan &amp; pay {formatAmount(liTotal, liCurrency)}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <QrCode size={40} className="text-slate-300" />
+                    <span className="mt-4 max-w-[220px] text-center text-[11px] font-semibold text-slate-400">
+                      Press Activate now to reveal the UPI QR for {formatAmount(liTotal, liCurrency)}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ---------------- LinkedIn AI Agent Plan: done ---------------- */}
+        {track === 'linkedin' && liDone && (
+          <div className="mt-8 max-w-xl md:mt-10">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50">
+              <Check size={22} className="text-emerald-600" />
+            </span>
+            <h1 className="mt-5 text-3xl font-black tracking-tight text-slate-900">Thanks — we are on it</h1>
+            <p className="mt-4 text-sm font-medium text-slate-500">
+              We have your <span className="font-bold text-slate-800">{liPlan.name}</span> LinkedIn AI Agent request (
+              {formatAmount(liTotal, liCurrency)}) and your payment confirmation. Our team verifies the payment and
+              activates the subscription on{' '}
+              <span className="font-bold text-slate-800">{email}</span> — usually within 24 hours.
+            </p>
+            <p className="mt-4 text-xs text-slate-400">
+              Once it is active, link your LinkedIn account in the dashboard and the agent starts working through your
+              outreach, follow-ups and posting.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href={LINKEDIN_PLAN_CONFIG.dashboardUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-slate-800"
+              >
+                Open the dashboard <ExternalLink size={14} />
+              </a>
+              <a
+                href={LINKEDIN_PLAN_CONFIG.whatsappConfirm}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-3.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-100"
+              >
+                <MessageCircle size={15} /> Send the payment screenshot
+              </a>
+            </div>
           </div>
         )}
       </div>
