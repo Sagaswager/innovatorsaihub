@@ -118,6 +118,16 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
   const liTotal = liCouponApplied ? liPlan.total - LINKEDIN_PLAN_CONFIG.couponOffInr : liPlan.total;
   const liStruckTotal = liCouponApplied ? liPlan.total : liPlan.originalTotal;
 
+  /* The agent dashboard is a separate app with its own sign-in (name, WhatsApp
+   * number, LinkedIn email). Deep-link the right tab and hand it the email and
+   * name so the customer does not retype them. */
+  const agentSignupUrl = `${LINKEDIN_PLAN_CONFIG.dashboardUrl}?tab=signup${
+    email ? `&email=${encodeURIComponent(email)}` : ''
+  }${name ? `&name=${encodeURIComponent(name)}` : ''}`;
+  const agentLoginUrl = `${LINKEDIN_PLAN_CONFIG.dashboardUrl}?tab=login${
+    email ? `&email=${encodeURIComponent(email)}` : ''
+  }`;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step, track, liDone]);
@@ -966,22 +976,49 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
             <h1 className="mt-5 text-3xl font-black tracking-tight text-slate-900">Thanks — we are on it</h1>
             <p className="mt-4 text-sm font-medium text-slate-500">
               We have your <span className="font-bold text-slate-800">{liPlan.name}</span> LinkedIn AI Agent request (
-              {formatAmount(liTotal, liCurrency)}) and your payment confirmation. Our team verifies the payment and
-              activates the subscription on{' '}
-              <span className="font-bold text-slate-800">{email}</span> — usually within 24 hours.
+              {formatAmount(liTotal, liCurrency)}) and your payment confirmation for{' '}
+              <span className="font-bold text-slate-800">{email}</span>.
             </p>
-            <p className="mt-4 text-xs text-slate-400">
-              Once it is active, link your LinkedIn account in the dashboard and the agent starts working through your
-              outreach, follow-ups and posting.
+
+            <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              What happens next
             </p>
+            <ol className="mt-3 space-y-3">
+              <li className="flex items-start gap-3 text-sm text-slate-700">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-900 text-[11px] font-bold text-white">
+                  1
+                </span>
+                <span className="pt-0.5">Our team verifies your payment — usually within 24 hours.</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm text-slate-700">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-900 text-[11px] font-bold text-white">
+                  2
+                </span>
+                <span className="pt-0.5">
+                  Create your agent account with the <span className="font-bold">same email</span>
+                  {email ? ` (${email})` : ''} — the dashboard is a separate sign-in from this site. Already have one?
+                  Sign in instead.
+                </span>
+              </li>
+              <li className="flex items-start gap-3 text-sm text-slate-700">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-900 text-[11px] font-bold text-white">
+                  3
+                </span>
+                <span className="pt-0.5">
+                  Link your LinkedIn account inside the dashboard. The plan is switched on and the agent starts
+                  working through your outreach, follow-ups and posting.
+                </span>
+              </li>
+            </ol>
+
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
-                href={LINKEDIN_PLAN_CONFIG.dashboardUrl}
+                href={agentSignupUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-slate-800"
               >
-                Open the dashboard <ExternalLink size={14} />
+                Create my agent account <ExternalLink size={14} />
               </a>
               <a
                 href={LINKEDIN_PLAN_CONFIG.whatsappConfirm}
@@ -989,9 +1026,21 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-3.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-100"
               >
-                <MessageCircle size={15} /> Send the payment screenshot
+                <MessageCircle size={15} /> Confirm with the team
               </a>
             </div>
+            <p className="mt-3 text-[11px] text-slate-400">
+              Already have an agent account?{' '}
+              <a
+                href={agentLoginUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-slate-600 underline underline-offset-4"
+              >
+                Sign in here
+              </a>{' '}
+              — we will find the plan on your email.
+            </p>
           </div>
         )}
       </div>
