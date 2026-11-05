@@ -1315,38 +1315,44 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               }}
               className="mt-3 md:mt-4 text-base md:text-2xl text-zinc-700 tracking-tight leading-snug select-text"
             >
-              Give the goal. AI Agent gets it done.
+              Give the goal.{' '}
+              {/* The goal itself, swiping through samples; apps show as logos only */}
+              <span className="relative inline-block align-baseline overflow-hidden whitespace-nowrap">
+                <span className="invisible inline-flex items-center gap-1.5" aria-hidden="true">
+                  <span>{heroPrompts[promptIndex].label}</span>
+                  {heroPrompts[promptIndex].apps &&
+                    connectAppLogos.map((app) => (
+                      <span key={app.name}>{app.svg}</span>
+                    ))}
+                </span>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={promptIndex}
+                    initial={{ x: "40%", opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: "-40%", opacity: 0 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute inset-y-0 left-0 inline-flex items-center gap-1.5 whitespace-nowrap"
+                  >
+                    <span className="gradient-swipe-text">{heroPrompts[promptIndex].label}</span>
+                    {heroPrompts[promptIndex].apps &&
+                      connectAppLogos.map((app) => (
+                        <span key={app.name} title={app.name}>{app.svg}</span>
+                      ))}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </p>
 
-            {/* Swipe line: sample goals, plus the connectable apps on the last one */}
-            <div className="mt-4 md:mt-5 flex items-center gap-2.5 select-none">
-              <span className="shrink-0 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-                Try
-              </span>
-              <div className="relative h-9 flex-1 min-w-0 overflow-hidden">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={promptIndex}
-                    initial={{ x: "45%", opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: "-45%", opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute inset-0 flex items-center gap-2 whitespace-nowrap"
-                  >
-                    <span className="gradient-swipe-text text-base md:text-xl font-semibold tracking-tight">
-                      {heroPrompts[promptIndex].label}
-                    </span>
-                    {heroPrompts[promptIndex].apps && (
-                      <span className="flex items-center gap-1.5 ml-1">
-                        {connectAppLogos.map((app) => (
-                          <span key={app.name} title={app.name}>{app.svg}</span>
-                        ))}
-                      </span>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
+            <p
+              style={{
+                fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                fontWeight: 600,
+              }}
+              className="mt-1 text-base md:text-2xl text-zinc-700 tracking-tight leading-snug select-text"
+            >
+              AI Agent gets it done.
+            </p>
 
             {/* Left Side Aligned Starts At Button & Update Label (Triggers Get Started glassy Form) */}
             <div className="flex flex-wrap items-center gap-3 text-left mt-6">
