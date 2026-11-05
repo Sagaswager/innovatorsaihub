@@ -722,7 +722,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
 
   // Swipe line: advance every 2.8s.
   useEffect(() => {
-    const timer = setInterval(() => setPromptIndex((i) => (i + 1) % heroPrompts.length), 2800);
+    const timer = setInterval(() => setPromptIndex((i) => (i + 1) % heroPrompts.length), 1500);
     return () => clearInterval(timer);
   }, []);
 
@@ -1088,20 +1088,6 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           <span>Join Team</span>
         </button>
 
-        {/* Multi-AI Agent — opens the self-hosted AI platform at ai.innovatorsaihub.com */}
-        <a
-          id="platform-multi-ai-agent-link"
-          href="https://ai.innovatorsaihub.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackEvent('cta_clicked', { button_name: 'multi_ai_agent_header', location: 'platform_header' })}
-          style={{ backgroundColor: '#25C667' }}
-          className="text-white hover:opacity-90 border border-zinc-800 rounded-full px-5 py-2 text-xs font-bold tracking-wide hover:scale-105 active:scale-95 transition-all duration-200 inline-flex items-center gap-2 outline-none shadow-sm"
-        >
-          <img src="/aihub-orb.png" alt="" width={13} height={13} className="w-[13px] h-[13px] object-contain" />
-          <span>Multi-AI Agent</span>
-        </a>
-
         {/* Book Demo Button (Black with zoom-in scale effect) */}
         <a
           href="https://calendar.app.google/D4VcVM3GVSh4PAia6"
@@ -1333,10 +1319,10 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={promptIndex}
-                    initial={{ x: "40%", opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: "-40%", opacity: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ y: "-110%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: "110%", opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     className="col-start-1 row-start-1 inline-flex items-center gap-1.5 whitespace-nowrap"
                   >
                     <span className="gradient-swipe-text">{heroPrompts[promptIndex].label}</span>
@@ -1361,7 +1347,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 style={{ backgroundColor: '#25C667' }}
-                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm md:text-base font-semibold text-white shadow-sm hover:opacity-95 transition-all duration-200"
+                className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm md:text-base font-semibold text-white shadow-sm hover:opacity-95 transition-all duration-200"
               >
                 <img src="/aihub-orb.png" alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain" />
                 <span>Multi-AI Agent gets it done</span>
@@ -1416,26 +1402,6 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 <span>New update : FREE Version is over, Sorry😔</span>
               </div>
 
-              {/* Multi-AI Agent — the platform behind the button */}
-              <motion.a
-                id="platform-hero-multi-ai-agent"
-                href="https://ai.innovatorsaihub.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(37, 198, 103, 0.45)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => trackEvent('cta_clicked', { button_name: 'multi_ai_agent_hero', location: 'platform_hero' })}
-                style={{
-                  fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                  fontWeight: 700,
-                  backgroundColor: '#25C667',
-                  color: '#ffffff'
-                }}
-                className="px-5 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 cursor-pointer outline-none"
-              >
-                <img src="/aihub-orb.png" alt="" width={14} height={14} className="w-[14px] h-[14px] object-contain" />
-                <span>Multi-AI Agent</span>
-              </motion.a>
             </div>
 
           </div>
