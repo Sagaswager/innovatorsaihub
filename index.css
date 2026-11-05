@@ -82,3 +82,30 @@ h1, h2, h3 {
         display: none !important;
     }
 }
+
+/* Hero swipe line — animated gradient text */
+@keyframes gradient-swipe {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+.gradient-swipe-text {
+    background-image: linear-gradient(90deg, #059669 0%, #06b6d4 25%, #6366f1 50%, #a855f7 75%, #059669 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-swipe 8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gradient-swipe-text {
+        animation: none;
+        background-position: 30% 50%;
+    }
+}
