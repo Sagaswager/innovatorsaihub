@@ -1313,17 +1313,22 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                 fontWeight: 600,
               }}
-              className="mt-3 md:mt-4 text-base md:text-2xl text-zinc-700 tracking-tight leading-snug select-text"
+              className="mt-2 md:mt-3 text-base md:text-2xl text-zinc-700 tracking-tight leading-tight select-text"
             >
-              Give the goal.{' '}
-              {/* The goal itself, swiping through samples; apps show as logos only */}
-              <span className="relative inline-block align-baseline overflow-hidden whitespace-nowrap">
-                <span className="invisible inline-flex items-center gap-1.5" aria-hidden="true">
-                  <span>{heroPrompts[promptIndex].label}</span>
-                  {heroPrompts[promptIndex].apps &&
-                    connectAppLogos.map((app) => (
-                      <span key={app.name}>{app.svg}</span>
-                    ))}
+              <span className="mr-1.5">Give the goal</span>
+              {/* The goal itself, swiping through samples; apps show as logos only.
+                  Inline grid keeps the spacer and the swiping text in ONE cell, so the
+                  gradient line sits on the same baseline as "Give the goal" and the
+                  width never jitters. */}
+              <span className="relative inline-grid align-baseline items-baseline overflow-hidden whitespace-nowrap">
+                <span
+                  className="invisible col-start-1 row-start-1 inline-flex items-center gap-1.5"
+                  aria-hidden="true"
+                >
+                  <span>3D Website Development</span>
+                  {connectAppLogos.map((app) => (
+                    <span key={app.name}>{app.svg}</span>
+                  ))}
                 </span>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
@@ -1332,7 +1337,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                     animate={{ x: 0, opacity: 1 }}
                     exit={{ x: "-40%", opacity: 0 }}
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute inset-y-0 left-0 inline-flex items-center gap-1.5 whitespace-nowrap"
+                    className="col-start-1 row-start-1 inline-flex items-center gap-1.5 whitespace-nowrap"
                   >
                     <span className="gradient-swipe-text">{heroPrompts[promptIndex].label}</span>
                     {heroPrompts[promptIndex].apps &&
@@ -1344,18 +1349,27 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               </span>
             </p>
 
-            <p
-              style={{
-                fontFamily: '"Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                fontWeight: 600,
-              }}
-              className="mt-1 text-base md:text-2xl text-zinc-700 tracking-tight leading-snug select-text"
-            >
-              AI Agent gets it done.
-            </p>
+            {/* "…gets it done" — the orb button that opens the platform */}
+            <div className="mt-2 md:mt-3">
+              <motion.a
+                href="https://ai.innovatorsaihub.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent('cta_clicked', { button_name: 'hero_multi_ai_agent_gets_it_done', location: 'platform_hero' })
+                }
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                style={{ backgroundColor: '#25C667' }}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm md:text-base font-semibold text-white shadow-sm hover:opacity-95 transition-all duration-200"
+              >
+                <img src="/aihub-orb.png" alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain" />
+                <span>Multi-AI Agent gets it done</span>
+              </motion.a>
+            </div>
 
             {/* Left Side Aligned Starts At Button & Update Label (Triggers Get Started glassy Form) */}
-            <div className="flex flex-wrap items-center gap-3 text-left mt-6">
+            <div className="flex flex-wrap items-center gap-3 text-left mt-4">
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(149, 214, 86, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
