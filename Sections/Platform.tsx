@@ -18,7 +18,86 @@ import { trackEvent } from '../analytics';
 import GoogleSignInButton from './GoogleSignInButton';
 import { isGoogleSignInConfigured, type GoogleProfile } from '../googleAuth';
 
-const aiCoWorkers = [
+type CoWorker = {
+  title: string;
+  rating: string;
+  reviews: string;
+  price?: string;
+  originalPrice?: string;
+  brandGradient: string;
+  description: string;
+  benefits: string[];
+  exclusions: string[];
+  logo: React.ReactNode;
+  /** When set the card links straight out instead of opening the details panel. */
+  href?: string;
+  cta?: string;
+};
+
+/** What a visitor can hand an AI agent — the swipe line under the hero tagline. */
+const heroPrompts: { label: string; apps?: boolean }[] = [
+  { label: "3D Website Development" },
+  { label: "Do Video Editing" },
+  { label: "Generate B2B Leads" },
+  { label: "Connect Apps", apps: true },
+];
+
+/** Brand marks for the "Connect Apps" prompt — logos only, no wordmarks. */
+const connectAppLogos = [
+  {
+    name: "Google Docs",
+    svg: (
+      <svg key="docs" viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 shrink-0" aria-hidden="true">
+        <path fill="#4285F4" d="M6.2 2h7.3L18 6.5V22H6.2z" />
+        <path fill="#BBCFF7" d="M13.5 2 18 6.5h-4.5z" />
+        <path fill="#F1F5FE" d="M8.6 10.4h6.8v1.3H8.6zm0 2.6h6.8v1.3H8.6zm0 2.6h4.6v1.3H8.6z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Google Sheets",
+    svg: (
+      <svg key="sheets" viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 shrink-0" aria-hidden="true">
+        <path fill="#0F9D58" d="M6.2 2h7.3L18 6.5V22H6.2z" />
+        <path fill="#9CD5B6" d="M13.5 2 18 6.5h-4.5z" />
+        <path fill="#FFFFFF" d="M8.6 11.5h6.8v7H8.6z" />
+        <path fill="#0F9D58" d="M8.6 13.2h6.8v.8H8.6zm0 1.9h6.8v.8H8.6zm2.2-3.6h.9v7h-.9z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Gmail",
+    svg: (
+      <svg key="gmail" viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 shrink-0" aria-hidden="true">
+        <path fill="#4285F4" d="M0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64v16.362H1.636A1.636 1.636 0 0 1 0 19.366z" />
+        <path fill="#34A853" d="M24 19.366V5.457c0-2.023-2.309-3.178-3.927-1.964L18.545 4.64v16.362H22.364A1.636 1.636 0 0 0 24 19.366z" />
+        <path fill="#EA4335" d="M12 16.64l-6.545-4.91V4.64l6.545 4.908L18.545 4.64v7.09L12 16.64z" />
+        <path fill="#C5221F" d="M0 5.457c0-2.023 2.309-3.178 3.927-1.964l1.528 1.147V11.73L0 7.5V5.457z" />
+        <path fill="#FBBC05" d="M24 5.457c0-2.023-2.309-3.178-3.927-1.964l-1.528 1.147V11.73l5.455-4.23V5.457z" />
+      </svg>
+    ),
+  },
+  {
+    name: "WhatsApp",
+    svg: (
+      <svg key="whatsapp" viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 shrink-0" aria-hidden="true">
+        <path fill="#25D366" d="M12 1.9a10 10 0 0 0-8.6 15.1L2 22.1l5.3-1.4A10 10 0 1 0 12 1.9z" />
+        <path fill="#FFFFFF" d="M17.4 14.1c-.3.8-1.7 1.5-2.3 1.6-.6.1-1.2.1-3.4-.8-2.9-1.2-4.7-4.1-4.9-4.3-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.9-.4h.6c.2 0 .5 0 .7.6.2.6.8 2 .9 2.2.1.2.1.3 0 .5l-.3.5-.4.5c-.2.2-.3.3-.1.6.2.3.7 1.2 1.6 2 .9.8 1.6 1 1.9 1.2.3.2.5.1.6 0l.9-1.1c.2-.3.4-.2.7-.1.3.1 1.7.8 2 .9.3.2.5.2.4.5z" />
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    svg: (
+      <svg key="linkedin" viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 shrink-0" aria-hidden="true">
+        <rect width="24" height="24" rx="4" fill="#0077B5" />
+        <path fill="#fff" d="M8.2 19H5.5V9.6H8.2V19z M6.9 8.3c-.9 0-1.6-.7-1.6-1.6s.7-1.6 1.6-1.6 1.6.7 1.6 1.6-.7 1.6-1.6 1.6z M19 19h-2.7v-4.2c0-1 0-2.3-1.4-2.3-1.4 0-1.6 1.1-1.6 2.2V19H10.6V9.6h2.6v1.3h0c.4-.7 1.2-1.5 2.7-1.5 2.9 0 3.4 1.9 3.4 4.4V19z" />
+      </svg>
+    ),
+  },
+];
+
+const aiCoWorkers: CoWorker[] = [
   {
     title: "Whatsapp AI Agent",
     rating: "4.5",
@@ -83,6 +162,34 @@ const aiCoWorkers = [
         <path d="M8.2 19H5.5V9.6H8.2V19z M6.9 8.3c-.9 0-1.6-.7-1.6-1.6s.7-1.6 1.6-1.6 1.6.7 1.6 1.6-.7 1.6-1.6 1.6z M19 19h-2.7v-4.2c0-1 0-2.3-1.4-2.3-1.4 0-1.6 1.1-1.6 2.2V19H10.6V9.6h2.6v1.3h0c.4-.7 1.2-1.5 2.7-1.5 2.9 0 3.4 1.9 3.4 4.4V19z" fill="#fff" />
       </svg>
     )
+  },
+  {
+    title: "Multi-AI Agent",
+    rating: "",
+    reviews: "",
+    brandGradient: "from-violet-500 to-fuchsia-500",
+    href: "https://ai.innovatorsaihub.com",
+    cta: "Open",
+    description: "Your whole AI team in one workspace: agents that plan, build, write, research and run your day, with tables, files, functions and schedules in the same place.",
+    benefits: [
+      "Hire AI agents that work inside your own workspace",
+      "Connect Google Docs, Sheets, Gmail, WhatsApp and LinkedIn",
+      "Build tables, files, functions and scheduled workflows",
+      "Chat, email and voice channels for every agent",
+      "Bring your own model keys or use ours",
+      "One dashboard for the whole team",
+    ],
+    exclusions: [
+      "Unlimited free usage (plan limits apply)",
+      "Access to your accounts without your approval",
+      "Custom model training",
+      "White-label reselling",
+      "Self-hosting on your own server",
+      "Custom enterprise contracts",
+    ],
+    logo: (
+      <img src="/aihub-orb.png" alt="Multi-AI Agent" className="w-20 h-20 object-contain" loading="lazy" decoding="async" />
+    ),
   },
   {
     title: "Gmail AI Agent",
@@ -605,11 +712,19 @@ interface PlatformProps {
 
 const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // Swipe line under the hero tagline.
+  const [promptIndex, setPromptIndex] = useState(0);
   const [isCreditsOpen, setIsCreditsOpen] = useState(false);
   const [isAccountSettingsOpen, setIsAccountSettingsOpen] = useState(false);
   // Task 8: real rating averages, when an agent has reviews. Cards fall back to the
   // static display value until the first review arrives.
   const [reviewStats, setReviewStats] = useState<Record<string, { average: number; count: number }>>({});
+
+  // Swipe line: advance every 2.8s.
+  useEffect(() => {
+    const timer = setInterval(() => setPromptIndex((i) => (i + 1) % heroPrompts.length), 2800);
+    return () => clearInterval(timer);
+  }, []);
 
   // Task 6: close the Add Balance popup on Escape (click-outside is handled by the
   // overlay rendered alongside the popup).
@@ -983,7 +1098,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           style={{ backgroundColor: '#25C667' }}
           className="text-white hover:opacity-90 border border-zinc-800 rounded-full px-5 py-2 text-xs font-bold tracking-wide hover:scale-105 active:scale-95 transition-all duration-200 inline-flex items-center gap-2 outline-none shadow-sm"
         >
-          <Bot size={13} className="text-white" />
+          <img src="/aihub-orb.png" alt="" width={13} height={13} className="w-[13px] h-[13px] object-contain" />
           <span>Multi-AI Agent</span>
         </a>
 
@@ -1203,6 +1318,36 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
               Give the goal. AI Agent gets it done.
             </p>
 
+            {/* Swipe line: sample goals, plus the connectable apps on the last one */}
+            <div className="mt-4 md:mt-5 flex items-center gap-2.5 select-none">
+              <span className="shrink-0 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
+                Try
+              </span>
+              <div className="relative h-9 flex-1 min-w-0 overflow-hidden">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={promptIndex}
+                    initial={{ x: "45%", opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: "-45%", opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute inset-0 flex items-center gap-2 whitespace-nowrap"
+                  >
+                    <span className="gradient-swipe-text text-base md:text-xl font-semibold tracking-tight">
+                      {heroPrompts[promptIndex].label}
+                    </span>
+                    {heroPrompts[promptIndex].apps && (
+                      <span className="flex items-center gap-1.5 ml-1">
+                        {connectAppLogos.map((app) => (
+                          <span key={app.name} title={app.name}>{app.svg}</span>
+                        ))}
+                      </span>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
             {/* Left Side Aligned Starts At Button & Update Label (Triggers Get Started glassy Form) */}
             <div className="flex flex-wrap items-center gap-3 text-left mt-6">
               <motion.button
@@ -1268,7 +1413,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                 }}
                 className="px-5 py-2.5 rounded-xl text-xs md:text-sm tracking-wide shadow-md border border-zinc-800 inline-flex items-center gap-2 cursor-pointer outline-none"
               >
-                <Bot size={14} />
+                <img src="/aihub-orb.png" alt="" width={14} height={14} className="w-[14px] h-[14px] object-contain" />
                 <span>Multi-AI Agent</span>
               </motion.a>
             </div>
@@ -1433,12 +1578,17 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -15 }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 relative z-10"
                 >
                   {aiCoWorkers.map((item, index) => (
                     <div 
                       key={index} 
                       onClick={() => {
+                        if (item.href) {
+                          window.open(item.href, '_blank', 'noopener,noreferrer');
+                          trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card', location: 'agent_hub' });
+                          return;
+                        }
                         if (item.title.toLowerCase().includes('whatsapp')) {
                           if (navigateTo) navigateTo('whatsapp-ai-agent');
                           else window.location.href = '/whatsapp-ai-agent';
@@ -1484,6 +1634,11 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
+                              if (item.href) {
+                                window.open(item.href, '_blank', 'noopener,noreferrer');
+                                trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card_cta', location: 'agent_hub' });
+                                return;
+                              }
                               if (item.title.toLowerCase().includes('whatsapp')) {
                                 if (navigateTo) navigateTo('whatsapp-ai-agent');
                                 else window.location.href = '/whatsapp-ai-agent';
@@ -1496,7 +1651,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                             }}
                             className="px-6 py-2.5 rounded-xl text-xs md:text-sm font-medium text-white shadow-sm hover:scale-105 hover:shadow-md hover:shadow-green-500/10 active:scale-95 transition-all duration-300 bg-gradient-to-r from-emerald-400 to-green-500"
                           >
-                            Rent
+                            {item.cta ?? 'Rent'}
                           </button>
                         </div>
                       </div>
