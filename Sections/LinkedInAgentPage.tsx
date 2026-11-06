@@ -1189,7 +1189,7 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
 <nav className="flex flex-col gap-2.5 text-sm">
 <a className="text-slate-600 hover:text-slate-900 transition" href="#">Security Overview</a>
 <a className="text-slate-600 hover:text-slate-900 transition" href="#">SOC2 Type II</a>
-<a className="text-slate-600 hover:text-slate-900 transition" href="#">Privacy Policy</a>
+<a className="text-slate-600 hover:text-slate-900 transition" href="/privacy">Privacy Policy</a>
 <a className="text-slate-600 hover:text-slate-900 transition" href="#">Terms of Service</a>
 <a className="text-slate-600 hover:text-slate-900 transition" href="#">Data Processing (DPA)</a>
 </nav>

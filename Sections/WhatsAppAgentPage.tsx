@@ -1384,7 +1384,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
           <div className="pt-space-xl border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-space-md text-slate-400 text-xs">
             <div className="font-code-mono">© 2025 Innovators AI Hub Inc. All rights reserved. Operating on WhatsApp Cloud API infrastructure.</div>
             <div className="flex items-center gap-space-lg font-semibold">
-              <a className="hover:text-slate-900 transition-colors" href="#">PRIVACY POLICY</a>
+              <a className="hover:text-slate-900 transition-colors" href="/privacy">PRIVACY POLICY</a>
               <a className="hover:text-slate-900 transition-colors" href="#">TERMS OF SERVICE</a>
               <a className="hover:text-slate-900 transition-colors" href="#">SECURITY</a>
             </div>
