@@ -68,6 +68,7 @@ const ROUTES = {
       'Typical setups run on the official WhatsApp Business API with a verified number, connected to HubSpot, Zoho, Salesforce, Google Sheets or your own backend. If you already have a support desk, the agent can feed it rather than replace it.',
       'You stay in control. Escalation rules decide when a human takes over, quiet hours are respected, and every message is logged and reviewable. Nothing about the customer relationship is hidden from you.',
       'Setup starts with a short audit of how enquiries reach you today, then a configured agent tested against real conversations before it goes live on your number. Book a demo to see the agent handle one of your own enquiries.',
+      'Before you decide, read [what a WhatsApp AI agent is and how to set one up](/whatsapp-ai-agent-guide), [what an AI agent costs in India](/ai-agent-cost-in-india) and [how an AI agent differs from a chatbot](/ai-agent-vs-chatbot).',
     ],
   },
   'linkedin-ai-agent': {
@@ -83,6 +84,7 @@ const ROUTES = {
       'Safety is part of the design. Daily invitation and message limits are respected, sending is spread across working hours, and accounts are monitored for warnings so volume is reduced before LinkedIn reacts. A human can pause the agent at any time.',
       'Reporting tells you what matters: how many conversations started, how many replied, how many meetings were booked, and which message actually earned the reply.',
       'The agent works alongside your existing CRM, so leads and notes land where your team already looks. Book a demo and we will show the outreach flow against a target list you choose.',
+      'Before you decide, read [what an AI agent costs in India](/ai-agent-cost-in-india), [how an AI agent differs from a chatbot](/ai-agent-vs-chatbot) and [what a WhatsApp AI agent is](/whatsapp-ai-agent-guide) — most LinkedIn replies end up closing on WhatsApp.',
     ],
   },
   services: {
@@ -493,7 +495,7 @@ function articleHtml(article) {
 function injectContent(html, meta, key) {
   const paragraphs = meta.article
     ? articleHtml(meta.article)
-    : `${meta.body.map((p) => `        <p>${p}</p>`).join('\n')}\n        ${CTA}`;
+    : `${meta.body.map((p) => `        <p>${inlineLinks(p)}</p>`).join('\n')}\n        ${CTA}`;
   const block = `<div id="root"><div class="seo-static">
         ${meta.article ? '' : `<h1>${meta.h1}</h1>`}
 ${paragraphs}
