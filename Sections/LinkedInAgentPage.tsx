@@ -1364,6 +1364,43 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
           </div>
         )}
       </AnimatePresence>
+
+      {/* Guides: the buyer-intent pages that link here */}
+      <section className="max-w-5xl mx-auto px-6 pb-24 pt-4">
+        <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-5">Read before you decide</h2>
+        <ul className="space-y-3">
+          <li>
+            <a
+              href="/ai-agent-cost-in-india"
+              onClick={(e) => { e.preventDefault(); navigateTo?.('ai-agent-cost-in-india'); }}
+              className="text-[15px] font-semibold text-emerald-700 hover:text-emerald-800 underline decoration-emerald-300 decoration-2 underline-offset-2"
+            >
+              What an AI agent costs in India
+            </a>
+            <span className="text-[15px] text-slate-600"> — subscription, setup, pass-through usage and review time.</span>
+          </li>
+          <li>
+            <a
+              href="/ai-agent-vs-chatbot"
+              onClick={(e) => { e.preventDefault(); navigateTo?.('ai-agent-vs-chatbot'); }}
+              className="text-[15px] font-semibold text-emerald-700 hover:text-emerald-800 underline decoration-emerald-300 decoration-2 underline-offset-2"
+            >
+              AI agent vs chatbot
+            </a>
+            <span className="text-[15px] text-slate-600"> — where a scripted bot stops and an agent starts.</span>
+          </li>
+          <li>
+            <a
+              href="/whatsapp-ai-agent-guide"
+              onClick={(e) => { e.preventDefault(); navigateTo?.('whatsapp-ai-agent-guide'); }}
+              className="text-[15px] font-semibold text-emerald-700 hover:text-emerald-800 underline decoration-emerald-300 decoration-2 underline-offset-2"
+            >
+              WhatsApp AI agent: what it is and how to set one up
+            </a>
+            <span className="text-[15px] text-slate-600"> — useful if your LinkedIn leads move to WhatsApp to close.</span>
+          </li>
+        </ul>
+      </section>
     </div>
   );
 };
