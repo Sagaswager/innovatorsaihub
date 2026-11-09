@@ -24,6 +24,9 @@ const LinkedInAgentPage = lazy(() => import('./Sections/LinkedInAgentPage'));
 const ConsentBanner = lazy(() => import('./Sections/ConsentBanner'));
 const PrivacyPolicy = lazy(() => import('./Sections/PrivacyPolicy'));
 const MyPlanPage = lazy(() => import('./Sections/MyPlanPage'));
+const ArticlePage = lazy(() => import('./Sections/ArticlePage'));
+// Long-form guide copy — the same file scripts/route-shells.mjs prerenders from.
+import ARTICLES from './content/articles.json';
 
 export type Page = 
   | 'home' 
@@ -36,8 +39,16 @@ export type Page =
   | 'admin'
   | 'whatsapp-ai-agent'
   | 'linkedin-ai-agent'
+  | 'whatsapp-ai-agent-guide'
+  | 'ai-agent-cost-in-india'
+  | 'ai-agent-vs-chatbot'
   | 'my-plan'
   | 'privacy';
+
+const ARTICLE_SLUGS = Object.keys(ARTICLES) as Page[];
+type ArticleContent = (typeof ARTICLES)[keyof typeof ARTICLES];
+const getArticle = (page: Page): ArticleContent | undefined =>
+  (ARTICLES as Record<string, ArticleContent>)[page];
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
@@ -111,6 +122,7 @@ const App: React.FC = () => {
         'admin',
         'whatsapp-ai-agent',
         'linkedin-ai-agent',
+        ...ARTICLE_SLUGS,
         'my-plan',
         'privacy'
       ];
@@ -202,6 +214,12 @@ const App: React.FC = () => {
         break;
     }
 
+    const articleMeta = getArticle(currentPage);
+    if (articleMeta) {
+      title = articleMeta.title;
+      description = articleMeta.description;
+    }
+
     document.title = title;
     const pageUrl = `https://www.innovatorsaihub.com${currentPage === 'platform' ? '/' : `/${currentPage}`}`;
     
@@ -258,7 +276,49 @@ const App: React.FC = () => {
     }
 
     let dynamicSchema: object | null = null;
-    if (currentPage === 'whatsapp-ai-agent') {
+    if (articleMeta) {
+      // The prerendered shell already carries Article + FAQPage + Breadcrumb.
+      // Replace it with the identical client-side graph so the page never has
+      // two conflicting copies after React mounts.
+      document.querySelectorAll('script[data-route-schema]').forEach((node) => node.remove());
+      dynamicSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "headline": articleMeta.h1,
+            "description": articleMeta.description,
+            "url": pageUrl,
+            "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
+            "datePublished": "2026-11-09",
+            "dateModified": "2026-11-09",
+            "articleSection": articleMeta.sections.map((section) => section.h2),
+            "author": { "@type": "Organization", "name": "Innovators AI HUB", "url": "https://www.innovatorsaihub.com/" },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Innovators AI HUB",
+              "url": "https://www.innovatorsaihub.com/",
+              "logo": { "@type": "ImageObject", "url": "https://www.innovatorsaihub.com/ai-logos.png" }
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": articleMeta.faq.map((item) => ({
+              "@type": "Question",
+              "name": item.q,
+              "acceptedAnswer": { "@type": "Answer", "text": item.a }
+            }))
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.innovatorsaihub.com/" },
+              { "@type": "ListItem", "position": 2, "name": articleMeta.h1, "item": pageUrl }
+            ]
+          }
+        ]
+      };
+    } else if (currentPage === 'whatsapp-ai-agent') {
       dynamicSchema = {
         "@context": "https://schema.org",
         "@graph": [
@@ -512,7 +572,8 @@ const App: React.FC = () => {
     };
   }, [currentPage]);
 
-  const isLightPage = currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent' || currentPage === 'privacy' || currentPage === 'my-plan';
+  const isArticlePage = ARTICLE_SLUGS.includes(currentPage);
+  const isLightPage = isArticlePage || currentPage === 'platform' || currentPage === 'whatsapp-ai-agent' || currentPage === 'linkedin-ai-agent' || currentPage === 'privacy' || currentPage === 'my-plan';
 
   useEffect(() => {
     if (isLightPage) {
@@ -691,6 +752,17 @@ const App: React.FC = () => {
               transition={{ duration: 0.2 }}
             >
               <AdminDashboard isDarkMode={isDarkMode} />
+            </motion.div>
+          )}
+
+          {isArticlePage && (
+            <motion.div
+              key={`article-${currentPage}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
+            >
+              <ArticlePage slug={currentPage as any} navigateTo={navigateTo} />
             </motion.div>
           )}
 
