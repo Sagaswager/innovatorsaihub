@@ -395,5 +395,406 @@
         "text": "Bring a real conversation and we will map it."
       }
     ]
+  },
+  "whatsapp-business-api-approval": {
+    "title": "WhatsApp Business API Approval: What It Takes to Get Live | Innovators AI HUB",
+    "description": "What WhatsApp Business API approval actually requires: Meta business verification, phone number rules, display name review, why applications get rejected, and what changes once you are live.",
+    "h1": "WhatsApp Business API Approval: What It Takes to Get Live",
+    "answer": "WhatsApp Business API approval is three approvals, not one: Meta verifies your business, your phone number is added and confirmed, and your display name passes review. You need documents that match your legal entity, a number that is not active on the WhatsApp app, and a name that clearly represents the brand.",
+    "sections": [
+      {
+        "h2": "Three approvals, not one",
+        "paragraphs": [
+          "Approval is usually described as a single gate. It is not. Your business has to be verified inside Meta Business Manager, your number has to be added to a WhatsApp Business Account and confirmed, and your display name has to survive review."
+        ]
+      },
+      {
+        "h2": "Business verification: documents that have to agree",
+        "paragraphs": [
+          "Business verification happens in Meta Business Manager under Security Center, started by an admin of the business portfolio. You upload an official document showing your legal name, registered address and, where it applies, your tax registration: for an Indian business usually a GST certificate, a business PAN, an Udyam certificate, a certificate of incorporation or a utility bill in the business name."
+        ],
+        "list": [
+          "Legal name exactly as on the registration document, with no trading name and no shortened form",
+          "Registered address matching the document, including the PIN code",
+          "A business phone number you actually answer, in the same name",
+          "A website on your own domain naming the business, the service and a way to contact you",
+          "Documents that are current, legible and show the full page, not a cropped corner"
+        ]
+      },
+      {
+        "h2": "Phone number requirements",
+        "paragraphs": [
+          "The number cannot be in use on the WhatsApp app at the same time. If it is, you delete the WhatsApp account on that number first, and the chats on that phone go with it, or you use a different number for the API.",
+          "The number must also receive a one-time code by SMS or voice call. A landline works if it can take a voice call; a virtual number works if it can receive the code and stay reachable. You pick a display name and a business category at this step too."
+        ]
+      },
+      {
+        "h2": "Display name rules",
+        "paragraphs": [
+          "The display name is what a customer sees instead of a phone number, so Meta reviews it as a brand claim rather than a label. It has to clearly represent the business, meaning a name a customer could connect to your website, your signage and your legal entity."
+        ],
+        "list": [
+          "Use the brand name your customers know, not an internal team name",
+          "Generic words on their own are rejected: Support, Sales, Info, Customer Care",
+          "No claims inside the name, such as Best or Cheapest, unless they are part of the registered brand",
+          "No emoji, no strings of punctuation, no all-caps styling",
+          "If you sell under one brand, use that brand rather than the holding company"
+        ],
+        "after": [
+          "Changing the name later is possible but reviewed again, and the number of changes is limited, so choose one you can keep for a year."
+        ]
+      },
+      {
+        "h2": "What gets rejected, and why",
+        "paragraphs": [
+          "Rejections are rarely mysterious once you know which gate failed."
+        ],
+        "list": [
+          "Documents that do not match the profile: a different spelling of the legal name, an old address, a phone number that is not on the document",
+          "Documents that are unreadable, cropped, angled or expired",
+          "A website that does not support the claim: no mention of the business, no contact route, a free subdomain, or a page that is only a login",
+          "A display name that is generic or unrelated to the brand on the site",
+          "A number still active on WhatsApp, so the code cannot be delivered",
+          "A restricted category, or a template submitted as utility when it is promotional and gives no opt-out"
+        ],
+        "after": [
+          "The fix is usually administrative: correct the profile, upload a clean document, wait for the current review to finish before resubmitting,."
+        ]
+      },
+      {
+        "h2": "How long approval takes",
+        "paragraphs": [
+          "Meta publishes no guaranteed turnaround for business verification, and anyone who promises you fixed hours is guessing. What you control is the queue you join: complete documents on the first submission, a profile that matches them, a website that confirms the business.",
+          "So start verification on day one and build in parallel. The agent configuration, the template wording and the CRM integration do not need an approved account. They need a decision about what the agent says and where the conversation ends up."
+        ]
+      },
+      {
+        "h2": "What changes once you are approved",
+        "paragraphs": [
+          "Approval does not mean you can message anyone at any time. Four rules shape what an agent can do."
+        ],
+        "list": [
+          "The 24-hour service window: when a customer messages you, a 24-hour window opens in which you can reply freely. Once it closes, you need an approved template.",
+          "Templates: every message you start outside the window is a template, reviewed and categorised as marketing, utility or authentication.",
+          "Per-message pricing: Meta charges per template message delivered rather than per conversation. Service conversations the customer starts are the free part,.",
+          "Messaging limits and quality: a new number starts on a low daily limit and earns more as it sends without being blocked or reported. A bought list is the fastest way to lose the account."
+        ],
+        "after": [
+          "The green tick is separate again: Official Business Account status is granted on notability, not on API approval, and a verified business can run an agent without it."
+        ]
+      },
+      {
+        "h2": "Where the agent fits",
+        "paragraphs": [
+          "An approved account plus a WhatsApp AI agent is what makes the channel useful: the agent answers inside the service window, qualifies, books the appointment and hands over when a person is needed. Templates cover the follow-up after the window closes.",
+          "To see what the agent does once it is live, read [what a WhatsApp AI agent is and how to set one up](/whatsapp-ai-agent-guide), or look at the [WhatsApp AI Agent service](/whatsapp-ai-agent). For the cost side, read [what an AI agent costs in India](/ai-agent-cost-in-india)."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Do I need a new phone number for the WhatsApp Business API?",
+        "a": "Only if the number is already active on the WhatsApp app. A number can be on the API or on the app, not both, so delete the WhatsApp account on it or use a second number."
+      },
+      {
+        "q": "Is business verification the same as the green tick?",
+        "a": "No. Business verification confirms your legal entity to Meta. The green tick is Official Business Account status, granted on notability, and is separate."
+      },
+      {
+        "q": "Can I send promotional messages to a list once approved?",
+        "a": "Only with opt-in and approved marketing templates, and Meta charges per template message. Numbers that block or report you pull down your quality rating and your daily limit."
+      },
+      {
+        "q": "What if Meta rejects the verification?",
+        "a": "You get the reason, fix the profile or the document, and resubmit. The usual causes are a name or address that does not match the document, or a website that does not confirm the business."
+      }
+    ],
+    "related": [
+      {
+        "href": "/whatsapp-ai-agent",
+        "label": "WhatsApp AI Agent",
+        "text": "what the agent does on your number once the account is approved"
+      },
+      {
+        "href": "/whatsapp-ai-agent-guide",
+        "label": "WhatsApp AI agent guide",
+        "text": "setup, qualification and hand-over in detail"
+      },
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard at ₹999 per month and Pro at ₹14,999"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact us",
+        "text": "ask about your own number and business documents"
+      }
+    ]
+  },
+  "voice-ai-agent-use-cases": {
+    "title": "Voice AI Agent Use Cases: Inbound and Outbound Calls | Innovators AI HUB",
+    "description": "The voice AI agent use cases that work today: lead qualification calls, appointment reminders, first-line support and order status, with what each call sounds like, what it hands to a human and what it needs integrated.",
+    "h1": "Voice AI Agent Use Cases That Work Today",
+    "answer": "A voice AI agent makes and answers calls in natural speech. The use cases that work are narrow and repetitive: qualifying an inbound lead, confirming an appointment, answering first-line support questions and giving order status. Each needs a clear script boundary, an agreed hand-off to a person, and a connection to your calendar, CRM or order system.",
+    "sections": [
+      {
+        "h2": "What a voice agent is good at",
+        "paragraphs": [
+          "A voice agent is a language model behind a phone number. Speech is transcribed as the person talks, the agent decides what to say next, and the reply is spoken back in a natural voice. On a well-built stack the loop runs in about a second,.",
+          "What makes it work is a narrow job. Ask it to run a five-minute qualification, confirm a booking, or answer the ten questions your team answers daily, and it performs. Ask it to negotiate or handle a refund complaint and you will hear the seams."
+        ]
+      },
+      {
+        "h2": "Inbound: lead qualification calls",
+        "paragraphs": [
+          "The strongest use case for most businesses. A call arrives from a number your team has not seen, and instead of ringing out, the agent answers with the business name and asks what your sales team would ask: what they want, where they are, when they need it, and what budget they have in mind.",
+          "What it sounds like: short turns, one question at a time, no menu. If the caller talks over the agent, the agent stops and listens,. If the caller asks for a discount, a complaint or a technical detail, the agent offers a callback time instead of guessing.",
+          "What it hands over: a qualified lead with the answers attached, written to the CRM before the call ends, plus a booked callback or site visit. What needs integrating: a number or SIP trunk from a provider such as Twilio, the voice stack itself, your CRM and a calendar."
+        ]
+      },
+      {
+        "h2": "Inbound: first-line support and order status",
+        "paragraphs": [
+          "The second inbound case is the call that blocks your team all day: where is my order, what are your hours, does this come in blue, how do I reset my password. The agent answers from your own data,, and escalates only when the answer is not in the source.",
+          "What it sounds like: it asks for an order number or the phone number the order was placed with, reads back the status and offers the next step. If the caller is clearly frustrated, or asks for a refund, the rule should be to transfer rather than explain.",
+          "What it hands over: a warm transfer with the transcript and order context on screen, or a callback ticket if nobody is free. What needs integrating: read access to the order system or helpdesk, a transfer number, and a written rule for what counts as frustration."
+        ]
+      },
+      {
+        "h2": "Outbound: appointment reminders and confirmations",
+        "paragraphs": [
+          "The least glamorous use case and the easiest to measure. The agent calls tomorrow's appointments, confirms, reschedules or cancels, and writes the outcome back to the calendar. No pitch, no persuasion: one clear question and a clean record.",
+          "What it sounds like: an introduction naming the business and the appointment time, then a single question. If the person wants to move it, the agent offers the next two open slots rather than reading out the whole diary.",
+          "What it hands over: an updated calendar, a list of people who could not be reached, and anyone who asked something out of scope. What needs integrating: the booking system in both directions, and a messaging channel for the confirmation,."
+        ]
+      },
+      {
+        "h2": "Outbound: lead follow-up and reactivation",
+        "paragraphs": [
+          "The outbound case that works is calling people who already gave you their number: an enquiry that went cold, a quote that was never answered, a customer whose contract is ending. The agent refers to the original enquiry and asks whether it is still live.",
+          "The case that does not work is a cold list. Outbound calling in India is regulated, consent and do-not-disturb rules apply, and a number that never expected a call will report it.",
+          "What it hands over: a pipeline split into live, not now and gone, plus a booking for the live ones. What needs integrating: the CRM lead list, call recording with the consent announcement at the start, and the same calendar hand-off."
+        ]
+      },
+      {
+        "h2": "What each use case needs",
+        "paragraphs": [
+          "The pattern repeats: a data source the agent reads, and a condition under which it stops trying to be helpful and hands over."
+        ],
+        "table": {
+          "head": [
+            "Use case",
+            "Where the answer comes from",
+            "Hands to a human when"
+          ],
+          "rows": [
+            [
+              "Lead qualification",
+              "CRM and calendar",
+              "The caller asks for a price exception or for a person"
+            ],
+            [
+              "First-line support",
+              "Order system or help centre",
+              "A refund, a complaint, or no answer in the source"
+            ],
+            [
+              "Appointment reminder",
+              "Booking calendar",
+              "The caller wants a change the calendar cannot offer"
+            ],
+            [
+              "Lead follow-up",
+              "CRM lead list",
+              "The caller opts out or asks not to be called again"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "What to check before you buy one",
+        "paragraphs": [
+          "Three things separate a working agent from a demo. Latency: if the pause before each reply is longer than a breath, callers talk over it and the call collapses. Interruption handling: the agent must stop speaking when the caller does. And the hand-off: a transfer that drops the call, or lands the person in a queue with no context, undoes everything the agent did.",
+          "Ask for a recording of a real call rather than a scripted demo, and ask what happens when the caller says something the agent has never heard."
+        ],
+        "after": [
+          "If the process you want covered is chat rather than a phone call, the [WhatsApp AI Agent](/whatsapp-ai-agent) does the same first-line work in writing. The [services page](/services) lists what we rent and [pricing](/pricing) shows the two plans. To walk through one of these call flows on your own numbers, [contact us](/contact)."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Can a voice agent handle Hindi and English in the same call?",
+        "a": "Yes, a modern speech stack can detect and switch languages mid-call, which matters in India where most calls mix the two. Test it on recordings of your own calls first."
+      },
+      {
+        "q": "Do I need to change my phone number?",
+        "a": "No. The agent usually runs on a new number or a SIP trunk and calls are forwarded from your existing line, so the public number stays the same."
+      },
+      {
+        "q": "What happens when the agent does not understand the caller?",
+        "a": "A working agent asks once more in different words, then offers a callback or a transfer rather than looping. Looping is the failure mode to test for."
+      },
+      {
+        "q": "What does a voice agent cost?",
+        "a": "Plan pricing matches our chat agents: Standard from ₹999 per month for one agent on one channel, Pro at ₹14,999 for several agents or channels. Telephony usage is billed by the call provider."
+      }
+    ],
+    "related": [
+      {
+        "href": "/services",
+        "label": "Services",
+        "text": "the agents we rent, including the Voice Calling AI Agent"
+      },
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard at ₹999 per month and Pro at ₹14,999"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact us",
+        "text": "bring one call flow and we will test the agent against it"
+      },
+      {
+        "href": "/hire-an-ai-agent-checklist",
+        "label": "How to hire an AI agent",
+        "text": "the checklist to run before you sign anything"
+      }
+    ]
+  },
+  "hire-an-ai-agent-checklist": {
+    "title": "How to Hire an AI Agent: A Buyer's Checklist | Innovators AI HUB",
+    "description": "A practical checklist for hiring an AI agent: name the one process, choose the number you will judge it by, set the human hand-off, check CRM fit, and the questions to ask a vendor before signing.",
+    "h1": "How to Hire an AI Agent: A Checklist Before You Sign",
+    "answer": "To hire an AI agent, name one process for it to own, one number that proves it worked, and the exact point where a person takes over. Then check that it writes to your CRM, agree who answers when it fails, and ask the vendor what they will not promise. Sign a pilot, not a transformation.",
+    "sections": [
+      {
+        "h2": "Define the one process",
+        "paragraphs": [
+          "An agent that does everything does nothing measurable. Before you talk to a vendor, write down the single process you want off your team's plate: inbound WhatsApp enquiries from the website, the first call to every new lead, the morning LinkedIn outreach, appointment reminders for tomorrow's clinic list.",
+          "Then write the process as it happens today: who receives it, what they ask, where they record it, what happens when they are busy. A vendor who can repeat that back to you has understood the job. One who starts with the technology has not."
+        ],
+        "list": [
+          "The process has a clear start: a message arrives, a call comes in, a list is uploaded",
+          "It has a clear end: a booked meeting, a resolved question, a record in the CRM",
+          "It repeats daily or weekly, not once a quarter",
+          "You can describe it in a paragraph without saying it depends"
+        ]
+      },
+      {
+        "h2": "Name the number you will judge it by",
+        "paragraphs": [
+          "Pick the metric before go-live, and pick one. It should be a number you already track, or could track with one extra field in the CRM.",
+          "Avoid what the agent can inflate on its own, such as messages sent or conversations started. Those measure activity, not outcome, and a vendor who leads with them is showing you what is easy to count."
+        ],
+        "list": [
+          "Time to first reply, measured from the customer's message",
+          "Qualified conversations per week, using your existing definition of qualified",
+          "Meetings booked, and how many of those actually happened",
+          "Questions resolved without a human, and how many came back",
+          "Cost per handled conversation against what the same work costs a person"
+        ]
+      },
+      {
+        "h2": "Decide the hand-off point",
+        "paragraphs": [
+          "The most expensive mistake in an agent project is a vague answer to when a human steps in. Decide before you sign: which topics the agent must never handle alone, what hour it stops trying, and who receives the conversation when it escalates."
+        ],
+        "list": [
+          "Pricing exceptions, refunds, complaints and legal questions go to a person",
+          "Someone who asks for a human gets one, without arguing",
+          "Outside working hours the agent books a callback or says when you will reply; it does not pretend to be a team",
+          "The hand-off carries the transcript and the qualification answers, not just a name"
+        ]
+      },
+      {
+        "h2": "Check the CRM fit",
+        "paragraphs": [
+          "An agent that works but writes nowhere has moved the work rather than removed it. Before signing, ask where a conversation lands, in which fields, and what happens when the same person messages twice."
+        ],
+        "list": [
+          "Which CRM, and whether the connection is native or a script against your API",
+          "Which fields get filled: source, requirement, budget, timeline, owner",
+          "What happens on a duplicate: merged, updated or duplicated again",
+          "Who can read the transcripts, and how long they are kept",
+          "What you can export if you stop paying"
+        ]
+      },
+      {
+        "h2": "Agree who owns the conversation when it fails",
+        "paragraphs": [
+          "Every agent fails sometimes: it misreads a message, quotes an old price, promises something you do not offer. What matters is that the failure has an owner, in writing.",
+          "That owner is you, not the vendor. The agent speaks with your brand, so your team replies to the customer; the vendor's accountability is the system, the review and the alerting."
+        ],
+        "list": [
+          "How fast you hear about a wrong answer: an alert, a daily digest or a monthly report",
+          "Who can pause the agent, and how quickly",
+          "Whether the vendor reviews transcripts with you or only sends a dashboard",
+          "What the vendor is accountable for: uptime, accuracy, response time, or nothing"
+        ]
+      },
+      {
+        "h2": "Ask what the vendor will not do",
+        "paragraphs": [
+          "The questions that separate a partner from a reseller are the negative ones. A vendor who can say where an agent is the wrong tool is telling you the truth about where it is right."
+        ],
+        "list": [
+          "Which of my processes should not be automated?",
+          "What will the agent still get wrong after a month?",
+          "Do you use the official WhatsApp Business API, and can I see the account?",
+          "What happens to my number and my data if I leave?",
+          "Who writes and updates the prompts after go-live: you, me, or a support ticket?"
+        ]
+      },
+      {
+        "h2": "Pilot before you commit",
+        "paragraphs": [
+          "A sensible first month is one process, one channel, one number to judge it by, and a review at the end of it. That is what a rental model is for: you can stop. Standard cover for one agent on one channel starts at ₹999 per month, and Pro at ₹14,999 is for several agents or channels working together. See [pricing](/pricing) for what each includes.",
+          "At the end of the pilot, decide with the number rather than the feeling. If the agent did not move the metric, change the process or stop. If it did, add the next channel, usually the one where the same conversations already happen. If you would rather talk it through first, [contact us](/contact) with the process you have in mind."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "How much does it cost to hire an AI agent in India?",
+        "a": "Rental pricing is the common model: one agent on one channel from ₹999 per month on Standard, and ₹14,999 on Pro for several agents or channels. Setup and the CRM connection are included; taxes and channel usage charges are not."
+      },
+      {
+        "q": "How long before an agent is live?",
+        "a": "The build is usually days rather than months: an audit, configuration, testing on real conversations, then go-live. Approvals outside our control, such as WhatsApp business verification, sit separately and should be started on day one."
+      },
+      {
+        "q": "What if the agent gives a customer wrong information?",
+        "a": "That is an ownership question, not a technology one. Agree before signing who replies to the customer, how fast you are told, who can pause the agent, and whether the vendor reviews transcripts with you."
+      },
+      {
+        "q": "Do I need to replace my CRM?",
+        "a": "No. A working agent writes into the CRM you already use, whether that is HubSpot, Zoho, Salesforce, Google Sheets or your own backend, and the field mapping should be checked before go-live."
+      }
+    ],
+    "related": [
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard at ₹999 per month and Pro at ₹14,999, and what each includes"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact us",
+        "text": "bring one process and we will scope the pilot around it"
+      },
+      {
+        "href": "/services",
+        "label": "Services",
+        "text": "the four kinds of agent you can rent"
+      },
+      {
+        "href": "/whatsapp-ai-agent",
+        "label": "WhatsApp AI Agent",
+        "text": "the most common first agent, and what it handles"
+      }
+    ]
   }
 }
