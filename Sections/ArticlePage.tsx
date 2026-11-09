@@ -12,6 +12,8 @@ type Section = {
   h2: string;
   paragraphs?: string[];
   list?: string[];
+  /** Paragraphs rendered after the list/table, so a section can close with prose. */
+  after?: string[];
   table?: { head: string[]; rows: string[][] };
 };
 
@@ -114,6 +116,9 @@ const ArticlePage: React.FC<ArticlePageProps> = ({ slug, navigateTo }) => {
                 </table>
               </div>
             )}
+            {(section.after ?? []).map((p) => (
+              <Prose key={p.slice(0, 40)} text={p} navigateTo={navigateTo} />
+            ))}
           </section>
         ))}
 
