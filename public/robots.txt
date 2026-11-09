@@ -75,5 +75,8 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
+# Agent catalog (Agentmap proposal)
+Agentmap: https://www.innovatorsaihub.com/ai-catalog.json
+
 # Canonical XML Sitemap Declaration
 Sitemap: https://www.innovatorsaihub.com/sitemap.xml

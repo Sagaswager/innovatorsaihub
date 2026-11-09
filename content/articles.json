@@ -50,7 +50,7 @@
       {
         "h2": "How it answers in Hindi and Hinglish",
         "paragraphs": [
-          "Few Indian businesses receive messages in textbook English. Customers type “price kya hai”, mix scripts, abbreviate and send voice notes. A useful agent is tested against real messages from your own inbox, not the clean demo sentences in a vendor's deck: in setup we read a week of your actual conversations and check the agent handles the way your customers write.",
+          "Few Indian businesses receive messages in textbook English. Customers type \u201cprice kya hai\u201d, mix scripts, abbreviate and send voice notes. A useful agent is tested against real messages from your own inbox, not the clean demo sentences in a vendor's deck: in setup we read a week of your actual conversations and check the agent handles the way your customers write.",
           "The agent also has to know the edge of what it knows. If a question falls outside the material it was given, it should say so and route the question to a person rather than invent an answer. That single behaviour decides whether customers trust the number."
         ]
       },
@@ -58,13 +58,13 @@
         "h2": "When a person should take over",
         "paragraphs": [
           "An agent should escalate, not insist. Rules that work: escalate when the customer asks for a human, when the conversation involves a complaint or refund, when the order value passes a threshold you set, or when the agent has failed twice on the same point.",
-          "On handover your team should see the whole thread in one place, so the customer never hears “could you explain that again”. Quiet hours, a pause switch per conversation and a full stop button matter as much as the automation itself."
+          "On handover your team should see the whole thread in one place, so the customer never hears \u201ccould you explain that again\u201d. Quiet hours, a pause switch per conversation and a full stop button matter as much as the automation itself."
         ]
       },
       {
         "h2": "What a WhatsApp AI agent costs",
         "paragraphs": [
-          "Standard is ₹999 a month for one AI co-worker on one channel, including setup and a monthly review. Pro is ₹14,999 a month for a team of agents working across channels, with more involved workflow and integration work. Both are on [pricing](/pricing), and the [services page](/services) shows the other agents a WhatsApp agent can hand work to.",
+          "Standard is \u20b9999 a month for one AI co-worker on one channel, including setup and a monthly review. Pro is \u20b914,999 a month for a team of agents working across channels, with more involved workflow and integration work. Both are on [pricing](/pricing), and the [services page](/services) shows the other agents a WhatsApp agent can hand work to.",
           "Two costs sit outside any plan and belong to other parties: Meta's WhatsApp Business API conversation charges, which change over time, and your team's time reviewing escalations. Ask any vendor which of those they bill, which they pass through at cost, and which they mark up."
         ]
       },
@@ -125,7 +125,7 @@
       {
         "href": "/pricing",
         "label": "Pricing",
-        "text": "Standard ₹999 and Pro ₹14,999 per month."
+        "text": "Standard \u20b9999 and Pro \u20b914,999 per month."
       }
     ]
   },
@@ -133,12 +133,12 @@
     "title": "AI Agent Cost in India: What You Actually Pay For | Innovators AI HUB",
     "description": "What an AI agent costs in India, broken into the four lines of the bill: subscription, setup and integration, pass-through usage, and your team's review time.",
     "h1": "AI Agent Cost in India: What You Actually Pay For",
-    "answer": "There is no single price for an AI agent in India. What you pay is four separate lines: the agent subscription, the one-time setup and integration, the usage your vendor passes through (Meta's WhatsApp charges, model calls, call minutes), and your own team's time reviewing escalations. Our published plans are ₹999 a month for Standard and ₹14,999 a month for Pro.",
+    "answer": "There is no single price for an AI agent in India. What you pay is four separate lines: the agent subscription, the one-time setup and integration, the usage your vendor passes through (Meta's WhatsApp charges, model calls, call minutes), and your own team's time reviewing escalations. Our published plans are \u20b9999 a month for Standard and \u20b914,999 a month for Pro.",
     "sections": [
       {
         "h2": "The four lines of an AI agent bill",
         "paragraphs": [
-          "Almost every quote you will see is one of three shapes: a monthly subscription per agent, a one-time build fee plus a monthly retainer, or usage-based billing on top of either. Before comparing two numbers, find out which shape you are being quoted in. A ₹999 monthly plan and a one-time custom build are not the same kind of purchase, and comparing them directly is how businesses end up disappointed in both."
+          "Almost every quote you will see is one of three shapes: a monthly subscription per agent, a one-time build fee plus a monthly retainer, or usage-based billing on top of either. Before comparing two numbers, find out which shape you are being quoted in. A \u20b9999 monthly plan and a one-time custom build are not the same kind of purchase, and comparing them directly is how businesses end up disappointed in both."
         ],
         "list": [
           "Subscription: the agent itself, usually per agent per channel, monthly.",
@@ -148,9 +148,9 @@
         ]
       },
       {
-        "h2": "What ₹999 and ₹14,999 include here",
+        "h2": "What \u20b9999 and \u20b914,999 include here",
         "paragraphs": [
-          "Standard is ₹999 a month: one AI co-worker on one channel, either WhatsApp or LinkedIn, including setup, the integration that channel needs, and a monthly review. Pro is ₹14,999 a month: a team of agents working together across channels, with more involved workflow and integration work and ongoing tuning. Both are described on [pricing](/pricing).",
+          "Standard is \u20b9999 a month: one AI co-worker on one channel, either WhatsApp or LinkedIn, including setup, the integration that channel needs, and a monthly review. Pro is \u20b914,999 a month: a team of agents working together across channels, with more involved workflow and integration work and ongoing tuning. Both are described on [pricing](/pricing).",
           "Neither number includes Meta's WhatsApp Business API conversation charges, subscriptions you already pay for such as CRM seats or calendar tools, paid data sources, or voice call minutes. Those are real costs, and a quote that quietly omits them is not a cheaper quote, only a shorter one."
         ]
       },
@@ -198,7 +198,7 @@
       {
         "h2": "A sensible starting budget",
         "paragraphs": [
-          "Start with the one workflow that loses you the most money, which is usually unanswered enquiries, on the one channel where those enquiries arrive. One agent on one channel at ₹999 a month is the smallest honest way to find out whether the thing works in your business before you commit to a team, a custom build or a voice deployment.",
+          "Start with the one workflow that loses you the most money, which is usually unanswered enquiries, on the one channel where those enquiries arrive. One agent on one channel at \u20b9999 a month is the smallest honest way to find out whether the thing works in your business before you commit to a team, a custom build or a voice deployment.",
           "Then read the log. If conversations are ending in bookings and the escalations are clean, widening scope is a decision backed by evidence. If they are not, you spent a small amount learning something useful. The [WhatsApp AI agent guide](/whatsapp-ai-agent-guide) covers what setup actually involves, and the [services page](/services) lists the agents available."
         ]
       },
@@ -212,7 +212,7 @@
     ],
     "faq": [
       {
-        "q": "Is ₹999 a month realistic for an AI agent?",
+        "q": "Is \u20b9999 a month realistic for an AI agent?",
         "a": "It is our Standard plan for one agent on one channel, including setup and a monthly review. WhatsApp conversation charges billed by Meta and tools you already pay for sit outside it, so the real monthly figure depends on how many conversations you have."
       },
       {
@@ -236,7 +236,7 @@
       {
         "href": "/pricing",
         "label": "Pricing",
-        "text": "Standard ₹999 and Pro ₹14,999 per month, in full."
+        "text": "Standard \u20b9999 and Pro \u20b914,999 per month, in full."
       },
       {
         "href": "/ai-agent-vs-chatbot",
@@ -325,7 +325,7 @@
       {
         "h2": "Where chatbots break in Indian businesses",
         "paragraphs": [
-          "The failure is almost always language and phrasing, not logic. Customers write “kitna lagega”, “price?”, “rate batao”, and send voice notes. Each is a different string, so a keyword-matched bot needs every variant written by hand, and the variants never stop arriving.",
+          "The failure is almost always language and phrasing, not logic. Customers write \u201ckitna lagega\u201d, \u201cprice?\u201d, \u201crate batao\u201d, and send voice notes. Each is a different string, so a keyword-matched bot needs every variant written by hand, and the variants never stop arriving.",
           "The second failure is exception handling. A customer asks for a discount, a refund or a bulk rate, the bot has no branch for it, and it either repeats itself or ends the conversation. An agent can recognise the exception, collect what a person needs, and route it."
         ]
       },
@@ -339,14 +339,14 @@
       {
         "h2": "Cost and effort, compared honestly",
         "paragraphs": [
-          "A rule-based chatbot can be built with almost no budget and no integrations, which is why it is everywhere. An agent carries a subscription and, usually, an integration cost. Here, Standard is ₹999 a month for one agent on one channel and Pro is ₹14,999 a month for a cross-channel team, both listed on [pricing](/pricing).",
+          "A rule-based chatbot can be built with almost no budget and no integrations, which is why it is everywhere. An agent carries a subscription and, usually, an integration cost. Here, Standard is \u20b9999 a month for one agent on one channel and Pro is \u20b914,999 a month for a cross-channel team, both listed on [pricing](/pricing).",
           "The comparison only makes sense against what a conversation is worth. If an unanswered enquiry is worth a sale, an agent that answers in seconds is cheap. If the conversation ends in a phone number for opening hours, a chatbot is enough and an agent is overhead."
         ]
       },
       {
         "h2": "You usually do not have to choose",
         "paragraphs": [
-          "The two combine well. Many working setups put the agent on the same WhatsApp number, behind the buttons that already exist: the customer taps “track order” and gets the fast deterministic answer, or types a question and the agent handles it. When the agent is unsure it falls back to the menu, and when the menu cannot help, both hand over to a person.",
+          "The two combine well. Many working setups put the agent on the same WhatsApp number, behind the buttons that already exist: the customer taps \u201ctrack order\u201d and gets the fast deterministic answer, or types a question and the agent handles it. When the agent is unsure it falls back to the menu, and when the menu cannot help, both hand over to a person.",
           "If you already run a chatbot that does one job well, the shortest path is to keep it and put an agent behind the questions it currently fails. The [WhatsApp AI Agent page](/whatsapp-ai-agent) covers how that is wired on the official API, and the [services page](/services) shows the other agents a team can include."
         ]
       }
@@ -523,7 +523,7 @@
       {
         "href": "/pricing",
         "label": "Pricing",
-        "text": "Standard at ₹999 per month and Pro at ₹14,999"
+        "text": "Standard at \u20b9999 per month and Pro at \u20b914,999"
       },
       {
         "href": "/contact",
@@ -638,7 +638,7 @@
       },
       {
         "q": "What does a voice agent cost?",
-        "a": "Plan pricing matches our chat agents: Standard from ₹999 per month for one agent on one channel, Pro at ₹14,999 for several agents or channels. Telephony usage is billed by the call provider."
+        "a": "Plan pricing matches our chat agents: Standard from \u20b9999 per month for one agent on one channel, Pro at \u20b914,999 for several agents or channels. Telephony usage is billed by the call provider."
       }
     ],
     "related": [
@@ -650,7 +650,7 @@
       {
         "href": "/pricing",
         "label": "Pricing",
-        "text": "Standard at ₹999 per month and Pro at ₹14,999"
+        "text": "Standard at \u20b9999 per month and Pro at \u20b914,999"
       },
       {
         "href": "/contact",
@@ -751,7 +751,7 @@
       {
         "h2": "Pilot before you commit",
         "paragraphs": [
-          "A sensible first month is one process, one channel, one number to judge it by, and a review at the end of it. That is what a rental model is for: you can stop. Standard cover for one agent on one channel starts at ₹999 per month, and Pro at ₹14,999 is for several agents or channels working together. See [pricing](/pricing) for what each includes.",
+          "A sensible first month is one process, one channel, one number to judge it by, and a review at the end of it. That is what a rental model is for: you can stop. Standard cover for one agent on one channel starts at \u20b9999 per month, and Pro at \u20b914,999 is for several agents or channels working together. See [pricing](/pricing) for what each includes.",
           "At the end of the pilot, decide with the number rather than the feeling. If the agent did not move the metric, change the process or stop. If it did, add the next channel, usually the one where the same conversations already happen. If you would rather talk it through first, [contact us](/contact) with the process you have in mind."
         ]
       }
@@ -759,7 +759,7 @@
     "faq": [
       {
         "q": "How much does it cost to hire an AI agent in India?",
-        "a": "Rental pricing is the common model: one agent on one channel from ₹999 per month on Standard, and ₹14,999 on Pro for several agents or channels. Setup and the CRM connection are included; taxes and channel usage charges are not."
+        "a": "Rental pricing is the common model: one agent on one channel from \u20b9999 per month on Standard, and \u20b914,999 on Pro for several agents or channels. Setup and the CRM connection are included; taxes and channel usage charges are not."
       },
       {
         "q": "How long before an agent is live?",
@@ -778,7 +778,7 @@
       {
         "href": "/pricing",
         "label": "Pricing",
-        "text": "Standard at ₹999 per month and Pro at ₹14,999, and what each includes"
+        "text": "Standard at \u20b9999 per month and Pro at \u20b914,999, and what each includes"
       },
       {
         "href": "/contact",
@@ -794,6 +794,417 @@
         "href": "/whatsapp-ai-agent",
         "label": "WhatsApp AI Agent",
         "text": "the most common first agent, and what it handles"
+      }
+    ]
+  },
+  "linkedin-automation-limits": {
+    "title": "LinkedIn Automation Limits: What LinkedIn Actually Enforces | Innovators AI HUB",
+    "description": "LinkedIn publishes no weekly invitation number. What it publishes is what triggers a restriction: volume in a short window, invitations that get ignored, and any sign of a bot. The policy, the recovery windows, and the setup that survives it.",
+    "h1": "LinkedIn Automation Limits: What LinkedIn Actually Enforces",
+    "answer": "LinkedIn does not publish a number of invitations you can send. It publishes the triggers instead: too many invitations in a short time, invitations that are ignored or marked as spam, and any sign of a bot. Cross that pattern and the account is restricted, whichever tool sent them. Every specific number you read online is observation, not policy.",
+    "sections": [
+      {
+        "h2": "What LinkedIn publishes, and what it does not",
+        "paragraphs": [
+          "LinkedIn's help centre has a page on invitation restrictions. It says the number of invitations you can send is limited, to keep requests relevant, and then never states the limit. That silence is deliberate: the ceiling moves with the age of the account, the history of what happened to previous invitations, and signals LinkedIn does not disclose.",
+          "Two hard numbers do appear, and both matter more than the missing one: the network cap of 30,000 first-degree connections, and the rule that after you withdraw an invitation you cannot invite that person again for up to three weeks. Basic and Premium members are both subject to the limits, and invitations cannot be bought."
+        ],
+        "list": [
+          "30,000 \u2014 maximum first-degree connections on any account",
+          "3 weeks \u2014 wait before re-inviting someone whose invitation you withdrew",
+          "1 week \u2014 typical time for an automatic restriction to lift",
+          "Basic and Premium \u2014 same limits, same restrictions"
+        ]
+      },
+      {
+        "h2": "The three things that actually get an account restricted",
+        "paragraphs": [
+          "The restriction page names its causes: sending many invitations within a short amount of time; having many invitations ignored, left pending or marked as spam by recipients; and sending an excessive number where LinkedIn suspects an automation tool, in which case it may suspend or restrict the account.",
+          "The second trigger is the one teams ignore, because it is about what recipients did, not how much you sent. Sixty invitations a week that nobody accepts is a worse signal than a hundred with a healthy response rate. That is also why 'we stay under the limit' is not a safety argument: there is no published limit to stay under."
+        ]
+      },
+      {
+        "h2": "The rule that decides whether any tool is allowed",
+        "paragraphs": [
+          "Separately from limits, LinkedIn publishes a page on prohibited software. Third-party software \u2014 crawlers, bots, browser plug-ins or extensions \u2014 that scrapes, modifies the appearance of, or automates activity on LinkedIn is not permitted, nor are fake accounts or fake engagement. Section 8.2 of the User Agreement prohibits using bots or other unauthorised automated methods to add contacts, send or redirect messages, drive inauthentic engagement, or bypass access controls and use limits.",
+          "Read together, that covers the family of tools that log into an account and send on the member's behalf, whatever the technique is called. Human-like delays are a claim about getting caught, not about permission. The distinction that matters is who sends: copy drafted for a person to review and send from their own seat is a different act from software sending inside an authenticated session. We build on the first pattern \u2014 the agent prepares the queue, the person approves it, the agent stops when someone replies. If a vendor says their automation is whitelisted, ask to see the LinkedIn partnership that says so."
+        ]
+      },
+      {
+        "h2": "What a restriction looks like, and how long it lasts",
+        "paragraphs": [
+          "LinkedIn's recovery guidance tells you what a bad week costs: a first restriction usually clears in a few hours, several in one day mean waiting a few days, and being restricted for too many outstanding invitations means waiting up to a month. Most restrictions lift automatically within a week.",
+          "Two details make it worse. Repeated suspensions for automated activity can end in permanent restriction, and support will not tell you why \u2014 LinkedIn states it cannot disclose the reason for an invitation restriction. No diagnosis, no appeal, no quota reset, just a date to wait for."
+        ],
+        "list": [
+          "First restriction: wait a few hours",
+          "Several in one day: wait a few days",
+          "Too many outstanding invitations: wait up to a month",
+          "Repeated suspensions for automated activity: can become permanent"
+        ]
+      },
+      {
+        "h2": "What a working volume actually looks like",
+        "paragraphs": [
+          "The figure quoted in almost every article on this subject \u2014 around a hundred invitations a week \u2014 does not come from LinkedIn. It is a practitioner observation that vendors repeat to each other. Treat it as the top of a range people report, not a number to fill.",
+          "Withdrawing invitations looks like housekeeping and is not: once withdrawn, that person cannot be invited again for up to three weeks, so a first week of over-eager sending can leave your best list unusable for a month. Targeting has to be narrow before volume goes up.",
+          "Judge by what comes back rather than what goes out. If invitations are being ignored, the answer is a better opening message and a tighter list, not more volume."
+        ],
+        "list": [
+          "Accepted versus ignored invitations, week by week",
+          "Withdrawn invitations, and why",
+          "Replies per hundred invitations sent",
+          "Time from a reply to a booked meeting"
+        ]
+      },
+      {
+        "h2": "The setup that survives contact with the platform",
+        "paragraphs": [
+          "A compliant outreach operation is boring by design: one identity per salesperson, no shared logins or invented profiles, nothing leaves until a human approves it, and sending is spread across working hours instead of fired in a burst at nine. The agent's job is to make that queue good \u2014 find the right people, write an opening line from something real on the profile, follow up on a schedule, and stop the instant someone replies, books, or asks to be left alone. Warnings are monitored so volume drops before LinkedIn acts, and conversations land in the CRM so whoever takes over can see what was said."
+        ]
+      },
+      {
+        "h2": "Questions worth asking before you buy anything",
+        "paragraphs": [
+          "Most of the risk sits in the contract, not the technology. These separate a tool you can run for a year from one that costs you an account in a quarter."
+        ],
+        "list": [
+          "Which account sends \u2014 mine, or one you own?",
+          "Does a person press send, or does the software?",
+          "What happens automatically at the first warning from LinkedIn?",
+          "Can I see and edit the queue before it goes out?",
+          "What is your process if my account is restricted \u2014 and who pays for the lost month?",
+          "Does it stop when someone replies, or keep following up?"
+        ]
+      },
+      {
+        "h2": "Where to go next",
+        "paragraphs": [
+          "If you want the agent to handle drafting, targeting and follow-up while your team keeps the send button, that is what our LinkedIn AI agent is built for. If you have not bought an agent before, read the buyer's checklist first."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "How many connection requests can I send per day on LinkedIn?",
+        "a": "LinkedIn does not publish a number. Its help centre says invitations are limited and lists the causes of a restriction \u2014 volume in a short window, many ignored or spam-marked invitations, and suspected automation \u2014 without stating a limit. Be sceptical of any vendor quoting an exact daily figure as policy."
+      },
+      {
+        "q": "Does Premium or Sales Navigator raise the invitation limit?",
+        "a": "No. LinkedIn states that all members, Basic and Premium, are subject to invitation limits and restrictions, and that invitations cannot be bought. A subscription buys search features and InMail, not more invitations."
+      },
+      {
+        "q": "Will using an automation tool get my account banned?",
+        "a": "LinkedIn's User Agreement prohibits bots and unauthorised automated methods for adding contacts or sending messages, and its help centre says suspected automation can lead to suspension. Repeated suspensions can end in permanent restriction. The risk is real and sits on your account, not the vendor's."
+      },
+      {
+        "q": "Can an AI write my LinkedIn outreach messages?",
+        "a": "Drafting is not the prohibited act \u2014 automated sending is. Text prepared by an agent, reviewed and sent by the person whose name is on it, keeps the human act in the loop. Software that logs in and sends on your behalf is the pattern LinkedIn's policy describes."
+      },
+      {
+        "q": "What should I do if my account is already restricted?",
+        "a": "Stop sending, wait the period LinkedIn states for your case (hours for a first restriction, days for several in a day, up to a month for too many outstanding invitations), and fix the targeting and message that caused the ignored invitations before resuming. Support will not tell you the reason, so the diagnosis has to come from your own reply data."
+      }
+    ],
+    "related": [
+      {
+        "href": "/linkedin-ai-agent",
+        "label": "LinkedIn AI Agent",
+        "text": "the agent that drafts, queues and follows up while your team keeps the send button"
+      },
+      {
+        "href": "/hire-an-ai-agent-checklist",
+        "label": "How to hire an AI agent",
+        "text": "the questions to ask a vendor before you sign"
+      },
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard at \u20b9999 per month and Pro at \u20b914,999"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact us",
+        "text": "bring your target list and we will show you the outreach flow"
+      }
+    ]
+  },
+  "ai-agent-for-real-estate": {
+    "title": "AI Agent for Real Estate: Enquiry to Site Visit | Innovators AI HUB",
+    "description": "How a real-estate AI agent turns a WhatsApp or portal enquiry into a booked site visit: what it asks, what it must never guess, where a person takes over, and the numbers to judge it by.",
+    "h1": "AI Agent for Real Estate: The Enquiry-to-Site-Visit Work",
+    "answer": "A real-estate AI agent answers a property enquiry within seconds on WhatsApp, qualifies budget, locality and timeline, and books a site visit on the broker's calendar \u2014 then follows up until the visit happens or the buyer says no. The value is speed and persistence, not conversation volume. One process, one number, one hand-off.",
+    "sections": [
+      {
+        "h2": "Where real-estate enquiries actually leak",
+        "paragraphs": [
+          "A buyer shortlists four listings on a portal, sends the same enquiry to each, and books a visit with whoever answers first. That is the whole competition, and it is decided in minutes, at whatever hour the enquiry arrives \u2014 usually in the evening, when the sales team has stopped working.",
+          "The second leak is follow-up. A qualified buyer who says 'not this week, maybe after the 20th' is the most valuable lead in the pipeline and the easiest to forget, because nobody's calendar has a reminder shaped like that. The enquiry is answered, the visit is not booked, and the lead is gone without anyone deciding to drop it.",
+          "Neither leak is a marketing problem. Both are the same operational gap: nobody is on the enquiry continuously."
+        ]
+      },
+      {
+        "h2": "The one process worth handing over",
+        "paragraphs": [
+          "An agent should own the road from enquiry to attended site visit, and nothing beyond it. In our real-estate builds that is a small team of agents rather than one chatbot: one qualifies, one books and reminds, one follows up on the ones that went quiet. Qualification, booking and follow-up are different jobs with different failure modes, and separating them makes each one measurable.",
+          "Write the process down before you configure anything: a message arrives, the agent qualifies, offers real slots, books one, reminds twice, and either the visit happens or the buyer is marked as not now with a date to come back to."
+        ]
+      },
+      {
+        "h2": "What it asks, and in what order",
+        "paragraphs": [
+          "Five questions is the practical ceiling in a WhatsApp conversation. Past that, buyers stop answering and the agent has produced an interrogation instead of a booking.",
+          "The first question should be the one that changes the next sentence \u2014 usually budget band or locality \u2014 so that the second message can be specific. 'We have two 3BHKs in Wakad inside that range, Saturday 11am or Sunday 4pm?' converts where 'what is your budget, configuration, timeline and loan status?' does not."
+        ],
+        "list": [
+          "Buying or renting, and which configuration",
+          "Budget band, offered as ranges rather than a request for a number",
+          "Locality, or the commute it has to work with",
+          "Timeline \u2014 this month, this quarter, or exploring",
+          "Whether the decision is theirs alone, when that affects how the visit is booked"
+        ]
+      },
+      {
+        "h2": "What it must never guess",
+        "paragraphs": [
+          "Price, availability, carpet area, floor, facing, possession date, approvals and title: none of these should ever come from the model's imagination. The agent answers only from the listing data you give it, and anything outside that range is escalated or held for a person to confirm.",
+          "This is the rule that decides whether the deployment survives its first month. A single confident wrong answer about availability costs a visit, an argument with a broker, and the buyer's trust in every later message. 'Let me confirm that and come back within the hour' is a better answer than a guess, and it is a sentence the agent should be able to say freely."
+        ]
+      },
+      {
+        "h2": "Booking the visit so it actually happens",
+        "paragraphs": [
+          "Booking means writing into availability the team actually keeps, not a fictitious calendar. The agent offers two or three slots per project, confirms in writing with the project name, address and who will meet the buyer, and sends a reminder at twenty-four hours and again two hours before.",
+          "Rescheduling has to be as easy as booking. If moving a visit requires a phone call during office hours, the buyer does not move it, they go somewhere else. A cancel-and-rebook path in the same thread protects both the visit and the calendar slot behind it."
+        ],
+        "list": [
+          "Slots come from one source of truth the sales team maintains",
+          "Written confirmation with project, address, time and contact",
+          "Reminder at 24 hours and 2 hours before",
+          "Self-serve reschedule, with the freed slot offered to the waitlist"
+        ]
+      },
+      {
+        "h2": "Where a person takes over",
+        "paragraphs": [
+          "Negotiation, payment plans, loan paperwork, legal questions and the visit itself all belong to a person. The agent's job is to arrive at that hand-off with the context already written down: what the buyer wants, what they said about budget, what they have already seen, and what they asked that the agent could not answer.",
+          "A hand-off that says 'customer is interested, please call' throws away everything the conversation produced. A hand-off that carries the transcript and four fields into the CRM gives the broker a running start."
+        ]
+      },
+      {
+        "h2": "Where the record lands",
+        "paragraphs": [
+          "If your team does not look at it, the work disappears. Map the fields before go-live: source, project, configuration, budget band, locality, timeline, visit date, outcome, and the date to follow up on the ones who deferred. If the CRM is Salesforce, Zoho, HubSpot or a shared sheet, the agent writes into what you already open every morning rather than a dashboard nobody visits."
+        ]
+      },
+      {
+        "h2": "What to measure",
+        "paragraphs": [
+          "Pick one number before go-live. For most teams it is attended site visits per week, because it is the last thing before a deal and the first thing a slow reply destroys. Everything else is supporting evidence."
+        ],
+        "list": [
+          "Time to first reply, measured from the buyer's message",
+          "Qualified enquiries per week, using your existing definition",
+          "Visits booked, and visits attended",
+          "Cost per attended visit against what the same visit costs today"
+        ]
+      },
+      {
+        "h2": "What an agent will not fix",
+        "paragraphs": [
+          "It will not fix thin inventory, pricing the market disagrees with, listings that misstate what is for sale, or a sales team that never updates availability. In those cases the agent will qualify and book faster into a problem, which is worse than being slow.",
+          "The honest version of the promise: a real-estate agent removes the delay and the forgetting from a process you already run. It does not create demand, and it cannot sell a property the buyer does not want."
+        ]
+      },
+      {
+        "h2": "Where to start",
+        "paragraphs": [
+          "Start with one project and one channel \u2014 usually WhatsApp on the number your listings already print \u2014 and run it long enough to compare attended visits against the weeks before. If you want to see what the flow looks like against your own inventory, bring one project to the first call."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Can an AI agent book site visits on its own?",
+        "a": "Yes, if it writes into a calendar or CRM the team already maintains. The agent offers slots that are genuinely free, confirms in writing and sends reminders. When it cannot reach the scheduling system, it takes the request and confirms later rather than inventing a slot."
+      },
+      {
+        "q": "Will it make up property details?",
+        "a": "It should not, and that is a configuration decision, not a model one. The agent answers price, availability and specifications only from the listing data you provide; anything outside it is escalated or held for confirmation. Ask any vendor to demonstrate what happens when you ask about a property that is not in the data."
+      },
+      {
+        "q": "Does it work for rentals as well as sales?",
+        "a": "Yes, with a different qualification path. Rentals turn on deposit, furnishing, move-in date and whether pets or a company lease are involved; sales turn on budget, loan status and decision timeline. Same booking and reminder flow underneath."
+      },
+      {
+        "q": "Can it work with leads from property portals?",
+        "a": "Any lead source that can reach a webhook or forward to a WhatsApp number can start the flow. What a portal allows you to automate differs by portal and by your agreement with them, so confirm that before promising the sales team a portal integration."
+      },
+      {
+        "q": "How much does a real-estate AI agent cost?",
+        "a": "On our plans, one agent on one channel starts at \u20b9999 per month on Standard, and \u20b914,999 on Pro for several agents or channels, with setup and CRM connection included. Conversation and telephony charges from the channel provider are separate and change with usage."
+      }
+    ],
+    "related": [
+      {
+        "href": "/whatsapp-ai-agent",
+        "label": "WhatsApp AI Agent",
+        "text": "the channel most real-estate enquiries actually arrive on"
+      },
+      {
+        "href": "/ai-agent-for-clinics",
+        "label": "AI agent for clinics",
+        "text": "the same booking pattern, built for appointment-led businesses"
+      },
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard at \u20b9999 per month and Pro at \u20b914,999"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact us",
+        "text": "bring one project and we will map the enquiry-to-visit flow"
+      }
+    ]
+  },
+  "ai-agent-for-clinics": {
+    "title": "AI Agent for Clinics: Bookings, Reminders, Front Desk | Innovators AI HUB",
+    "description": "A clinic AI agent answers appointment requests after hours, books real slots, sends reminders and reduces no-shows \u2014 without giving medical advice. What it owns, what stays with staff, and what to settle before go-live.",
+    "h1": "AI Agent for Clinics: Bookings, Reminders and the Front Desk",
+    "answer": "A clinic AI agent answers appointment requests on WhatsApp at any hour, offers the slots the clinic has actually opened, books or reschedules them, and sends reminders so fewer patients fail to show. It does not give medical advice: any question about symptoms, medication or test results goes to staff.",
+    "sections": [
+      {
+        "h2": "The front desk is a queue, not a person",
+        "paragraphs": [
+          "Appointment requests arrive while the front desk is on a call, during a consultation, and after the shutter comes down. The ones that arrive after closing are the expensive ones: a patient who needs a slot tomorrow messages at nine at night, gets no reply, and books with the clinic that answers.",
+          "A missed call in a clinic is not a lost lead in the marketing sense. It is a patient who needed something and found a closed door, and it usually does not come back to check whether the door has opened."
+        ]
+      },
+      {
+        "h2": "What the agent should own",
+        "paragraphs": [
+          "Give the agent the appointment book, not the consulting room. In our clinic builds that means it handles requests after hours and during busy periods, offers only slots that are genuinely open, confirms them, and manages the flow of changes that eat front-desk time.",
+          "Everything is transactional: who, which doctor, when, how to get there, what to bring. That is a narrow job and a measurable one."
+        ],
+        "list": [
+          "New appointment requests, with doctor, day and time preference",
+          "Reschedule and cancel, without a phone call",
+          "Fee, address, parking, timings and preparation instructions",
+          "Reminders at 24 hours and 2 hours before",
+          "Waitlist offers when a slot frees up"
+        ]
+      },
+      {
+        "h2": "What must go to a person, every time",
+        "paragraphs": [
+          "Symptoms, medication and dosage, test results, pregnancy, young children, and anything that reads like an emergency are not appointment requests. They are clinical questions, and the agent's only job is to route them to staff \u2014 quickly, and with the message intact.",
+          "Emergency routing deserves its own standing rule, written before go-live and tested: the number to call, the instruction to go to the nearest emergency department, and no attempt at triage in between. An agent that tries to be helpful here is a liability, not an assistant."
+        ],
+        "list": [
+          "Anything describing symptoms or asking what they mean",
+          "Medication names, doses, or whether to stop taking something",
+          "Test and scan results, or when they will be ready",
+          "Pregnancy, infants, and post-operative concerns",
+          "Any message containing an emergency word \u2014 route first, discuss never"
+        ]
+      },
+      {
+        "h2": "One source of truth for slots",
+        "paragraphs": [
+          "A clinic agent is only as good as the calendar behind it. If the practice management system has an API, bookings should write into it directly. If it does not, the agent takes the request, tells the patient when they will hear back, and a staff member confirms \u2014 slower, but honest, and far better than a double booking.",
+          "Decide the rules before configuration: how long each consultation type blocks, how much buffer sits between patients, which doctors have fixed theatre or clinic days, and what the agent does when two patients want the last slot at the same moment."
+        ]
+      },
+      {
+        "h2": "Reminders that reduce no-shows",
+        "paragraphs": [
+          "Two reminders do most of the work: one the day before, one a couple of hours ahead, each with the address, the doctor and a way to cancel. The second reminder is the one that catches the patient who forgot, and a one-tap cancel is what turns a wasted slot into one the waitlist can take.",
+          "Be careful with the promises here. No-show rates differ enormously between specialities and localities, and no honest vendor can tell you a percentage in advance. Measure your own rate for four weeks before and after, and use that."
+        ],
+        "list": [
+          "24-hour confirmation, with directions and what to bring",
+          "2-hour reminder with a one-tap cancel",
+          "Cancelled slot offered to the waitlist automatically",
+          "Reschedule in the same thread, no call required"
+        ]
+      },
+      {
+        "h2": "Patient data: settle this before go-live",
+        "paragraphs": [
+          "Appointment messages contain personal data, and in a clinic that is not a small matter. Before switching anything on, get straight answers to four questions: where the conversation transcripts are stored, how long they are kept, who inside the clinic can read them, and what is written into the patient record versus kept only in the chat.",
+          "Also settle the number itself. A business number on the WhatsApp Business API is the right base for patient messaging, with a verified business profile so patients can see who is writing. Personal data handling brings obligations under applicable Indian law, including the DPDP Act, and the vendor should be able to describe their storage and deletion in plain sentences rather than a policy page."
+        ]
+      },
+      {
+        "h2": "Language, and the way patients actually write",
+        "paragraphs": [
+          "Patients write in English, Hindi, Hinglish and the local language, often in one sentence and usually without punctuation. The agent has to read that, answer briefly, and never use clinical vocabulary it cannot explain. Short messages work better than complete ones: a time, a doctor, a place, a confirmation."
+        ]
+      },
+      {
+        "h2": "What to measure",
+        "paragraphs": [
+          "One number should decide whether this stays: bookings confirmed without a staff member touching the conversation. Around it, four supporting measures tell you where to fix things."
+        ],
+        "list": [
+          "Requests answered outside working hours",
+          "Bookings confirmed with no staff involvement",
+          "No-shows per week, against the four weeks before go-live",
+          "Reschedules and cancellations handled without a call",
+          "Front-desk minutes per booking"
+        ]
+      },
+      {
+        "h2": "What it will not fix",
+        "paragraphs": [
+          "It will not create open slots, shorten a waiting list that is long because the clinic is full, or make staff keep availability current. Nor does it replace a receptionist: it takes the messages that arrive when nobody is free, and the routine changes that eat a front desk's morning.",
+          "Said plainly: the agent buys your staff time and stops after-hours requests from dying unanswered. It does not increase the number of patients a doctor can see."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Can an AI agent book appointments in my clinic software?",
+        "a": "It depends on the software. If your practice management system exposes an API, the agent can check availability and write the booking back. If it does not, the agent takes the request, confirms the patient will hear back shortly, and a staff member completes the booking \u2014 no invented slots."
+      },
+      {
+        "q": "Will the agent give medical advice?",
+        "a": "It must not, and that should be a hard rule rather than a model setting. Anything about symptoms, medication, results, pregnancy or emergencies is routed to staff, with emergency messages handled by a fixed instruction to call or attend an emergency department."
+      },
+      {
+        "q": "Is it safe to put patient conversations through an AI agent?",
+        "a": "Safety here means storage and access, not the model alone. Ask where transcripts live, how long they are retained, who in the clinic can read them, and what is copied into the patient record. A business number on the WhatsApp Business API with a verified profile is the right channel; handling personal data brings obligations the clinic and vendor should both be able to describe plainly."
+      },
+      {
+        "q": "Will it reduce no-shows?",
+        "a": "Reminders and one-tap cancellation reliably help, but no honest number can be promised in advance \u2014 no-show rates vary by speciality and locality. Measure your own rate for four weeks before and after, and judge on that comparison."
+      },
+      {
+        "q": "How much does a clinic AI agent cost?",
+        "a": "On our plans, one agent on one channel starts at \u20b9999 per month on Standard, and \u20b914,999 on Pro where several agents or channels are needed. Setup and the CRM or calendar connection are included; WhatsApp conversation charges from Meta are separate and usage-based."
+      }
+    ],
+    "related": [
+      {
+        "href": "/whatsapp-ai-agent",
+        "label": "WhatsApp AI Agent",
+        "text": "the channel patients already use to ask for appointments"
+      },
+      {
+        "href": "/ai-agent-for-real-estate",
+        "label": "AI agent for real estate",
+        "text": "the same booking pattern applied to site visits"
+      },
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard at \u20b9999 per month and Pro at \u20b914,999"
+      },
+      {
+        "href": "/contact",
+        "label": "Contact us",
+        "text": "bring your appointment flow and we will map it"
       }
     ]
   }

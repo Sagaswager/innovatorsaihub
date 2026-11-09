@@ -45,6 +45,9 @@ export type Page =
   | 'whatsapp-business-api-approval'
   | 'voice-ai-agent-use-cases'
   | 'hire-an-ai-agent-checklist'
+  | 'linkedin-automation-limits'
+  | 'ai-agent-for-real-estate'
+  | 'ai-agent-for-clinics'
   | 'my-plan'
   | 'privacy';
 

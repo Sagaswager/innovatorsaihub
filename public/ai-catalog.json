@@ -1,19 +1,76 @@
 {
   "$schema": "https://agenticresourcediscovery.org/spec/schema.json",
   "name": "Innovators AI HUB",
-  "description": "Autonomous AI Agent Teams and Custom Business Automation Solutions",
-  "version": "1.0.0",
+  "description": "Autonomous AI Agent Teams and Custom Business Automation Solutions. Four rentable agent services — WhatsApp, LinkedIn, voice calling and custom workflows — plus AI brand films, with published pricing.",
+  "version": "1.1.0",
   "homepage": "https://www.innovatorsaihub.com",
+  "pricing": "https://www.innovatorsaihub.com/pricing",
+  "contact": "https://www.innovatorsaihub.com/contact",
   "endpoints": [
     {
       "name": "WhatsApp AI Agent",
-      "description": "Autonomous 24/7 WhatsApp AI agent for lead qualification, order updates, and customer support.",
+      "description": "Autonomous 24/7 WhatsApp AI agent for lead qualification, order updates, appointment booking and customer support, writing into your existing CRM.",
       "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent"
     },
     {
       "name": "LinkedIn AI Agent",
-      "description": "Automated B2B outreach, personalized connection invitations, and lead generation AI agent on LinkedIn.",
+      "description": "B2B prospecting agent on LinkedIn: target list building, personalised outreach drafted for human approval, scheduled follow-up, reply detection and hand-off.",
       "url": "https://www.innovatorsaihub.com/linkedin-ai-agent"
+    },
+    {
+      "name": "Voice Calling AI Agent",
+      "description": "Outbound and inbound voice AI agent for qualification calls, appointment setting and support, with call transcripts and hand-off rules.",
+      "url": "https://www.innovatorsaihub.com/voice-ai-agent-use-cases"
+    },
+    {
+      "name": "Custom AI Workflows",
+      "description": "Multi-agent operational workflows and integrations: CRM write-back, conversation logging, hand-off rules and reporting dashboards.",
+      "url": "https://www.innovatorsaihub.com/services"
     }
-  ]
+  ],
+  "guides": [
+    {
+      "name": "WhatsApp AI agent guide",
+      "url": "https://www.innovatorsaihub.com/whatsapp-ai-agent-guide"
+    },
+    {
+      "name": "What an AI agent costs in India",
+      "url": "https://www.innovatorsaihub.com/ai-agent-cost-in-india"
+    },
+    {
+      "name": "AI agent vs chatbot",
+      "url": "https://www.innovatorsaihub.com/ai-agent-vs-chatbot"
+    },
+    {
+      "name": "WhatsApp Business API approval",
+      "url": "https://www.innovatorsaihub.com/whatsapp-business-api-approval"
+    },
+    {
+      "name": "Voice AI agent use cases",
+      "url": "https://www.innovatorsaihub.com/voice-ai-agent-use-cases"
+    },
+    {
+      "name": "How to hire an AI agent",
+      "url": "https://www.innovatorsaihub.com/hire-an-ai-agent-checklist"
+    },
+    {
+      "name": "LinkedIn automation limits",
+      "url": "https://www.innovatorsaihub.com/linkedin-automation-limits"
+    },
+    {
+      "name": "AI agent for real estate",
+      "url": "https://www.innovatorsaihub.com/ai-agent-for-real-estate"
+    },
+    {
+      "name": "AI agent for clinics",
+      "url": "https://www.innovatorsaihub.com/ai-agent-for-clinics"
+    }
+  ],
+  "markdown": [
+    "https://www.innovatorsaihub.com/pricing.md",
+    "https://www.innovatorsaihub.com/services.md",
+    "https://www.innovatorsaihub.com/whatsapp-ai-agent.md",
+    "https://www.innovatorsaihub.com/linkedin-ai-agent.md"
+  ],
+  "llms": "https://www.innovatorsaihub.com/llms.txt"
 }

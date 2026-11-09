@@ -17,6 +17,26 @@ Full specifications can be parsed at [/pricing.md](https://www.innovatorsaihub.c
 - **Custom AI Workflows**: Custom pricing. Multi-agent collaborative setups for operational scale.
 - **AI Brand Films**: Custom pricing. Generative video production.
 
+## Guides
+
+- [WhatsApp AI agent guide](https://www.innovatorsaihub.com/whatsapp-ai-agent-guide)
+- [What an AI agent costs in India](https://www.innovatorsaihub.com/ai-agent-cost-in-india)
+- [AI agent vs chatbot](https://www.innovatorsaihub.com/ai-agent-vs-chatbot)
+- [WhatsApp Business API approval](https://www.innovatorsaihub.com/whatsapp-business-api-approval)
+- [Voice AI agent use cases](https://www.innovatorsaihub.com/voice-ai-agent-use-cases)
+- [How to hire an AI agent](https://www.innovatorsaihub.com/hire-an-ai-agent-checklist)
+- [LinkedIn automation limits](https://www.innovatorsaihub.com/linkedin-automation-limits)
+- [AI agent for real estate](https://www.innovatorsaihub.com/ai-agent-for-real-estate)
+- [AI agent for clinics](https://www.innovatorsaihub.com/ai-agent-for-clinics)
+
+## Machine-readable
+
+- [Agent catalog](https://www.innovatorsaihub.com/ai-catalog.json) — services, guides, markdown siblings
+- [Pricing](https://www.innovatorsaihub.com/pricing.md) — Standard ₹999/mo, Pro ₹14,999/mo
+- [Services](https://www.innovatorsaihub.com/services.md) — the four agent services and brand films
+- [WhatsApp AI agent](https://www.innovatorsaihub.com/whatsapp-ai-agent.md)
+- [LinkedIn AI agent](https://www.innovatorsaihub.com/linkedin-ai-agent.md)
+
 ## Primary Contacts & Links
 
 - **Website**: https://www.innovatorsaihub.com/
