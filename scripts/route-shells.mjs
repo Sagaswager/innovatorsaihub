@@ -215,6 +215,107 @@ for (const [slug, article] of Object.entries(ARTICLES)) {
   };
 }
 
+/**
+ * H2 structure for the 8 November shells.
+ *
+ * Those routes shipped as one wall of prose — an h1 followed by 6 or 7
+ * consecutive paragraphs, zero <h2>. Search and AI crawlers got no structure at
+ * all. This table groups the SAME paragraphs under named sections: no sentence is
+ * rewritten, reordered or padded, the copy is only divided. Indices point into
+ * that route's `body` array, and every index must be used exactly once (checked
+ * at build time) so no paragraph can silently drop out of the shell.
+ */
+const SECTION_PLAN = {
+  '': [
+    ['AI agent teams instead of extra headcount', [0]],
+    ['One agent, one job', [1]],
+    ['Agents that work as a team', [2]],
+    ['Onboarding is an audit, not a rebuild', [3]],
+    ['AI brand films, and where we work', [4, 5]],
+  ],
+  'whatsapp-ai-agent': [
+    ['What a WhatsApp AI agent does', [0]],
+    ['The gap between an enquiry and a reply', [1]],
+    ['What it handles on a typical day', [2]],
+    ['Setup, integrations and who stays in control', [3, 4]],
+    ['How onboarding works', [5, 6]],
+  ],
+  'linkedin-ai-agent': [
+    ['What a LinkedIn AI agent does', [0]],
+    ['Targeting, personalisation, follow-up and hand-off', [1]],
+    ['Keeping your network warm', [2]],
+    ["Staying inside LinkedIn's limits", [3]],
+    ['Reporting, CRM fit and where to read next', [4, 5, 6]],
+  ],
+  services: [
+    ['AI co-workers you can rent', [0]],
+    ['Four kinds of agent', [1]],
+    ['How an engagement runs', [2]],
+    ['Rented, not bought', [3]],
+    ['Integrations, and where to start', [4, 5]],
+  ],
+  pricing: [
+    ['AI agents are rented, not bought', [0]],
+    ['Standard plan: \u20b9999 per month', [1]],
+    ['Pro plan: \u20b914,999 for teams', [2]],
+    ['Custom workflows and AI brand films', [3]],
+    ['How to choose a plan', [4, 5]],
+  ],
+  portfolio: [
+    ['Two halves: systems and films', [0]],
+    ['Agent systems for real estate, clinics, retail and e-commerce', [1]],
+    ['AI brand films', [2]],
+    ['The plumbing behind both', [3]],
+    ['Scope discipline, and how to see the nearest build', [4, 5]],
+  ],
+  contact: [
+    ['How to reach us', [0]],
+    ['Come with a process, not a wish', [1]],
+    ['What the first call looks like', [2]],
+    ['Where we work and how onboarding runs', [3]],
+    ['Press, partnerships and booking a slot', [4, 5]],
+  ],
+  register: [
+    ['What AI for Business is', [0]],
+    ['A day built around demonstration', [1]],
+    ['Who comes', [2]],
+    ['What you leave with', [3]],
+    ['Venue, seats and how to register', [4, 5]],
+  ],
+  join: [
+    ['A small team, close to the customer', [0]],
+    ['Internships are how people join', [1]],
+    ['What we look for', [2]],
+    ['What we offer', [3]],
+    ['How to apply', [4, 5]],
+  ],
+  privacy: [
+    ['Analytics and consent', [0, 1]],
+    ['Account details', [2]],
+    ['Conversations with our agents', [3]],
+    ['Who else sees data', [4]],
+    ['Your choices, and changes to this policy', [5, 6]],
+  ],
+};
+
+/**
+ * Small "related pages" block rendered inside the prerendered copy — a plain
+ * paragraph of real anchors, so it is visible to a crawler without relying on the
+ * React app booting. One line per route; leave a route out to omit the block.
+ */
+const RELATED = {
+  '': [['/services', 'AI co-worker agents'], ['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/linkedin-ai-agent', 'LinkedIn AI Agent'], ['/pricing', 'Pricing'], ['/whatsapp-ai-agent-guide', 'WhatsApp AI agent guide']],
+  'whatsapp-ai-agent': [['/whatsapp-ai-agent-guide', 'WhatsApp AI agent guide'], ['/whatsapp-business-api-approval', 'WhatsApp Business API approval'], ['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/pricing', 'Pricing']],
+  'linkedin-ai-agent': [['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/ai-agent-vs-chatbot', 'AI agent vs chatbot'], ['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/pricing', 'Pricing']],
+  services: [['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/linkedin-ai-agent', 'LinkedIn AI Agent'], ['/voice-ai-agent-use-cases', 'Voice AI agent use cases'], ['/pricing', 'Pricing']],
+  pricing: [['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/services', 'Services'], ['/contact', 'Contact us']],
+  portfolio: [['/services', 'Services'], ['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/contact', 'Contact us']],
+  contact: [['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/pricing', 'Pricing'], ['/services', 'Services']],
+  register: [['/services', 'Services'], ['/contact', 'Contact us']],
+  join: [['/portfolio', 'Portfolio'], ['/contact', 'Contact us']],
+  privacy: [['/contact', 'Contact us']],
+};
+
 /** Site-level entities, kept on every route. */
 const ORG = {
   '@context': 'https://schema.org',
@@ -479,6 +580,11 @@ function articleHtml(article) {
       parts.push('          </tbody>');
       parts.push('        </table>');
     }
+    if (section.after) {
+      for (const paragraph of section.after) {
+        parts.push(`        <p>${inlineLinks(paragraph)}</p>`);
+      }
+    }
   }
   parts.push('        <h2>Frequently asked questions</h2>');
   for (const item of article.faq) {
@@ -492,10 +598,39 @@ function articleHtml(article) {
   return parts.join('\n');
 }
 
+/** Shell body: either the plan's h2 sections, or the old flat paragraph list. */
+function shellBody(meta, key) {
+  const paragraphs = meta.body.map((p) => `<p>${inlineLinks(p)}</p>`);
+  const plan = SECTION_PLAN[key];
+  if (!plan) return paragraphs.map((p) => `        ${p}`).join('\n');
+  const used = plan.flatMap(([, indices]) => indices);
+  if (used.length !== paragraphs.length || new Set(used).size !== paragraphs.length) {
+    throw new Error(
+      `route-shells: SECTION_PLAN for "${key}" must use every body paragraph once ` +
+        `(body has ${paragraphs.length}, plan uses ${used.length} with ${new Set(used).size} unique)`,
+    );
+  }
+  return plan
+    .map(([h2, indices]) =>
+      [`        <h2>${h2}</h2>`, ...indices.map((i) => `        ${paragraphs[i]}`)].join('\n'),
+    )
+    .join('\n');
+}
+
+/** Crawler-visible link block; plain anchors, no JS needed. */
+function relatedHtml(key) {
+  const links = RELATED[key];
+  if (!links) return '';
+  const anchors = links
+    .map(([href, label]) => `<a href="${href}">${label}</a>`)
+    .join(' · ');
+  return `        <p class="seo-related"><strong>Related pages:</strong> ${anchors}</p>`;
+}
+
 function injectContent(html, meta, key) {
   const paragraphs = meta.article
     ? articleHtml(meta.article)
-    : `${meta.body.map((p) => `        <p>${inlineLinks(p)}</p>`).join('\n')}\n        ${CTA}`;
+    : `${shellBody(meta, key)}\n${relatedHtml(key) ? relatedHtml(key) + '\n' : ''}        ${CTA}`;
   const block = `<div id="root"><div class="seo-static">
         ${meta.article ? '' : `<h1>${meta.h1}</h1>`}
 ${paragraphs}
