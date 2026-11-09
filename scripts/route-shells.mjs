@@ -30,6 +30,13 @@ import { join } from 'node:path';
 const SITE = 'https://www.innovatorsaihub.com';
 const DIST = 'dist';
 const DEFAULT_IMAGE = '/platform_hero.webp';
+/** First publish date for the long-form guides (Article schema). */
+const PUBLISHED = '2026-11-09';
+/** Long-form guide copy. The React page imports this same file, so the shell a
+ *  crawler reads and the page a visitor sees cannot drift apart. */
+const ARTICLES = JSON.parse(
+  readFileSync(new URL('../content/articles.json', import.meta.url), 'utf8'),
+);
 
 /** Shown to crawlers and to anyone whose JS has not booted yet. */
 const ROUTES = {
@@ -195,6 +202,17 @@ const ROUTES = {
   },
 };
 
+// Long-form guides: metadata and body come from content/articles.json.
+for (const [slug, article] of Object.entries(ARTICLES)) {
+  ROUTES[slug] = {
+    title: article.title,
+    description: article.description,
+    h1: article.h1,
+    article,
+    schema: 'article',
+  };
+}
+
 /** Site-level entities, kept on every route. */
 const ORG = {
   '@context': 'https://schema.org',
@@ -223,6 +241,40 @@ function routeSchema(key, meta) {
   const url = `${SITE}/${key}`;
   const type = meta.schema ?? 'service';
   if (type === 'none') return [];
+
+  if (type === 'article') {
+    const a = meta.article;
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: a.h1,
+        description: a.description,
+        url,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        datePublished: PUBLISHED,
+        dateModified: PUBLISHED,
+        articleSection: a.sections.map((section) => section.h2),
+        author: { '@type': 'Organization', name: 'Innovators AI HUB', url: SITE },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Innovators AI HUB',
+          url: SITE,
+          logo: { '@type': 'ImageObject', url: `${SITE}/ai-logos.png` },
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: a.faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      BREADCRUMB(key, a.h1),
+    ];
+  }
 
   if (type === 'pricing') {
     return [
@@ -365,8 +417,8 @@ function replaceOnce(html, pattern, replacement, label, route) {
   return html.replace(pattern, replacement);
 }
 
-const ldBlock = (obj) =>
-  `<script type="application/ld+json">\n${JSON.stringify(obj, null, 2)}\n    </script>`;
+const ldBlock = (obj, attrs = '') =>
+  `<script type="application/ld+json"${attrs ? ` ${attrs}` : ''}>\n${JSON.stringify(obj, null, 2)}\n    </script>`;
 
 /** Drop the shared FAQPage block; it is re-added only where an FAQ is rendered. */
 function dropFaqSchema(html) {
@@ -379,15 +431,72 @@ function dropFaqSchema(html) {
 const PRERENDER_STYLE = `<style id="seo-prerender-style">
       #root > .seo-static{max-width:820px;margin:0 auto;padding:96px 20px 48px;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;color:#18181b;line-height:1.65}
       #root > .seo-static h1{font-size:clamp(26px,4vw,40px);line-height:1.2;font-weight:800;margin:0 0 18px;letter-spacing:-.02em}
+      #root > .seo-static h2{font-size:clamp(20px,2.6vw,26px);line-height:1.25;font-weight:700;margin:34px 0 14px;letter-spacing:-.01em}
+      #root > .seo-static h3{font-size:17px;line-height:1.35;font-weight:700;margin:22px 0 8px}
       #root > .seo-static p{margin:0 0 14px;font-size:16px}
+      #root > .seo-static .seo-answer{font-size:18px;font-weight:500;border-left:4px solid #059669;padding-left:16px;margin:0 0 28px}
+      #root > .seo-static ul{padding-left:20px;margin:0 0 18px}
+      #root > .seo-static li{margin:0 0 8px;font-size:16px}
+      #root > .seo-static table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:15px}
+      #root > .seo-static th{text-align:left;padding:10px 12px 10px 0;border-bottom:2px solid #e4e4e7;font-weight:700}
+      #root > .seo-static td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid #f1f1f4;vertical-align:top}
+      #root > .seo-static a{color:#047857;font-weight:600}
     </style>`;
 
+/** Turn `[label](/path)` into a real anchor for the crawler/no-JS copy. */
+const inlineLinks = (text) =>
+  text.replace(/\[([^\]]+)\]\((\/[a-z0-9\-/]*)\)/g, '<a href="$2">$1</a>');
+
+const CTA = `<p><a href="${SITE}/services">Rent an AI co-worker agent</a> · <a href="${SITE}/pricing">See pricing</a> · <a href="${SITE}/contact">Contact us</a></p>`;
+
+/** Full article body: one h1, real h2 sections, lists, optional table, rendered FAQ. */
+function articleHtml(article) {
+  const parts = [
+    `        <h1>${article.h1}</h1>`,
+    `        <p class="seo-answer">${inlineLinks(article.answer)}</p>`,
+  ];
+  for (const section of article.sections) {
+    parts.push(`        <h2>${section.h2}</h2>`);
+    for (const paragraph of section.paragraphs ?? []) {
+      parts.push(`        <p>${inlineLinks(paragraph)}</p>`);
+    }
+    if (section.list) {
+      parts.push('        <ul>');
+      for (const item of section.list) parts.push(`          <li>${inlineLinks(item)}</li>`);
+      parts.push('        </ul>');
+    }
+    if (section.table) {
+      parts.push('        <table>');
+      parts.push(
+        `          <thead><tr>${section.table.head.map((cell) => `<th>${cell}</th>`).join('')}</tr></thead>`,
+      );
+      parts.push('          <tbody>');
+      for (const row of section.table.rows) {
+        parts.push(`            <tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`);
+      }
+      parts.push('          </tbody>');
+      parts.push('        </table>');
+    }
+  }
+  parts.push('        <h2>Frequently asked questions</h2>');
+  for (const item of article.faq) {
+    parts.push(`        <h3>${item.q}</h3>`, `        <p>${item.a}</p>`);
+  }
+  parts.push('        <h2>Where to go next</h2>', '        <ul>');
+  for (const link of article.related) {
+    parts.push(`          <li><a href="${link.href}">${link.label}</a> — ${link.text}</li>`);
+  }
+  parts.push('        </ul>', `        ${CTA}`);
+  return parts.join('\n');
+}
+
 function injectContent(html, meta, key) {
-  const paragraphs = meta.body.map((p) => `        <p>${p}</p>`).join('\n');
+  const paragraphs = meta.article
+    ? articleHtml(meta.article)
+    : `${meta.body.map((p) => `        <p>${p}</p>`).join('\n')}\n        ${CTA}`;
   const block = `<div id="root"><div class="seo-static">
-        <h1>${meta.h1}</h1>
+        ${meta.article ? '' : `<h1>${meta.h1}</h1>`}
 ${paragraphs}
-        <p><a href="${SITE}/services">Rent an AI co-worker agent</a> · <a href="${SITE}/pricing">See pricing</a> · <a href="${SITE}/contact">Contact us</a></p>
       </div></div>`;
   let out = replaceOnce(html, /<div id="root"><\/div>/, block, '#root placeholder', key || 'home');
   out = replaceOnce(out, /<\/head>/, `${PRERENDER_STYLE}\n  </head>`, '</head>', key || 'home');
@@ -455,11 +564,15 @@ for (const [key, meta] of Object.entries(ROUTES)) {
   }
 
   // Structured data: site entities + this route's own entity.
-  const blocks = [ORG, ...(meta.faq ? [FAQ] : []), ...routeSchema(route, meta)];
+  const siteBlocks = [ORG, ...(meta.faq ? [FAQ] : [])];
+  const renderedBlocks = [
+    ...siteBlocks.map((b) => ldBlock(b)),
+    ...routeSchema(route, meta).map((b) => ldBlock(b, 'data-route-schema="1"')),
+  ];
   html = replaceOnce(
     html,
     /<\/head>/,
-    `${blocks.map((b) => `    ${ldBlock(b)}`).join('\n')}\n  </head>`,
+    `${renderedBlocks.map((b) => `    ${b}`).join('\n')}\n  </head>`,
     'schema injection',
     route || 'home',
   );
