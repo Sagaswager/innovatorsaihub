@@ -6,7 +6,7 @@ import { trackEvent } from '../analytics';
 
 interface HeaderProps {
   isDarkMode: boolean;
-  currentPage: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent' | 'linkedin-ai-agent' | 'whatsapp-ai-agent-guide' | 'ai-agent-cost-in-india' | 'ai-agent-vs-chatbot' | 'my-plan' | 'privacy';
+  currentPage: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join' | 'admin' | 'whatsapp-ai-agent' | 'linkedin-ai-agent' | 'whatsapp-ai-agent-guide' | 'ai-agent-cost-in-india' | 'ai-agent-vs-chatbot' | 'whatsapp-business-api-approval' | 'voice-ai-agent-use-cases' | 'hire-an-ai-agent-checklist' | 'my-plan' | 'privacy';
   navigateTo: (page: any) => void;
   selectedAgents?: string[];
 }
