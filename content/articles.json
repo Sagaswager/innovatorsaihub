@@ -1,0 +1,399 @@
+{
+  "whatsapp-ai-agent-guide": {
+    "title": "WhatsApp AI Agent: What It Is and How to Set One Up | Innovators AI HUB",
+    "description": "A WhatsApp AI agent reads and answers customer messages on your business number, qualifies leads and books meetings. What it does, what Meta requires, and what it costs.",
+    "h1": "WhatsApp AI Agent: What It Is and How to Set One Up",
+    "answer": "A WhatsApp AI agent is software that reads incoming WhatsApp messages, understands them in plain English, Hindi or Hinglish, and replies on your business number. It qualifies the enquiry, answers routine questions, books the meeting and records the outcome in your CRM. It runs on the official WhatsApp Business API and hands the conversation to a person when it should.",
+    "sections": [
+      {
+        "h2": "What a WhatsApp AI agent actually does",
+        "paragraphs": [
+          "A WhatsApp AI agent sits between your customers and your business, on the number they already message. When a message arrives, the agent reads the whole sentence instead of matching a keyword, works out what the person wants, and answers in the language they used. It can quote from your catalogue, ask the three questions your sales team always asks, send a brochure, check a calendar and confirm an appointment.",
+          "The difference from the WhatsApp automation most businesses have already tried is where the decision lives. Quick replies replay text you wrote in advance; an agent chooses what to say next from the business information it was given, which is why it can handle a question nobody wrote a script for."
+        ],
+        "list": [
+          "New enquiries answered in seconds, at any hour",
+          "Qualification: requirement, budget, location, timeline",
+          "Product, service and availability questions answered from your own documents",
+          "Appointment booking, confirmation and rescheduling",
+          "Follow-ups with people who read the message and went quiet",
+          "Order and delivery status updates",
+          "Handover to a human with the full conversation attached"
+        ]
+      },
+      {
+        "h2": "Why the first reply matters more than a perfect reply",
+        "paragraphs": [
+          "Most WhatsApp enquiries are lost in the gap between the message arriving and someone picking up the phone, and the customer who waits two hours has usually messaged the next business on the list. The agent's advantage is not that it never makes a mistake. It is that the first reply lands immediately and nothing sits unread overnight.",
+          "We will not sell you a conversion rate. What you can measure is narrower: how quickly a new enquiry gets a reply, how many conversations end with a clear next step, and how many were still open at the end of the week. The [WhatsApp AI Agent service page](/whatsapp-ai-agent) covers how we run it."
+        ]
+      },
+      {
+        "h2": "What you need before it can go live",
+        "paragraphs": [
+          "The technology is the easy part. The part that takes time is the account, the verification and the content."
+        ],
+        "list": [
+          "A phone number you can dedicate to the business. It must not be in use on a personal WhatsApp account.",
+          "A Meta Business account for the business that owns the number, with business verification completed.",
+          "Access to the official WhatsApp Business API, either directly or through a Meta-approved provider.",
+          "Your own business content: products and services, the prices you are willing to quote, your FAQs, and the answers a good salesperson gives.",
+          "A destination for the outcome: a CRM, a spreadsheet, a calendar, or a person's inbox."
+        ]
+      },
+      {
+        "h2": "Approval is the slowest part, and nobody can shortcut it",
+        "paragraphs": [
+          "Meta reviews the business, checks that the display name matches the brand, and approves message templates before they can be sent to people who have not messaged you first. A template is a pre-approved format used for outbound notifications such as an appointment reminder; replies inside a conversation the customer started do not need one. Budget that review time into the project instead of promising a launch date you do not control."
+        ]
+      },
+      {
+        "h2": "How it answers in Hindi and Hinglish",
+        "paragraphs": [
+          "Few Indian businesses receive messages in textbook English. Customers type “price kya hai”, mix scripts, abbreviate and send voice notes. A useful agent is tested against real messages from your own inbox, not the clean demo sentences in a vendor's deck: in setup we read a week of your actual conversations and check the agent handles the way your customers write.",
+          "The agent also has to know the edge of what it knows. If a question falls outside the material it was given, it should say so and route the question to a person rather than invent an answer. That single behaviour decides whether customers trust the number."
+        ]
+      },
+      {
+        "h2": "When a person should take over",
+        "paragraphs": [
+          "An agent should escalate, not insist. Rules that work: escalate when the customer asks for a human, when the conversation involves a complaint or refund, when the order value passes a threshold you set, or when the agent has failed twice on the same point.",
+          "On handover your team should see the whole thread in one place, so the customer never hears “could you explain that again”. Quiet hours, a pause switch per conversation and a full stop button matter as much as the automation itself."
+        ]
+      },
+      {
+        "h2": "What a WhatsApp AI agent costs",
+        "paragraphs": [
+          "Standard is ₹999 a month for one AI co-worker on one channel, including setup and a monthly review. Pro is ₹14,999 a month for a team of agents working across channels, with more involved workflow and integration work. Both are on [pricing](/pricing), and the [services page](/services) shows the other agents a WhatsApp agent can hand work to.",
+          "Two costs sit outside any plan and belong to other parties: Meta's WhatsApp Business API conversation charges, which change over time, and your team's time reviewing escalations. Ask any vendor which of those they bill, which they pass through at cost, and which they mark up."
+        ]
+      },
+      {
+        "h2": "Questions worth asking before you choose a vendor",
+        "paragraphs": [
+          "A short set of questions separates a serious implementation from a resold template:"
+        ],
+        "list": [
+          "Which WhatsApp API are you building on, and is the number registered to my business or to yours?",
+          "What happens to the number, the verified business profile and the chat history if we stop working together?",
+          "Which languages will the agent handle, and who tests it against real customer messages?",
+          "Where do leads land, and can I read every conversation after the fact?",
+          "What are the escalation rules, and can I change them without a support ticket?"
+        ]
+      },
+      {
+        "h2": "How to start without a big project",
+        "paragraphs": [
+          "Start with one workflow on one number: the enquiries that currently go unanswered. Get the agent to a state where a stranger cannot tell whether a person or the agent replied first, measure reply time and the next-step rate, then widen the scope to follow-ups, order updates or a second channel."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Is a WhatsApp AI agent allowed by WhatsApp?",
+        "a": "Yes, when it runs on the official WhatsApp Business API under a verified business and follows Meta's policies on template approval and opt-outs. Tools that automate a personal WhatsApp account through unofficial libraries put that number at risk of being banned, so ask which API a vendor uses."
+      },
+      {
+        "q": "Can the agent book appointments?",
+        "a": "Yes, if it is connected to a calendar or booking tool. The agent checks availability, offers the open slots, confirms one, and writes the booking where your team already looks."
+      },
+      {
+        "q": "Will it reply in Hindi or Hinglish?",
+        "a": "It can, and it should be tested for it. Quality depends on testing against your real conversations rather than the sample sentences a vendor demos, because customers mix languages, abbreviations and voice notes."
+      },
+      {
+        "q": "How long does setup take?",
+        "a": "Meta's business verification and template review are outside anyone's control, so the honest answer is that it depends on those. Configuration and testing are the faster part, and we do not quote a go-live date until verification is through."
+      }
+    ],
+    "related": [
+      {
+        "href": "/whatsapp-ai-agent",
+        "label": "WhatsApp AI Agent service page",
+        "text": "See what we build and how onboarding works."
+      },
+      {
+        "href": "/ai-agent-cost-in-india",
+        "label": "What an AI agent costs in India",
+        "text": "The four parts of the bill, and what sits outside the plan."
+      },
+      {
+        "href": "/ai-agent-vs-chatbot",
+        "label": "AI agent vs chatbot",
+        "text": "Where a scripted bot stops and an agent starts."
+      },
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard ₹999 and Pro ₹14,999 per month."
+      }
+    ]
+  },
+  "ai-agent-cost-in-india": {
+    "title": "AI Agent Cost in India: What You Actually Pay For | Innovators AI HUB",
+    "description": "What an AI agent costs in India, broken into the four lines of the bill: subscription, setup and integration, pass-through usage, and your team's review time.",
+    "h1": "AI Agent Cost in India: What You Actually Pay For",
+    "answer": "There is no single price for an AI agent in India. What you pay is four separate lines: the agent subscription, the one-time setup and integration, the usage your vendor passes through (Meta's WhatsApp charges, model calls, call minutes), and your own team's time reviewing escalations. Our published plans are ₹999 a month for Standard and ₹14,999 a month for Pro.",
+    "sections": [
+      {
+        "h2": "The four lines of an AI agent bill",
+        "paragraphs": [
+          "Almost every quote you will see is one of three shapes: a monthly subscription per agent, a one-time build fee plus a monthly retainer, or usage-based billing on top of either. Before comparing two numbers, find out which shape you are being quoted in. A ₹999 monthly plan and a one-time custom build are not the same kind of purchase, and comparing them directly is how businesses end up disappointed in both."
+        ],
+        "list": [
+          "Subscription: the agent itself, usually per agent per channel, monthly.",
+          "Setup and integration: connecting the WhatsApp Business API or LinkedIn, the CRM, the calendar, and loading your business content.",
+          "Pass-through usage: WhatsApp conversation charges billed by Meta, model calls, and telephony minutes if a voice agent is involved.",
+          "Your team's time: reviewing escalations, approving new answers, and keeping product and price information current."
+        ]
+      },
+      {
+        "h2": "What ₹999 and ₹14,999 include here",
+        "paragraphs": [
+          "Standard is ₹999 a month: one AI co-worker on one channel, either WhatsApp or LinkedIn, including setup, the integration that channel needs, and a monthly review. Pro is ₹14,999 a month: a team of agents working together across channels, with more involved workflow and integration work and ongoing tuning. Both are described on [pricing](/pricing).",
+          "Neither number includes Meta's WhatsApp Business API conversation charges, subscriptions you already pay for such as CRM seats or calendar tools, paid data sources, or voice call minutes. Those are real costs, and a quote that quietly omits them is not a cheaper quote, only a shorter one."
+        ]
+      },
+      {
+        "h2": "What pushes a project above the plan price",
+        "paragraphs": [
+          "The subscription buys a working agent on one channel. Scope is what moves the price:"
+        ],
+        "list": [
+          "More than one channel, because each has its own API, its own policies and its own conversation design.",
+          "Deeper integrations. A spreadsheet is a morning's work; an ERP or a custom backend with no documentation is a project.",
+          "Unstructured knowledge. If product details live in twelve PDFs and one person's memory, someone has to make them usable first.",
+          "Human approval steps, where the agent must wait for a person before sending an offer or a refund.",
+          "Voice, which adds telephony, latency and a much narrower margin for error than text.",
+          "Compliance requirements such as data retention rules, audit logs, or data that has to stay in a particular region."
+        ]
+      },
+      {
+        "h2": "The costs people forget to count",
+        "paragraphs": [
+          "The plan price is the visible part. These are the lines that decide whether the project is worth keeping, and none of them are reasons to avoid an agent; they are reasons to put them in the budget in month one instead of discovering them in month three."
+        ],
+        "list": [
+          "Content upkeep. Prices change, offers end, and an agent quoting last quarter's price damages trust faster than a slow reply.",
+          "Review time. Someone has to read the escalations and the conversations the agent was unsure about, at least weekly at the start.",
+          "Template re-approval. New outbound message formats need Meta's approval, which takes time you should plan around.",
+          "Handover defects. A lead passed to a person without context gets asked the same three questions twice.",
+          "Verification and number upkeep. A lapsed business verification stops the number working, and nobody notices until a customer complains."
+        ]
+      },
+      {
+        "h2": "How to compare two quotes without being fooled",
+        "paragraphs": [
+          "Put the quotes side by side on these six questions and the difference usually explains itself:"
+        ],
+        "list": [
+          "What is included per agent, and per channel?",
+          "Is setup inside the price or billed separately, and is it capped?",
+          "Which usage is passed through at cost, and which is marked up?",
+          "Who owns the WhatsApp number, the verified business profile and the conversation data?",
+          "What happens at the end of the contract: export, deletion, or silence?",
+          "What is the price when you exceed the included volume?"
+        ]
+      },
+      {
+        "h2": "A sensible starting budget",
+        "paragraphs": [
+          "Start with the one workflow that loses you the most money, which is usually unanswered enquiries, on the one channel where those enquiries arrive. One agent on one channel at ₹999 a month is the smallest honest way to find out whether the thing works in your business before you commit to a team, a custom build or a voice deployment.",
+          "Then read the log. If conversations are ending in bookings and the escalations are clean, widening scope is a decision backed by evidence. If they are not, you spent a small amount learning something useful. The [WhatsApp AI agent guide](/whatsapp-ai-agent-guide) covers what setup actually involves, and the [services page](/services) lists the agents available."
+        ]
+      },
+      {
+        "h2": "Why some quotes run to lakhs",
+        "paragraphs": [
+          "A large quote usually describes a larger object: several channels, a custom backend, voice, compliance work, and a team assigned to the account. That can be the right purchase for a company with the volume to justify it. It is the wrong first purchase for a business that has never run an agent, because the unknowns are the same at every price and you only learn them by operating one.",
+          "Ask a high quote to be broken into the four lines above. If a vendor cannot separate subscription, setup, usage and review, the number is a feeling rather than a price."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Is ₹999 a month realistic for an AI agent?",
+        "a": "It is our Standard plan for one agent on one channel, including setup and a monthly review. WhatsApp conversation charges billed by Meta and tools you already pay for sit outside it, so the real monthly figure depends on how many conversations you have."
+      },
+      {
+        "q": "Are there setup charges on top?",
+        "a": "On Standard, setup and the single channel integration are included. Larger scopes, extra integrations, custom backend work or voice are quoted separately because they are different amounts of work."
+      },
+      {
+        "q": "Do I pay per message?",
+        "a": "Meta bills WhatsApp Business API conversation charges to the business on its own rate card, and those rates change. Treat them as a separate line in your budget rather than assuming they are inside a vendor's monthly plan."
+      },
+      {
+        "q": "What is the cheapest way to start?",
+        "a": "One channel, one workflow. Pick the enquiries that currently go unanswered, run them through one agent, and measure reply time and how many conversations reach a clear next step before adding anything else."
+      },
+      {
+        "q": "Why do some quotes run into lakhs?",
+        "a": "Usually because the scope is genuinely larger: multiple channels, custom backend integration, voice, compliance work, or a dedicated team. Ask for the quote split into subscription, setup, usage and review so you can compare it with a smaller plan on the same lines."
+      }
+    ],
+    "related": [
+      {
+        "href": "/pricing",
+        "label": "Pricing",
+        "text": "Standard ₹999 and Pro ₹14,999 per month, in full."
+      },
+      {
+        "href": "/ai-agent-vs-chatbot",
+        "label": "AI agent vs chatbot",
+        "text": "Why the two are priced differently."
+      },
+      {
+        "href": "/whatsapp-ai-agent-guide",
+        "label": "WhatsApp AI agent guide",
+        "text": "What setup involves, and what Meta requires."
+      },
+      {
+        "href": "/contact",
+        "label": "Contact",
+        "text": "Ask for a quote on your own workflow."
+      }
+    ]
+  },
+  "ai-agent-vs-chatbot": {
+    "title": "AI Agent vs Chatbot: What's the Difference? | Innovators AI HUB",
+    "description": "A chatbot follows a script; an AI agent works towards a goal and acts. The difference in behaviour, build effort and cost, and when a scripted bot is still the right choice.",
+    "h1": "AI Agent vs Chatbot: What's the Difference?",
+    "answer": "A chatbot follows a script: it matches what you typed to a menu of options and replies with an answer someone wrote in advance. An AI agent works towards a goal: it reads the message, decides what is needed, uses tools such as a calendar, a CRM or WhatsApp, and acts on the result. A chatbot answers questions; an agent finishes the job.",
+    "sections": [
+      {
+        "h2": "How a rule-based chatbot works",
+        "paragraphs": [
+          "A chatbot is a decision tree wearing a conversation. Someone maps out the likely questions, writes an answer for each, and connects them with buttons or keyword matches. When the customer stays on the map it feels fast and reliable, which is why banks and airlines still use one for balance checks and booking references.",
+          "Off the map, it fails in a recognisable way. You phrase something slightly differently and it offers the same three buttons again, or a polite apology and a link. The build effort went into predicting the questions rather than understanding them."
+        ]
+      },
+      {
+        "h2": "How an AI agent works",
+        "paragraphs": [
+          "An agent is given the same business information, plus a goal and a set of tools. It reads the message in full, decides what the person wants, and takes steps: look up the order, check the calendar, send the brochure, write the lead into the CRM, and if none of that resolves it, hand the conversation to a person with the history attached.",
+          "That is the structural difference. A chatbot's output is a message. An agent's output is a change in the world outside the chat, which is why an agent needs integrations, permissions and an escalation path that a chatbot never needed."
+        ]
+      },
+      {
+        "h2": "Side by side",
+        "paragraphs": [
+          "The same customer question, handled by each:"
+        ],
+        "table": {
+          "head": [
+            "",
+            "Chatbot",
+            "AI agent"
+          ],
+          "rows": [
+            [
+              "A question nobody anticipated",
+              "Offers the fallback menu, or a link",
+              "Reasons from the business content, or escalates with context"
+            ],
+            [
+              "Languages and phrasing",
+              "Matches the phrasings that were written",
+              "Handles mixed Hindi, English and Hinglish as typed"
+            ],
+            [
+              "What it can change outside the chat",
+              "Nothing",
+              "Books, updates the CRM, sends documents, triggers follow-ups"
+            ],
+            [
+              "What maintenance means",
+              "Redraw the flow for each new question",
+              "Update the content and the tools it can use"
+            ],
+            [
+              "Best fit",
+              "A fixed, high-volume set of known requests",
+              "Conversations that need judgement and a next step"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "When a chatbot is still the right choice",
+        "paragraphs": [
+          "Choosing an agent for its own sake is a common way to waste money. A chatbot is the better call when the requests are genuinely finite and repetitive, when nobody needs the outcome written anywhere, when the budget is close to zero, and when a wrong answer is harmless.",
+          "A shop that only needs opening hours, delivery timelines and a returns link does not need an agent; it needs three good answers in the right places. The honest test is whether the conversation has to end in an action. If it does not, the simpler tool wins."
+        ]
+      },
+      {
+        "h2": "Where chatbots break in Indian businesses",
+        "paragraphs": [
+          "The failure is almost always language and phrasing, not logic. Customers write “kitna lagega”, “price?”, “rate batao”, and send voice notes. Each is a different string, so a keyword-matched bot needs every variant written by hand, and the variants never stop arriving.",
+          "The second failure is exception handling. A customer asks for a discount, a refund or a bulk rate, the bot has no branch for it, and it either repeats itself or ends the conversation. An agent can recognise the exception, collect what a person needs, and route it."
+        ]
+      },
+      {
+        "h2": "What changes when the agent can act",
+        "paragraphs": [
+          "Once the system can write to your CRM or your calendar, two things matter that a chatbot never had to consider: permission and review. The agent should be able to do only the actions you granted, and every action it takes should be logged where your team can read it afterwards.",
+          "This is also where the measurable difference shows up. A chatbot reports how many conversations it had. An agent can report how many ended in a booking, a qualified lead, or an escalation a person closed, which is the number worth putting in a weekly review."
+        ]
+      },
+      {
+        "h2": "Cost and effort, compared honestly",
+        "paragraphs": [
+          "A rule-based chatbot can be built with almost no budget and no integrations, which is why it is everywhere. An agent carries a subscription and, usually, an integration cost. Here, Standard is ₹999 a month for one agent on one channel and Pro is ₹14,999 a month for a cross-channel team, both listed on [pricing](/pricing).",
+          "The comparison only makes sense against what a conversation is worth. If an unanswered enquiry is worth a sale, an agent that answers in seconds is cheap. If the conversation ends in a phone number for opening hours, a chatbot is enough and an agent is overhead."
+        ]
+      },
+      {
+        "h2": "You usually do not have to choose",
+        "paragraphs": [
+          "The two combine well. Many working setups put the agent on the same WhatsApp number, behind the buttons that already exist: the customer taps “track order” and gets the fast deterministic answer, or types a question and the agent handles it. When the agent is unsure it falls back to the menu, and when the menu cannot help, both hand over to a person.",
+          "If you already run a chatbot that does one job well, the shortest path is to keep it and put an agent behind the questions it currently fails. The [WhatsApp AI Agent page](/whatsapp-ai-agent) covers how that is wired on the official API, and the [services page](/services) shows the other agents a team can include."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Is ChatGPT a chatbot or an agent?",
+        "a": "The chat interface is a chatbot in the literal sense: it replies in text. It behaves like an agent when it is given tools and permission to use them, for example to search, calculate or act on another system. The label follows the tools and permissions, not the brand."
+      },
+      {
+        "q": "Is an AI agent always better than a chatbot?",
+        "a": "No. For a fixed, high-volume set of known requests where nothing needs to be written anywhere, a well-built chatbot is cheaper, more predictable and easier to audit. An agent earns its cost when the conversation has to end in an action or a qualified handover."
+      },
+      {
+        "q": "Do I have to replace my existing WhatsApp bot?",
+        "a": "Usually not. The common setup keeps the existing menu for structured requests and puts the agent behind free-text questions, with a shared handover to a person. Replacing everything is a bigger project than most businesses need on day one."
+      },
+      {
+        "q": "Will an AI agent invent answers?",
+        "a": "It can, if it is allowed to answer outside the material it was given. The fix is configuration rather than hope: restrict it to your approved content, make it say when it does not know, and route those conversations to a person. Test that behaviour before launch."
+      },
+      {
+        "q": "Can an agent work without integrations?",
+        "a": "It can hold a conversation, but it cannot book, update a record or trigger a follow-up. Without integrations you have an agent that talks like one and finishes nothing, which is usually worse value than a chatbot."
+      }
+    ],
+    "related": [
+      {
+        "href": "/whatsapp-ai-agent",
+        "label": "WhatsApp AI Agent",
+        "text": "The agent we build most often, on the official API."
+      },
+      {
+        "href": "/ai-agent-cost-in-india",
+        "label": "AI agent cost in India",
+        "text": "The four lines of the bill, explained."
+      },
+      {
+        "href": "/services",
+        "label": "Services",
+        "text": "The agents available to rent."
+      },
+      {
+        "href": "/contact",
+        "label": "Contact",
+        "text": "Bring a real conversation and we will map it."
+      }
+    ]
+  }
+}
