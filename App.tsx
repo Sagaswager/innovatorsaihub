@@ -25,8 +25,10 @@ const ConsentBanner = lazy(() => import('./Sections/ConsentBanner'));
 const PrivacyPolicy = lazy(() => import('./Sections/PrivacyPolicy'));
 const MyPlanPage = lazy(() => import('./Sections/MyPlanPage'));
 const ArticlePage = lazy(() => import('./Sections/ArticlePage'));
-// Long-form guide copy — the same file scripts/route-shells.mjs prerenders from.
-import ARTICLES from './content/articles.json';
+// Only the guide metadata (slug -> title/description) is needed at app level. The full copy
+// stays in content/articles.json, which is imported by the lazy ArticlePage chunk instead, so
+// 73.7 KB of guide prose is no longer parsed on routes that never render a guide.
+import ARTICLE_META from './content/articleMeta.json';
 
 export type Page = 
   | 'home' 
@@ -51,10 +53,10 @@ export type Page =
   | 'my-plan'
   | 'privacy';
 
-const ARTICLE_SLUGS = Object.keys(ARTICLES) as Page[];
-type ArticleContent = (typeof ARTICLES)[keyof typeof ARTICLES];
-const getArticle = (page: Page): ArticleContent | undefined =>
-  (ARTICLES as Record<string, ArticleContent>)[page];
+const ARTICLE_SLUGS = Object.keys(ARTICLE_META) as Page[];
+type ArticleMeta = (typeof ARTICLE_META)[keyof typeof ARTICLE_META];
+const getArticle = (page: Page): ArticleMeta | undefined =>
+  (ARTICLE_META as Record<string, ArticleMeta>)[page];
 
 const App: React.FC = () => {
   const [isDarkMode] = useState(true);
