@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from './motion';
 import { Menu, X, ArrowRight, ExternalLink, Calendar, ShoppingCart } from 'lucide-react';
 import PillButton from './PillButton';
 import { trackEvent } from '../analytics';

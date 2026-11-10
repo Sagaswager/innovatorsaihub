@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion, HTMLMotionProps } from './motion';
 
 interface PillButtonProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;

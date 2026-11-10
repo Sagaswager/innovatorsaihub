@@ -1,6 +1,6 @@
 import React from 'react';
 import { trackEvent } from '../analytics';
-import { motion } from 'framer-motion';
+import { motion } from './motion';
 
 interface AIQuoteProps {
   isDarkMode: boolean;

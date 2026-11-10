@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from './motion';
 import { Calendar, User, ChevronDown, LogIn, UserPlus, Sparkles, MessageSquare, Linkedin, PhoneCall, Bot, X, Check, Loader2, ChevronLeft } from 'lucide-react';
 
 import {

@@ -737,7 +737,7 @@ const notFound = `<!DOCTYPE html>
   <meta name="description" content="That page does not exist. Browse AI agent services, pricing or contact Innovators AI HUB.">
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="${SITE}/">
-  <link rel="icon" type="image/png" href="/ai-logos.png">
+  <link rel="icon" type="image/png" href="/favicon-256.png" sizes="256x18">
   <style>
     body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;color:#18181b;background:#fff}
     main{max-width:640px;margin:0 auto;padding:96px 20px}

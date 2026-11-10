@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from './motion';
 import { X, Check, Loader2 } from 'lucide-react';
 import { trackAgentRental, trackEvent } from '../analytics';
 import DemoVideo from './DemoVideo';

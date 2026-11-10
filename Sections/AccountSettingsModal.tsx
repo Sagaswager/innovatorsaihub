@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from './motion';
 import { X, Trash2, Loader2, Check, AlertTriangle } from 'lucide-react';
 import { deleteAccount, forgetUser, normalizeEmail } from '../authApi';
 

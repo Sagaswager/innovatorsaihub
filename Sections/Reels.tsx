@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from './motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ReelsProps {

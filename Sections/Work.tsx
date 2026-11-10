@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from './motion';
 import { ArrowUpRight } from 'lucide-react';
 
 interface WorkProps {

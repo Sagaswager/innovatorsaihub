@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from './motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import PillButton from './PillButton';
 import { trackEvent } from '../analytics';

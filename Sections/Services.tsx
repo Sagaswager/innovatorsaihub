@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from './motion';
 import { trackEvent } from '../analytics';
 import { 
   Video, 

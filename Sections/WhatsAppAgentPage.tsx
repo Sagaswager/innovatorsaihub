@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from './motion';
 import { X, Check, Loader2 } from 'lucide-react';
 import { trackAgentRental, trackContact, trackEvent } from '../analytics';
 import {
@@ -519,15 +519,19 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
             </div>
 
             {/* Interface Image Preview */}
-            <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative">
+            <div
+              className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-black/5 flex items-center justify-center relative"
+              style={{ aspectRatio: '16 / 9' }}
+            >
               <img
                 alt="WhatsApp AI agent for customer support, appointment booking and CRM automation"
                 className="w-full h-auto object-contain rounded-2xl"
-                src="/whatsapp-agent-interface.webp"
+                src="/whatsapp-agent-interface-1280.webp"
+                srcSet="/whatsapp-agent-interface-640.webp 640w, /whatsapp-agent-interface-1280.webp 1280w, /whatsapp-agent-interface-1920.webp 1920w"
+                sizes="(max-width: 832px) 100vw, 1024px"
                 width={2560}
                 height={1440}
-                loading="eager"
-                fetchPriority="high"
+                loading="lazy"
                 decoding="async"
                 style={{ imageRendering: '-webkit-optimize-contrast' }}
               />

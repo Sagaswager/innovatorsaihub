@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from './motion';
 import { Cpu, MessageSquare, PhoneCall, Users, ShoppingCart, Check } from 'lucide-react';
 import PillButton from './PillButton';
 import { trackEvent } from '../analytics';

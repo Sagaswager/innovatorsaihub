@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from './motion';
 import { Send, Globe, Mail, Phone, CheckCircle2, AlertCircle, Loader2, ArrowUpRight, X } from 'lucide-react';
 import { trackContact } from '../analytics';
 

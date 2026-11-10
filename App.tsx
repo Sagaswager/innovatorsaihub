@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from './Sections/motion';
 import Header from './Sections/Header';
 import Footer from './Sections/Footer';
 import Platform from './Sections/Platform';
@@ -300,7 +300,7 @@ const App: React.FC = () => {
             "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
             "datePublished": "2026-11-09",
             "dateModified": "2026-11-09",
-            "articleSection": articleMeta.sections.map((section) => section.h2),
+            "articleSection": (articleMeta.sections ?? []).map((section: any) => section.h2),
             "author": { "@type": "Organization", "name": "Innovators AI HUB", "url": "https://www.innovatorsaihub.com/" },
             "publisher": {
               "@type": "Organization",
@@ -311,7 +311,7 @@ const App: React.FC = () => {
           },
           {
             "@type": "FAQPage",
-            "mainEntity": articleMeta.faq.map((item) => ({
+            "mainEntity": (articleMeta.faq ?? []).map((item: any) => ({
               "@type": "Question",
               "name": item.q,
               "acceptedAnswer": { "@type": "Answer", "text": item.a }
