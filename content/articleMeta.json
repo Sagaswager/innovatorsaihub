@@ -1,0 +1,38 @@
+{
+  "whatsapp-ai-agent-guide": {
+    "title": "WhatsApp AI Agent: What It Is and How to Set One Up | Innovators AI HUB",
+    "description": "A WhatsApp AI agent reads and answers customer messages on your business number, qualifies leads and books meetings. What it does, what Meta requires, and what it costs."
+  },
+  "ai-agent-cost-in-india": {
+    "title": "AI Agent Cost in India: What You Actually Pay For | Innovators AI HUB",
+    "description": "What an AI agent costs in India, broken into the four lines of the bill: subscription, setup and integration, pass-through usage, and your team's review time."
+  },
+  "ai-agent-vs-chatbot": {
+    "title": "AI Agent vs Chatbot: What's the Difference? | Innovators AI HUB",
+    "description": "A chatbot follows a script; an AI agent works towards a goal and acts. The difference in behaviour, build effort and cost, and when a scripted bot is still the right choice."
+  },
+  "whatsapp-business-api-approval": {
+    "title": "WhatsApp Business API Approval: What It Takes to Get Live | Innovators AI HUB",
+    "description": "What WhatsApp Business API approval actually requires: Meta business verification, phone number rules, display name review, why applications get rejected, and what changes once you are live."
+  },
+  "voice-ai-agent-use-cases": {
+    "title": "Voice AI Agent Use Cases: Inbound and Outbound Calls | Innovators AI HUB",
+    "description": "The voice AI agent use cases that work today: lead qualification calls, appointment reminders, first-line support and order status, with what each call sounds like, what it hands to a human and what it needs integrated."
+  },
+  "hire-an-ai-agent-checklist": {
+    "title": "How to Hire an AI Agent: A Buyer's Checklist | Innovators AI HUB",
+    "description": "A practical checklist for hiring an AI agent: name the one process, choose the number you will judge it by, set the human hand-off, check CRM fit, and the questions to ask a vendor before signing."
+  },
+  "linkedin-automation-limits": {
+    "title": "LinkedIn Automation Limits: What LinkedIn Actually Enforces | Innovators AI HUB",
+    "description": "LinkedIn publishes no weekly invitation number. What it publishes is what triggers a restriction: volume in a short window, invitations that get ignored, and any sign of a bot. The policy, the recovery windows, and the setup that survives it."
+  },
+  "ai-agent-for-real-estate": {
+    "title": "AI Agent for Real Estate: Enquiry to Site Visit | Innovators AI HUB",
+    "description": "How a real-estate AI agent turns a WhatsApp or portal enquiry into a booked site visit: what it asks, what it must never guess, where a person takes over, and the numbers to judge it by."
+  },
+  "ai-agent-for-clinics": {
+    "title": "AI Agent for Clinics: Bookings, Reminders, Front Desk | Innovators AI HUB",
+    "description": "A clinic AI agent answers appointment requests after hours, books real slots, sends reminders and reduces no-shows — without giving medical advice. What it owns, what stays with staff, and what to settle before go-live."
+  }
+}
