@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from './motion';
+import { motion, AnimatePresence, Collapse } from './motion';
 import { X, Check, Loader2 } from 'lucide-react';
 import { trackAgentRental, trackContact, trackEvent } from '../analytics';
 import {
@@ -449,9 +449,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <span className={`material-symbols-outlined text-slate-400 transition-transform duration-300 ${openSections.introduction ? "rotate-180 text-primary-container" : ""}`}>expand_more</span>
                 </div>
               </button>
-              <AnimatePresence>
-                {openSections.introduction && (
-                  <motion.div id="introduction-details" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
+              <Collapse open={openSections.introduction} id="introduction-details" className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100 flex flex-col items-center text-center">
               {/* Badges */}
               <div className="flex flex-wrap items-center justify-center gap-2 mb-space-lg">
@@ -513,9 +511,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
 
             {/* Interface Image Preview */}
@@ -581,15 +577,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openSections.whyUse && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.whyUse} className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100 text-slate-700">
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl items-center mb-space-2xl">
                         <div className="lg:col-span-7 flex flex-col">
@@ -688,9 +676,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
 
             {/* Section 2 Accordion: Core Features */}
@@ -727,15 +713,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openSections.features && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.features} className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
                         {/* Feature 1 */}
@@ -819,9 +797,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
 
             {/* Section 3 Accordion: How It Works */}
@@ -858,15 +834,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openSections.howItWorks && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.howItWorks} className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100">
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
                         <div className="p-space-md rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -931,9 +899,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
 
             {/* Section 4 Accordion: Real-World Use Cases */}
@@ -970,15 +936,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openSections.useCases && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.useCases} className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100 space-y-6">
                       {/* Vertical 1: E-Commerce */}
                       <div className="p-6 rounded-2xl bg-slate-50/70 border border-slate-200">
@@ -1044,9 +1002,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
 
             {/* Section 5 Accordion: Enterprise Architecture & Security */}
@@ -1083,15 +1039,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openSections.security && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.security} className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100">
                       <p className="text-sm text-slate-600 mb-6 leading-relaxed">
                         We connect directly through the official WhatsApp Business Cloud API. Your customer data is encrypted in transit, completely isolated, and never used to train public AI models.
@@ -1167,9 +1115,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
 
             {/* Section 6 Accordion: Frequently Asked Questions */}
@@ -1206,15 +1152,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openSections.faq && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.faq} className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100">
                       <div className="space-y-3.5" id="faq-accordion">
                         {WHATSAPP_FAQS.map((faq, idx) => (
@@ -1232,9 +1170,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                         ))}
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
           </section>
 
@@ -1268,16 +1204,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                   <span className={`material-symbols-outlined text-slate-400 transition-transform duration-300 ${openSections.deployment ? "rotate-180 text-primary-container" : ""}`}>expand_more</span>
                 </div>
               </button>
-              <AnimatePresence>
-                {openSections.deployment && (
-                  <motion.div
-                    id="deployment-details"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
+              <Collapse open={openSections.deployment} id="deployment-details" className="overflow-hidden">
                     <div className="px-6 sm:px-10 pb-8 pt-4 border-t border-slate-100 text-center flex flex-col items-center">
               <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed mb-space-xl">
                 Your customers are already on WhatsApp. Give them the fast, friendly experience they expect while giving your team their time back to focus on what matters most.
@@ -1315,9 +1242,7 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
                 </div>
               </div>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </Collapse>
             </div>
           </section>
         </div>
