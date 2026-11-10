@@ -329,6 +329,43 @@ export const motion: any = new Proxy({}, {
   },
 });
 
+/* ------------------------------------------------------- collapse (accordion) */
+
+/**
+ * Collapse — the accordion open/close, without a layout animation.
+ *
+ * The previous path animated `height: 0 -> auto`, which meant reading
+ * `el.scrollHeight` (a forced synchronous layout of the whole document) and
+ * then a layout on every frame of the transition. This uses the CSS
+ * grid-template-rows 0fr -> 1fr technique instead: text stays crisp, content
+ * reflows correctly, no JS measurement, and the browser can clamp the work to
+ * the panel's own subtree. The element stays mounted for the exit duration so
+ * closing still animates.
+ */
+export const Collapse: React.FC<React.PropsWithChildren<{
+  open: boolean; duration?: number; className?: string; id?: string;
+}>> = ({ open, duration = 0.25, className = '', id, children }) => {
+  const [mounted, setMounted] = useState(open);
+  const [expanded, setExpanded] = useState(false);
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      // one frame at 0fr, then flip so the transition actually runs
+      const r = requestAnimationFrame(() => setExpanded(true));
+      return () => cancelAnimationFrame(r);
+    }
+    setExpanded(false);
+    const t = window.setTimeout(() => setMounted(false), duration * 1000 + 20);
+    return () => window.clearTimeout(t);
+  }, [open, duration]);
+  if (!mounted) return null;
+  return React.createElement(
+    'div',
+    { id, className: className ? `collapse ${className}` : 'collapse', 'data-open': expanded ? 'true' : 'false' },
+    React.createElement('div', { className: 'collapse-inner' }, children),
+  );
+};
+
 /* ---------------------------------------------------------- presence cache */
 
 export const AnimatePresence: React.FC<React.PropsWithChildren<{ initial?: boolean; mode?: string }>> = ({ children }) => {
