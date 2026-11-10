@@ -136,15 +136,14 @@
     }
     </script>
 
-    <!-- Preconnect & Asynchronous Non-blocking Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Sora:wght@600;700;800&family=Syne:wght@800&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Sora:wght@600;700;800&family=Syne:wght@800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+    <!-- Fonts are self-hosted (public/fonts, declared in fonts.css). The site
+         makes no external font request anymore: the old Google Fonts sheet was
+         two extra origins, two CSS round-trips and a render-blocking swap.
+         Preload only the two faces used in the first viewport -- the Sora
+         headline and Inter body text; everything else loads on demand. -->
+    <link rel="preload" href="/fonts/Sora-latin-46cba0e3.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Inter-latin-6ab57b19.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Asynchronous Non-blocking Material Symbols Outlined -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"></noscript>
 </head>
 <body>
     <div id="root"></div>
