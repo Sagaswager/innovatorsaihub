@@ -127,7 +127,12 @@
         "label": "Pricing",
         "text": "Standard \u20b9999 and Pro \u20b914,999 per month."
       }
-    ]
+    ,
+      {
+        "href": "/whatsapp-business-api-approval",
+        "label": "WhatsApp Business API approval",
+        "text": "what Meta checks before your number can go live"
+      }]
   },
   "ai-agent-cost-in-india": {
     "title": "AI Agent Cost in India: What You Actually Pay For | Innovators AI HUB",
@@ -253,7 +258,12 @@
         "label": "Contact",
         "text": "Ask for a quote on your own workflow."
       }
-    ]
+    ,
+      {
+        "href": "/voice-ai-agent-use-cases",
+        "label": "Voice AI agent use cases",
+        "text": "the calls an agent can take, and which ones it should not"
+      }]
   },
   "ai-agent-vs-chatbot": {
     "title": "AI Agent vs Chatbot: What's the Difference? | Innovators AI HUB",
@@ -795,7 +805,12 @@
         "label": "WhatsApp AI Agent",
         "text": "the most common first agent, and what it handles"
       }
-    ]
+    ,
+      {
+        "href": "/linkedin-automation-limits",
+        "label": "LinkedIn automation limits",
+        "text": "how much outreach LinkedIn tolerates before it reacts"
+      }]
   },
   "linkedin-automation-limits": {
     "title": "LinkedIn Automation Limits: What LinkedIn Actually Enforces | Innovators AI HUB",
