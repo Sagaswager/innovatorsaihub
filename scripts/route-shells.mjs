@@ -68,7 +68,7 @@ const ROUTES = {
       'Typical setups run on the official WhatsApp Business API with a verified number, connected to HubSpot, Zoho, Salesforce, Google Sheets or your own backend. If you already have a support desk, the agent can feed it rather than replace it.',
       'You stay in control. Escalation rules decide when a human takes over, quiet hours are respected, and every message is logged and reviewable. Nothing about the customer relationship is hidden from you.',
       'Setup starts with a short audit of how enquiries reach you today, then a configured agent tested against real conversations before it goes live on your number. Book a demo to see the agent handle one of your own enquiries.',
-      'Before you decide, read [what a WhatsApp AI agent is and how to set one up](/whatsapp-ai-agent-guide), [what an AI agent costs in India](/ai-agent-cost-in-india) and [how an AI agent differs from a chatbot](/ai-agent-vs-chatbot).',
+      'Before you decide, read [what a WhatsApp AI agent is and how to set one up](/whatsapp-ai-agent-guide), [what an AI agent costs in India](/ai-agent-cost-in-india) and [how an AI agent differs from a chatbot](/ai-agent-vs-chatbot), [what WhatsApp Business API approval requires](/whatsapp-business-api-approval).',
     ],
   },
   'linkedin-ai-agent': {
@@ -84,7 +84,7 @@ const ROUTES = {
       'Safety is part of the design. Daily invitation and message limits are respected, sending is spread across working hours, and accounts are monitored for warnings so volume is reduced before LinkedIn reacts. A human can pause the agent at any time.',
       'Reporting tells you what matters: how many conversations started, how many replied, how many meetings were booked, and which message actually earned the reply.',
       'The agent works alongside your existing CRM, so leads and notes land where your team already looks. Book a demo and we will show the outreach flow against a target list you choose.',
-      'Before you decide, read [what an AI agent costs in India](/ai-agent-cost-in-india), [how an AI agent differs from a chatbot](/ai-agent-vs-chatbot) and [what a WhatsApp AI agent is](/whatsapp-ai-agent-guide) — most LinkedIn replies end up closing on WhatsApp.',
+      'Before you decide, read [what an AI agent costs in India](/ai-agent-cost-in-india), [how an AI agent differs from a chatbot](/ai-agent-vs-chatbot) and [what a WhatsApp AI agent is](/whatsapp-ai-agent-guide) and [how much LinkedIn automation is safe](/linkedin-automation-limits) — most LinkedIn replies end up closing on WhatsApp.',
     ],
   },
   services: {
@@ -305,9 +305,9 @@ const SECTION_PLAN = {
  */
 const RELATED = {
   '': [['/services', 'AI co-worker agents'], ['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/linkedin-ai-agent', 'LinkedIn AI Agent'], ['/pricing', 'Pricing'], ['/whatsapp-ai-agent-guide', 'WhatsApp AI agent guide']],
-  'whatsapp-ai-agent': [['/whatsapp-ai-agent-guide', 'WhatsApp AI agent guide'], ['/whatsapp-business-api-approval', 'WhatsApp Business API approval'], ['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/pricing', 'Pricing']],
-  'linkedin-ai-agent': [['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/ai-agent-vs-chatbot', 'AI agent vs chatbot'], ['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/pricing', 'Pricing']],
-  services: [['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/linkedin-ai-agent', 'LinkedIn AI Agent'], ['/voice-ai-agent-use-cases', 'Voice AI agent use cases'], ['/pricing', 'Pricing']],
+  'whatsapp-ai-agent': [['/whatsapp-ai-agent-guide', 'WhatsApp AI agent guide'], ['/whatsapp-business-api-approval', 'WhatsApp Business API approval'], ['/voice-ai-agent-use-cases', 'Voice AI agent use cases'], ['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/pricing', 'Pricing']],
+  'linkedin-ai-agent': [['/linkedin-automation-limits', 'LinkedIn automation limits'], ['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/ai-agent-vs-chatbot', 'AI agent vs chatbot'], ['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/pricing', 'Pricing']],
+  services: [['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/linkedin-ai-agent', 'LinkedIn AI Agent'], ['/voice-ai-agent-use-cases', 'Voice AI agent use cases'], ['/ai-agent-for-real-estate', 'AI agent for real estate'], ['/ai-agent-for-clinics', 'AI agent for clinics'], ['/portfolio', 'Portfolio'], ['/pricing', 'Pricing']],
   pricing: [['/ai-agent-cost-in-india', 'What an AI agent costs in India'], ['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/services', 'Services'], ['/contact', 'Contact us']],
   portfolio: [['/services', 'Services'], ['/whatsapp-ai-agent', 'WhatsApp AI Agent'], ['/contact', 'Contact us']],
   contact: [['/hire-an-ai-agent-checklist', 'How to hire an AI agent'], ['/pricing', 'Pricing'], ['/services', 'Services']],
