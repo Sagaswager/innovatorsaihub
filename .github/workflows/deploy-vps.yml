@@ -1,0 +1,61 @@
+name: Deploy website to Hostinger VPS
+
+on:
+  push:
+    branches: [hostinger-vps]
+    paths-ignore:
+      - '**/*.md'
+      - 'deploy.ps1'
+
+permissions:
+  contents: read
+
+# Never interrupt a deployment while the website container is being replaced.
+concurrency:
+  group: innovatorsaihub-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+      VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+    steps:
+      - name: Check one-time SSH setup
+        shell: bash
+        run: |
+          set -eu
+          if [ -z "$VPS_SSH_PRIVATE_KEY" ] || [ -z "$VPS_KNOWN_HOSTS" ]; then
+            echo '::error::Add VPS_SSH_PRIVATE_KEY and VPS_KNOWN_HOSTS in repository Actions secrets before deployment.'
+            exit 1
+          fi
+
+      - name: Rebuild website and verify health
+        shell: bash
+        run: |
+          set -eu
+          ssh_dir=$(mktemp -d)
+          trap 'rm -rf "$ssh_dir"' EXIT
+          chmod 700 "$ssh_dir"
+          printf '%s\n' "$VPS_SSH_PRIVATE_KEY" > "$ssh_dir/key"
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > "$ssh_dir/known_hosts"
+          chmod 600 "$ssh_dir/key" "$ssh_dir/known_hosts"
+          ssh -i "$ssh_dir/key" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$ssh_dir/known_hosts" \
+            -o ConnectTimeout=15 \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=3 \
+            root@187.127.187.153 'bash -se' <<'REMOTE'
+          cd /docker/innovatorsaihub
+          docker compose -f docker-compose.yml config --quiet
+          docker compose -f docker-compose.yml build --no-cache website
+          docker compose -f docker-compose.yml up -d --no-deps --wait --wait-timeout 60 website
+          curl --fail --silent --show-error --max-time 15 --output /dev/null http://127.0.0.1:8088/healthz
+          curl --fail --silent --show-error --location --max-time 30 --retry 3 --retry-delay 2 --output /dev/null https://www.innovatorsaihub.com/
+          REMOTE
+          echo 'Deployment completed; website health and public HTTPS checks passed.'
