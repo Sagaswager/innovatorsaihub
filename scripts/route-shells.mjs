@@ -216,6 +216,60 @@ for (const [slug, article] of Object.entries(ARTICLES)) {
 }
 
 /**
+ * Sitemap: which routes go to search engines, at what priority, and — honestly —
+ * when that route's copy last changed.
+ *
+ * The sitemap used to be a hand-maintained `public/sitemap.xml` frozen at the
+ * dates the pages were first written, while the copy kept changing (11 and 12
+ * Nov link passes). `lastmod` is a recrawl hint: a sitemap that always says
+ * "8 November" tells Google nothing changed on pages that did. It is now
+ * generated from this table on every build, so it cannot drift from the site.
+ *
+ * `false` = not for search (private or thin legal page).
+ * Every route in ROUTES must appear here, and every key here must be a real
+ * route: the build throws if either direction is wrong, so a new page cannot
+ * ship without a sitemap decision.
+ */
+const SITEMAP = {
+  '': { priority: '1.0', changefreq: 'weekly', updated: '2026-11-08' },
+  'whatsapp-ai-agent': { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
+  'linkedin-ai-agent': { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
+  services: { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
+  pricing: { priority: '0.9', changefreq: 'monthly', updated: '2026-11-08' },
+  portfolio: { priority: '0.8', changefreq: 'monthly', updated: '2026-11-08' },
+  contact: { priority: '0.8', changefreq: 'monthly', updated: '2026-11-08' },
+  register: { priority: '0.7', changefreq: 'monthly', updated: '2026-11-08' },
+  join: { priority: '0.6', changefreq: 'monthly', updated: '2026-11-08' },
+  privacy: false,
+  'my-plan': false,
+  // Guides. 12 Nov only for the three whose copy changed that day (the link
+  // pass); the rest kept 9 Nov, the day they were written.
+  'whatsapp-ai-agent-guide': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-12' },
+  'ai-agent-cost-in-india': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-12' },
+  'ai-agent-vs-chatbot': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-09' },
+  'whatsapp-business-api-approval': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-09' },
+  'voice-ai-agent-use-cases': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-09' },
+  'hire-an-ai-agent-checklist': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-12' },
+  'linkedin-automation-limits': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-09' },
+  'ai-agent-for-real-estate': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-09' },
+  'ai-agent-for-clinics': { priority: '0.7', changefreq: 'monthly', updated: '2026-11-09' },
+};
+
+for (const key of Object.keys(ROUTES)) {
+  if (!(key in SITEMAP)) {
+    throw new Error(
+      `route-shells: route "${key || 'home'}" has no SITEMAP entry — add one (or false) so the ` +
+        'sitemap cannot silently omit a new page',
+    );
+  }
+}
+for (const key of Object.keys(SITEMAP)) {
+  if (!(key in ROUTES)) {
+    throw new Error(`route-shells: SITEMAP lists "${key}" but ROUTES has no such route`);
+  }
+}
+
+/**
  * H2 structure for the 8 November shells.
  *
  * Those routes shipped as one wall of prose — an h1 followed by 6 or 7
@@ -766,4 +820,25 @@ const notFound = `<!DOCTYPE html>
 `;
 writeFileSync(join(DIST, '404.html'), notFound);
 
-console.log(`route-shells: wrote ${written.length} shells -> ${written.join(', ')}, plus /404.html`);
+// Sitemap, generated from ROUTES + SITEMAP so it cannot drift from the site.
+const sitemapEntries = Object.entries(SITEMAP)
+  .filter(([, meta]) => meta)
+  .map(([route, meta]) => {
+    const loc = route ? `${SITE}/${route}` : `${SITE}/`;
+    return [
+      '  <url>',
+      `    <loc>${loc}</loc>`,
+      `    <lastmod>${meta.updated}</lastmod>`,
+      `    <changefreq>${meta.changefreq}</changefreq>`,
+      `    <priority>${meta.priority}</priority>`,
+      '  </url>',
+    ].join('\n');
+  });
+writeFileSync(
+  join(DIST, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.join(
+    '\n',
+  )}\n</urlset>\n`,
+);
+
+console.log(`route-shells: wrote ${written.length} shells -> ${written.join(', ')}, plus /404.html, ${sitemapEntries.length} sitemap urls`);
