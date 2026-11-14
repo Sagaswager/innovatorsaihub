@@ -188,16 +188,18 @@ const WhatsAppAgentPage: React.FC<WhatsAppAgentPageProps> = ({ isDarkMode = fals
       {/* TOP NAVBAR */}
       <header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
         <div className="h-20 w-full max-w-[1400px] mx-auto px-gutter flex items-center justify-between gap-space-md">
-          <div
-            className="flex items-center gap-2.5 sm:gap-3 shrink-0 cursor-pointer"
-            onClick={() => navigateTo ? navigateTo("platform") : (window.location.href = "/")}
+          <a
+            href="/"
+            aria-label="Innovators AI HUB home"
+            className="flex items-center gap-2.5 sm:gap-3 shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600"
+            onClick={(event) => { if (navigateTo) { event.preventDefault(); navigateTo("platform"); } }}
           >
             <img alt="Innovators AI HUB" className="h-8 md:h-10 w-auto object-contain" src="/logo-dark.png" />
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[10px] sm:text-[11px] font-bold text-primary-container tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-whatsapp-green animate-pulse"></span>
               Whatsapp AI Agent
             </span>
-          </div>
+          </a>
 
           <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-100/80 border border-slate-200/60 shadow-inner">
             <a

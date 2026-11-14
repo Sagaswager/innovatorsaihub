@@ -154,13 +154,13 @@ const LinkedInAgentPage: React.FC<LinkedInAgentPageProps> = ({ isDarkMode = fals
     <div className="w-full bg-white text-slate-900 selection:bg-emerald-500 selection:text-white font-['Plus_Jakarta_Sans',sans-serif]">
       <header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
         <div className="h-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 cursor-pointer" onClick={() => navigateTo ? navigateTo("platform") : (window.location.href = "/")}>
+          <a href="/" aria-label="Innovators AI HUB home" className="flex items-center gap-2.5 sm:gap-3 shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600" onClick={(event) => { if (navigateTo) { event.preventDefault(); navigateTo("platform"); } }}>
             <img alt="Innovators AI HUB" className="h-8 md:h-10 w-auto object-contain" src="/logo-dark.png"/>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[10px] sm:text-[11px] font-bold text-[#0A66C2] tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-[#0A66C2] animate-pulse"></span>
               LinkedIn Co-Worker
             </span>
-          </div>
+          </a>
           <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-100/80 border border-slate-200/60 shadow-inner">
             <a aria-current="page" className="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-900 bg-white shadow-sm transition-all cursor-pointer" href="/" onClick={(e) => { e.preventDefault(); if (navigateTo) navigateTo("platform"); else window.location.href = "/"; }}>Home</a>
             <a className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" href="#pricing-package">Pricing</a>
