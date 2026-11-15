@@ -270,6 +270,30 @@ for (const key of Object.keys(SITEMAP)) {
 }
 
 /**
+ * When this route's copy last changed — the same value the sitemap publishes.
+ *
+ * SITEMAP.updated became the honest `lastmod` on 2026-11-14, but the JSON-LD still
+ * carried `dateModified: 2026-11-09` on every guide (the day they were written),
+ * even for the ones edited on 12 Nov. That is the same stale-date drift the
+ * sitemap fix removed, in a second place: two numbers describing one page. Read
+ * the date from SITEMAP here too, so there is one source of truth and a shell
+ * whose schema contradicts its own sitemap entry cannot be built.
+ */
+function routeUpdated(key) {
+  const entry = SITEMAP[key];
+  // `false` = the route is not for search (private or thin legal page), so it has
+  // no lastmod to publish; such a shell keeps the original publish date.
+  if (entry === false) return PUBLISHED;
+  if (!entry || !entry.updated) {
+    throw new Error(`route-shells: route "${key || 'home'}" needs a SITEMAP date to publish dateModified`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(entry.updated)) {
+    throw new Error(`route-shells: SITEMAP date for "${key || 'home'}" is not YYYY-MM-DD: ${entry.updated}`);
+  }
+  return entry.updated;
+}
+
+/**
  * H2 structure for the 8 November shells.
  *
  * Those routes shipped as one wall of prose — an h1 followed by 6 or 7
@@ -398,6 +422,7 @@ function routeSchema(key, meta) {
   const url = `${SITE}/${key}`;
   const type = meta.schema ?? 'service';
   if (type === 'none') return [];
+  const updated = routeUpdated(key);
 
   if (type === 'article') {
     const a = meta.article;
@@ -410,7 +435,7 @@ function routeSchema(key, meta) {
         url,
         mainEntityOfPage: { '@type': 'WebPage', '@id': url },
         datePublished: PUBLISHED,
-        dateModified: PUBLISHED,
+        dateModified: updated,
         articleSection: a.sections.map((section) => section.h2),
         author: { '@type': 'Organization', name: 'Innovators AI HUB', url: SITE },
         publisher: {
@@ -476,6 +501,7 @@ function routeSchema(key, meta) {
         '@type': 'ContactPage',
         name: meta.title,
         url,
+        dateModified: updated,
         mainEntity: ORG,
       },
       BREADCRUMB(key, meta.h1),
@@ -510,6 +536,7 @@ function routeSchema(key, meta) {
         '@type': 'CollectionPage',
         name: meta.title,
         url,
+        dateModified: updated,
         about: 'AI agent systems and AI brand films built by Innovators AI HUB',
       },
       BREADCRUMB(key, meta.h1),
@@ -517,7 +544,10 @@ function routeSchema(key, meta) {
   }
 
   if (type === 'privacy' || type === 'join') {
-    return [{ '@context': 'https://schema.org', '@type': 'WebPage', name: meta.title, url }, BREADCRUMB(key, meta.h1)];
+    return [
+      { '@context': 'https://schema.org', '@type': 'WebPage', name: meta.title, url, dateModified: updated },
+      BREADCRUMB(key, meta.h1),
+    ];
   }
 
   if (type === 'services') {
