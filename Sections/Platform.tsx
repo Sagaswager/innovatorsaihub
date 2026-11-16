@@ -10,6 +10,7 @@ import {
   findLocalUser,
   rememberUser,
   SUPPORT_WHATSAPP,
+  indianaEntryUrl,
 } from '../authApi';
 import AccountSettingsModal from './AccountSettingsModal';
 import AgentReviews from './AgentReviews';
@@ -33,6 +34,8 @@ type CoWorker = {
   logo: React.ReactNode;
   /** When set the card links straight out instead of opening the details panel. */
   href?: string;
+  /** True when the destination should carry this visitor's site sign-in. */
+  sso?: boolean;
   cta?: string;
 };
 
@@ -172,6 +175,7 @@ const aiCoWorkers: CoWorker[] = [
     reviews: "",
     brandGradient: "from-violet-500 to-fuchsia-500",
     href: "https://ai.innovatorsaihub.com/auth?redirect_uri=%2Ft%2F01a167d7-2218-75c5-bbd9-ad6ec21cdf59%2Fhome",
+    sso: true,
     cta: "Rent",
     description: "Your whole AI team in one workspace: agents that plan, build, write, research and run your day, with tables, files, functions and schedules in the same place.",
     benefits: [
@@ -1575,7 +1579,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       onClick={() => {
                         if (item.href) {
                           trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card', location: 'agent_hub' });
-                          window.location.href = item.href;
+                          window.location.href = item.sso ? indianaEntryUrl() : item.href;
                           return;
                         }
                         if (item.title.toLowerCase().includes('whatsapp')) {
@@ -1628,7 +1632,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                               e.stopPropagation();
                               if (item.href) {
                                 trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card_cta', location: 'agent_hub' });
-                                window.location.href = item.href;
+                                window.location.href = item.sso ? indianaEntryUrl() : item.href;
                                 return;
                               }
                               if (item.title.toLowerCase().includes('whatsapp')) {
