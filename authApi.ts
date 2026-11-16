@@ -121,6 +121,36 @@ export function findLocalUser(email: string): Account | null {
   return hit ? { name: hit.name || '', email: target } : null;
 }
 
+/** Indiana AI: a visitor the site already knows walks straight in.
+ *  No second signup, no password — the address they are signed in with here
+ *  is handed to Indiana AI, which finds or makes their account and signs them
+ *  in. Anyone else gets the normal sign-in page. */
+export const INDIANA_SSO_URL = 'https://ai.innovatorsaihub.com/auth/site-sso';
+
+export const INDIANA_SIGNIN_URL =
+  'https://ai.innovatorsaihub.com/auth?redirect_uri=%2Ft%2F01a167d7-2218-75c5-bbd9-ad6ec21cdf59%2Fhome';
+
+/** Who this browser is signed in as on this site, if anyone. */
+export function readSiteSession(): Account | null {
+  try {
+    const raw = localStorage.getItem(LOCAL_SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const email = normalizeEmail(parsed && (parsed.email || parsed.mail));
+    if (!isValidEmail(email)) return null;
+    return { name: (parsed && parsed.name) || '', email };
+  } catch (err) {
+    return null;
+  }
+}
+
+/** Where the Indiana AI "Rent" button goes. */
+export function indianaEntryUrl(): string {
+  const session = readSiteSession();
+  if (!session) return INDIANA_SIGNIN_URL;
+  return `${INDIANA_SSO_URL}?email=${encodeURIComponent(session.email)}`;
+}
+
 export function rememberUser(user: Account): void {
   const email = normalizeEmail(user.email);
   const users = readLocalUsers().filter((u: any) => normalizeEmail(u && (u.email || u.mail)) !== email);
