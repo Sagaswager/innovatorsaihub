@@ -20,6 +20,8 @@ import { isGoogleSignInConfigured, type GoogleProfile } from '../googleAuth';
 
 type CoWorker = {
   title: string;
+  /** A second, smaller line under the title. */
+  subtitle?: string;
   rating: string;
   reviews: string;
   price?: string;
@@ -164,12 +166,13 @@ const aiCoWorkers: CoWorker[] = [
     )
   },
   {
-    title: "Multi-AI Agent",
+    title: "Indiana AI",
+    subtitle: "Multi AI Agents",
     rating: "",
     reviews: "",
     brandGradient: "from-violet-500 to-fuchsia-500",
-    href: "https://ai.innovatorsaihub.com",
-    cta: "Open",
+    href: "https://ai.innovatorsaihub.com/auth?redirect_uri=%2Ft%2F01a167d7-2218-75c5-bbd9-ad6ec21cdf59%2Fhome",
+    cta: "Rent",
     description: "Your whole AI team in one workspace: agents that plan, build, write, research and run your day, with tables, files, functions and schedules in the same place.",
     benefits: [
       "Hire AI agents that work inside your own workspace",
@@ -973,7 +976,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
       {/* Top Left Brand / Back navigation (Aligned with the right-sided demo call button) */}
       <div className="absolute top-4 md:top-6 left-4 md:left-8 z-50 flex items-center h-[34px]">
         <button
-          onClick={() => navigateTo?.('home')}
+          onClick={() => navigateTo?.('platform')}
           className="flex items-center group focus:outline-none"
         >
           <img
@@ -1085,7 +1088,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
           className="bg-white text-zinc-950 hover:bg-zinc-50 border border-zinc-200 rounded-full px-5 py-2 text-xs font-bold tracking-wide hover:scale-105 active:scale-95 transition-all duration-200 inline-flex items-center gap-2 outline-none shadow-sm cursor-pointer"
         >
           <UserPlus size={13} className="text-zinc-600" />
-          <span>Join Team</span>
+          <span>Join Innovators</span>
         </button>
 
         {/* Book Demo Button (Black with zoom-in scale effect) */}
@@ -1571,8 +1574,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       key={index} 
                       onClick={() => {
                         if (item.href) {
-                          window.open(item.href, '_blank', 'noopener,noreferrer');
                           trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card', location: 'agent_hub' });
+                          window.location.href = item.href;
                           return;
                         }
                         if (item.title.toLowerCase().includes('whatsapp')) {
@@ -1609,11 +1612,14 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       {/* Content Container */}
                       <div className="p-6 flex-1 flex flex-col justify-between text-left">
                         <div>
-                          <h3 
-                            className="text-base md:text-lg font-medium text-zinc-900 leading-tight mb-2 select-text"
-                          >
+                          <h3 className="text-base md:text-lg font-medium text-zinc-900 leading-tight select-text">
                             {item.title}
                           </h3>
+                          {item.subtitle && (
+                            <p className="mt-1 text-[11px] md:text-xs font-semibold tracking-wide text-zinc-700 select-text">
+                              {item.subtitle}
+                            </p>
+                          )}
                         </div>
 
                         <div className="flex items-center justify-end mt-4">
@@ -1621,8 +1627,8 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                             onClick={(e) => {
                               e.stopPropagation();
                               if (item.href) {
-                                window.open(item.href, '_blank', 'noopener,noreferrer');
                                 trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card_cta', location: 'agent_hub' });
+                                window.location.href = item.href;
                                 return;
                               }
                               if (item.title.toLowerCase().includes('whatsapp')) {
