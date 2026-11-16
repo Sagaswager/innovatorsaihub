@@ -20,7 +20,7 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, currentPage, navigateTo }) 
     <footer className="bg-zinc-950 border-t border-white/5">
       <div className="py-24 px-6 max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
         <button 
-          onClick={() => navigateTo?.('home')}
+          onClick={() => navigateTo?.('platform')}
           className="flex items-center gap-4 group outline-none"
         >
           <img 
