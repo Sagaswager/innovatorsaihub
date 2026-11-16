@@ -44,7 +44,7 @@ type CoWorker = {
  *  their own pages keep a plain "Rent"; every other box rents the Indiana AI
  *  team, and the button says so. */
 const rentLabel = (title: string): string =>
-  /whatsapp|linkedin|indiana/i.test(title) ? 'Rent' : 'Rent Indiana Agent';
+  /whatsapp|linkedin|indiana/i.test(title) ? 'Rent' : 'Rent Indiana AI';
 
 /** What a visitor can hand an AI agent — the swipe line under the hero tagline. */
 const heroPrompts: { label: string; apps?: boolean }[] = [
