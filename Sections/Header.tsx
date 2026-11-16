@@ -38,12 +38,11 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
   );
 
   const navItems: { label: string; page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join'; type: 'internal' }[] = [
-    { label: 'HUB', page: 'home', type: 'internal' },
     { label: 'Platform', page: 'platform', type: 'internal' },
     { label: 'Rent AI Co-worker', page: 'services', type: 'internal' },
     { label: 'Event', page: 'register', type: 'internal' },
     { label: 'Contact', page: 'contact', type: 'internal' },
-    { label: 'Join Team', page: 'join', type: 'internal' }
+    { label: 'Join Innovators', page: 'join', type: 'internal' }
   ];
 
   const handleLinkClick = (page: 'home' | 'portfolio' | 'services' | 'contact' | 'register' | 'platform' | 'join') => {
@@ -67,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, currentPage, navigateTo, se
           {/* Logo */}
           <div className="flex items-center gap-3">
             <button 
-              onClick={() => handleLinkClick('home')}
+              onClick={() => handleLinkClick('platform')}
               className="flex items-center group outline-none"
             >
               <img 
