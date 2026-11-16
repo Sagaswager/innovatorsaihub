@@ -1476,7 +1476,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
 
       </div>
 
-      {/* Let's Build AI Team Section */}
+      {/* Rent your AI Teammates Section */}
       <div
         style={{ fontFamily: '"Poppins", sans-serif', fontWeight: 500 }}
         className="bg-white pt-2 pb-16 px-6 relative z-10"
@@ -1551,7 +1551,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
             <h2 
               className="text-[12px] md:text-[15px] font-bold text-zinc-950 tracking-wider uppercase"
             >
-              Let's Build AI Team
+              Rent your AI Teammates
             </h2>
           </div>
 
