@@ -119,6 +119,11 @@ const App: React.FC = () => {
       ) {
         path = 'linkedin-ai-agent';
       }
+      /* The old hub page is retired: /home shows the landing page, so nothing
+         can reach the page it used to be. */
+      if (normalized === 'home') {
+        path = 'platform';
+      }
       const validPages: Page[] = [
         'home',
         'portfolio',
