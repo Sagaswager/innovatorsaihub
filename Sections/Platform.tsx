@@ -11,6 +11,7 @@ import {
   rememberUser,
   SUPPORT_WHATSAPP,
   indianaEntryUrl,
+  readSiteSession,
 } from '../authApi';
 import AccountSettingsModal from './AccountSettingsModal';
 import AgentReviews from './AgentReviews';
@@ -866,6 +867,21 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
     }
   }, []);
 
+  /** Indiana AI's "Rent": a visitor this site already knows is handed over at
+   *  once; anyone else fills in this site's own signup box first and is handed
+   *  over the moment that completes. Nobody is bounced off the site to the
+   *  dashboard's sign-in page as a first step. */
+  const startIndiana = () => {
+    if (readSiteSession()) {
+      window.location.href = indianaEntryUrl();
+      return;
+    }
+    setSubmitError('');
+    setModalMode('register');
+    setPendingAction('indiana');
+    setIsModalOpen(true);
+  };
+
   // Sign the person in: remember them locally, then continue where they were headed.
   const finishSignIn = (userName: string, cleanEmail: string) => {
     rememberUser({ name: userName, email: cleanEmail });
@@ -878,6 +894,12 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
     if (postLoginRedirect) {
       sessionStorage.removeItem('post_login_redirect');
       window.location.href = postLoginRedirect;
+      return;
+    }
+
+    if (pendingAction === 'indiana') {
+      setPendingAction(null);
+      window.location.href = indianaEntryUrl();
       return;
     }
 
@@ -933,6 +955,12 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
       if (postLoginRedirect) {
         sessionStorage.removeItem('post_login_redirect');
         window.location.href = postLoginRedirect;
+        return;
+      }
+
+      if (pendingAction === 'indiana') {
+        setPendingAction(null);
+        window.location.href = indianaEntryUrl();
         return;
       }
 
@@ -1579,7 +1607,11 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                       onClick={() => {
                         if (item.href) {
                           trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card', location: 'agent_hub' });
-                          window.location.href = item.sso ? indianaEntryUrl() : item.href;
+                          if (item.sso) {
+                            startIndiana();
+                            return;
+                          }
+                          window.location.href = item.href;
                           return;
                         }
                         if (item.title.toLowerCase().includes('whatsapp')) {
@@ -1632,7 +1664,11 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                               e.stopPropagation();
                               if (item.href) {
                                 trackEvent('cta_clicked', { button_name: 'multi_ai_agent_card_cta', location: 'agent_hub' });
-                                window.location.href = item.sso ? indianaEntryUrl() : item.href;
+                                if (item.sso) {
+                                  startIndiana();
+                                  return;
+                                }
+                                window.location.href = item.href;
                                 return;
                               }
                               if (item.title.toLowerCase().includes('whatsapp')) {
