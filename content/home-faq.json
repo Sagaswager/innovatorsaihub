@@ -1,0 +1,18 @@
+[
+  {
+    "q": "What is an AI Agent Team?",
+    "a": "An AI Agent Team consists of autonomous, specialized AI models (like WhatsApp, voice, or LinkedIn agents) integrated together. They collaborate to automate complex business operations like customer support and lead qualification without human intervention."
+  },
+  {
+    "q": "What are the benefits of hiring AI Agents vs. human employees?",
+    "a": "AI Agents operate 24/7 with zero downtime, handle unlimited concurrent queries, and eliminate human errors. Implementing autonomous workflows helps businesses streamline client communication, accelerate response times, and reduce overhead."
+  },
+  {
+    "q": "How do AI Agents connect to my CRM?",
+    "a": "Our AI Agents support native integration with major CRMs (HubSpot, Salesforce, Zoho) and communication channels (WhatsApp API, Twilio, Slack) through custom API workflows, allowing them to log leads and update records in real time."
+  },
+  {
+    "q": "Are custom workflows supported?",
+    "a": "Yes, we design and engineer custom multi-agent workflows tailored to your unique company operations. We audit your existing processes and build bespoke agents to handle specific, complex pipelines."
+  }
+]
