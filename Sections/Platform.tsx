@@ -40,6 +40,12 @@ type CoWorker = {
   cta?: string;
 };
 
+/** What a box's rent button says. Indiana AI and the two agents that have
+ *  their own pages keep a plain "Rent"; every other box rents the Indiana AI
+ *  team, and the button says so. */
+const rentLabel = (title: string): string =>
+  /whatsapp|linkedin|indiana/i.test(title) ? 'Rent' : 'Rent Indiana Agent';
+
 /** What a visitor can hand an AI agent — the swipe line under the hero tagline. */
 const heroPrompts: { label: string; apps?: boolean }[] = [
   { label: "3D Website Development" },
@@ -1683,7 +1689,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                             }}
                             className="px-6 py-2.5 rounded-xl text-xs md:text-sm font-medium text-white shadow-sm hover:scale-105 hover:shadow-md hover:shadow-green-500/10 active:scale-95 transition-all duration-300 bg-gradient-to-r from-emerald-400 to-green-500"
                           >
-                            {item.cta ?? 'Rent'}
+                            {item.cta ?? rentLabel(item.title)}
                           </button>
                         </div>
                       </div>
@@ -1754,7 +1760,7 @@ const Platform: React.FC<PlatformProps> = ({ navigateTo }) => {
                           }}
                           className="px-6 py-3 rounded-xl text-xs md:text-sm font-medium text-white shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 bg-gradient-to-r from-emerald-400 to-green-500 hover:shadow-green-500/10"
                         >
-                          Rent Agent
+                          {rentLabel(selectedAgent.title)}
                         </button>
                       </div>
                     </div>
