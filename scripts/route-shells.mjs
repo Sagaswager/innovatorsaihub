@@ -38,6 +38,15 @@ const ARTICLES = JSON.parse(
   readFileSync(new URL('../content/articles.json', import.meta.url), 'utf8'),
 );
 
+/** Homepage FAQ copy. The React homepage renders this same text in
+ *  Sections/Services.tsx; the FAQPage JSON-LD in index.html claims it. Until
+ *  2026-11-16 the shell carried the schema but none of the copy, so a crawler
+ *  read FAQ markup for questions that appeared nowhere on the page — a
+ *  structured-data policy problem, not a formatting one. */
+const HOME_FAQ = JSON.parse(
+  readFileSync(new URL('../content/home-faq.json', import.meta.url), 'utf8'),
+);
+
 /** Shown to crawlers and to anyone whose JS has not booted yet. */
 const ROUTES = {
   '': {
@@ -231,7 +240,7 @@ for (const [slug, article] of Object.entries(ARTICLES)) {
  * ship without a sitemap decision.
  */
 const SITEMAP = {
-  '': { priority: '1.0', changefreq: 'weekly', updated: '2026-11-08' },
+  '': { priority: '1.0', changefreq: 'weekly', updated: '2026-11-16' },
   'whatsapp-ai-agent': { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
   'linkedin-ai-agent': { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
   services: { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
@@ -694,11 +703,20 @@ function shellBody(meta, key) {
         `(body has ${paragraphs.length}, plan uses ${used.length} with ${new Set(used).size} unique)`,
     );
   }
-  return plan
+  const sections = plan
     .map(([h2, indices]) =>
       [`        <h2>${h2}</h2>`, ...indices.map((i) => `        ${paragraphs[i]}`)].join('\n'),
     )
     .join('\n');
+  return key === '' ? `${sections}\n${homeFaqHtml()}` : sections;
+}
+
+/** The homepage FAQ, as copy — the same questions and answers the schema asserts. */
+function homeFaqHtml() {
+  const items = HOME_FAQ.map(
+    (f) => `        <h3>${f.q}</h3>\n        <p>${f.a}</p>`,
+  ).join('\n');
+  return `        <h2>Frequently asked questions</h2>\n${items}`;
 }
 
 /** Crawler-visible link block; plain anchors, no JS needed. */
@@ -738,6 +756,28 @@ const FAQ = (() => {
   }
   throw new Error('route-shells: no FAQPage block found in dist/index.html');
 })();
+
+// FAQ rich results require the marked-up questions to be visible on the page.
+// This build shipped the FAQPage block with no FAQ copy for months; assert the
+// schema and the shell copy are the same Q&As, word for word, so they cannot
+// drift again without failing the build.
+{
+  const entity = FAQ.mainEntity ?? [];
+  if (entity.length !== HOME_FAQ.length) {
+    throw new Error(
+      `route-shells: index.html FAQPage has ${entity.length} questions, content/home-faq.json has ${HOME_FAQ.length}`,
+    );
+  }
+  HOME_FAQ.forEach((f, i) => {
+    const e = entity[i] ?? {};
+    const schemaAnswer = e.acceptedAnswer?.text ?? '';
+    if ((e.name ?? '').trim() !== f.q.trim() || schemaAnswer.trim() !== f.a.trim()) {
+      throw new Error(
+        `route-shells: homepage FAQ #${i + 1} differs between index.html schema and content/home-faq.json`,
+      );
+    }
+  });
+}
 const template = dropFaqSchema(rawTemplate);
 const written = [];
 
