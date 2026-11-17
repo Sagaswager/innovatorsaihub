@@ -32,6 +32,11 @@ import {
   submitOfferProof,
   fetchBalance,
 } from '../authApi';
+import {
+  LINKEDIN_PLAN_KEYS,
+  TEAM_PLAN_KEYS,
+  startCheckout,
+} from './checkoutApi';
 
 /* ------------------------------------------------------------------ *
  * "My Plan" — a standalone page (saga, 2026-10-16).
@@ -101,6 +106,7 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
   const [screenshot, setScreenshot] = useState('');
   const [screenshotName, setScreenshotName] = useState('');
   const [busy, setBusy] = useState(false);
+  const [paying, setPaying] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [proofUrl, setProofUrl] = useState('');
@@ -253,6 +259,65 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
     setBalance(0);
     setBalanceUsed(true);
     setStep('done');
+  };
+
+  /* Real payment: the gateway prices the order, we only say which plan. */
+  const beginCheckout = async () => {
+    setError('');
+    if (!isValidEmail(email)) {
+      setError('Enter a valid email address — your plan and receipt are matched to it.');
+      return;
+    }
+    setPaying(true);
+    const result = await startCheckout({
+      plan: TEAM_PLAN_KEYS[selectedId],
+      email: normalizeEmail(email),
+      name: name.trim(),
+      amount: quote.payable,
+    });
+    if (!result.ok) {
+      setPaying(false);
+      setError(result.message);
+      return;
+    }
+    void registerAccount({
+      name,
+      email,
+      source: 'plan-checkout',
+      agent: selected.name,
+      price: String(quote.payable),
+      notes: `Checkout ${result.orderId} · offer: ${offerApplied ? 'claimed' : 'none'}`,
+    });
+    window.location.href = result.url;
+  };
+
+  const beginLinkedInCheckout = async () => {
+    setError('');
+    if (!isValidEmail(email)) {
+      setError('Enter a valid email address — your plan and receipt are matched to it.');
+      return;
+    }
+    setPaying(true);
+    const result = await startCheckout({
+      plan: LINKEDIN_PLAN_KEYS[liPlanId],
+      email: normalizeEmail(email),
+      name: name.trim(),
+      amount: liTotal,
+    });
+    if (!result.ok) {
+      setPaying(false);
+      setError(result.message);
+      return;
+    }
+    void registerAccount({
+      name,
+      email,
+      source: 'linkedin-plan-checkout',
+      agent: liPlan.name,
+      price: String(liTotal),
+      notes: `Checkout ${result.orderId} · coupon: ${liCouponApplied ? LINKEDIN_PLAN_CONFIG.couponCode : 'none'}`,
+    });
+    window.location.href = result.url;
   };
 
   const applyCoupon = () => {
@@ -709,8 +774,8 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
                 Pay {formatINR(quote.payable)}
               </h1>
               <p className="mt-3 text-sm font-medium text-slate-500">
-                Scan the QR with any UPI app — GPay, PhonePe, Paytm — and pay{' '}
-                <span className="font-bold text-slate-900">{formatINR(quote.payable)}</span>.
+                Pay <span className="font-bold text-slate-900">{formatINR(quote.payable)}</span> securely by UPI —
+                GPay, PhonePe, Paytm. Your plan switches on by itself the moment the payment is confirmed.
               </p>
 
               <div className="mt-6 space-y-2 rounded-2xl border border-slate-200 p-4 text-xs text-slate-600">
@@ -739,7 +804,8 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
               <div className="mt-5 flex items-start gap-2 text-[11px] text-slate-400">
                 <QrCode size={14} className="mt-0.5 shrink-0" />
                 <span>
-                  Add your email in the UPI note if your app allows it — it makes matching your payment instant.
+                  You will confirm your mobile number with a one-time code, then pay the exact amount — no manual
+                  reference to type.
                   {proofUrl ? ' Your video screenshot is already with our team.' : ''}
                 </span>
               </div>
@@ -748,29 +814,49 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
 
               <button
                 type="button"
-                onClick={confirmPayment}
-                disabled={busy}
-                className="mt-6 rounded-2xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 disabled:opacity-60 active:scale-[0.98]"
+                onClick={beginCheckout}
+                disabled={paying || busy}
+                className="mt-6 w-full rounded-2xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 disabled:opacity-60 active:scale-[0.98] sm:w-auto"
               >
-                {busy ? (
+                {paying ? (
                   <span className="inline-flex items-center gap-2">
-                    <Loader2 size={15} className="animate-spin" /> Saving…
+                    <Loader2 size={15} className="animate-spin" /> Opening secure checkout…
                   </span>
                 ) : (
-                  "I've paid — activate my plan"
+                  `Pay ${formatINR(quote.payable)} securely`
                 )}
+              </button>
+              <button
+                type="button"
+                onClick={confirmPayment}
+                disabled={busy || paying}
+                className="mt-3 block text-xs font-semibold text-slate-400 underline underline-offset-4 transition-colors hover:text-slate-600 disabled:opacity-60"
+              >
+                I already paid — tell the team
               </button>
             </div>
 
-            <div className="flex flex-col items-center rounded-3xl border border-slate-200 p-6">
-              <img
-                src={PLAN_CONFIG.paymentQr}
-                alt="UPI QR code to pay for your Innovators AI Hub plan"
-                className="w-full max-w-[280px] rounded-2xl"
-              />
-              <span className="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                Scan &amp; pay {formatINR(quote.payable)}
+            <div className="rounded-3xl border border-slate-200 p-6">
+              <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                What happens next
               </span>
+              <ol className="mt-4 space-y-3 text-xs font-medium text-slate-600">
+                <li className="flex gap-2">
+                  <span className="font-black text-slate-900">1</span>
+                  <span>You confirm your mobile number with a one-time code on WhatsApp.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="font-black text-slate-900">2</span>
+                  <span>You pay {formatINR(quote.payable)} to Innovators AI Hub by UPI — the amount is filled in.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="font-black text-slate-900">3</span>
+                  <span>Your plan activates automatically and your chat limit lifts. Receipt to your email.</span>
+                </li>
+              </ol>
+              <p className="mt-5 border-t border-slate-200 pt-4 text-[11px] leading-relaxed text-slate-400">
+                Payment is collected by Innovators AI Hub. Card and cash options are not offered on this page.
+              </p>
             </div>
           </div>
         )}
@@ -937,21 +1023,37 @@ const MyPlanPage: React.FC<MyPlanPageProps> = ({ navigateTo }) => {
                     </a>
                   </div>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setError('');
-                      setLiActivated(true);
-                    }}
-                    className="mt-6 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-[0.98]"
-                  >
-                    Activate now
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      onClick={beginLinkedInCheckout}
+                      disabled={paying}
+                      className="mt-6 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 disabled:opacity-60 active:scale-[0.98]"
+                    >
+                      {paying ? (
+                        <span className="inline-flex items-center gap-2">
+                          <Loader2 size={15} className="animate-spin" /> Opening secure checkout…
+                        </span>
+                      ) : (
+                        `Pay ${formatAmount(liTotal, liCurrency)} securely`
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError('');
+                        setLiActivated(true);
+                      }}
+                      className="mt-3 block w-full text-xs font-semibold text-slate-400 underline underline-offset-4 transition-colors hover:text-slate-600"
+                    >
+                      I already paid — tell the team
+                    </button>
+                  </>
                 )}
 
                 <p className="mt-3 text-[11px] text-slate-400">
-                  Pay with any UPI app — GPay, PhonePe, Paytm. Add your email in the payment note if your app allows
-                  it; it makes matching your payment instant.
+                  Pay with any UPI app — GPay, PhonePe, Paytm. You confirm your mobile with a one-time code, then pay
+                  the exact amount; the plan switches on as soon as the payment is confirmed.
                 </p>
               </div>
 
