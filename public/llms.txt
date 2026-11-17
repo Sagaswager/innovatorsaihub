@@ -36,6 +36,16 @@ Full specifications can be parsed at [/pricing.md](https://www.innovatorsaihub.c
 - [Services](https://www.innovatorsaihub.com/services.md) — the four agent services and brand films
 - [WhatsApp AI agent](https://www.innovatorsaihub.com/whatsapp-ai-agent.md)
 - [LinkedIn AI agent](https://www.innovatorsaihub.com/linkedin-ai-agent.md)
+- Guide markdown siblings (same copy as the HTML page, declared there with `<link rel="alternate" type="text/markdown">`):
+  - [/whatsapp-ai-agent-guide.md](https://www.innovatorsaihub.com/whatsapp-ai-agent-guide.md)
+  - [/ai-agent-cost-in-india.md](https://www.innovatorsaihub.com/ai-agent-cost-in-india.md)
+  - [/ai-agent-vs-chatbot.md](https://www.innovatorsaihub.com/ai-agent-vs-chatbot.md)
+  - [/whatsapp-business-api-approval.md](https://www.innovatorsaihub.com/whatsapp-business-api-approval.md)
+  - [/voice-ai-agent-use-cases.md](https://www.innovatorsaihub.com/voice-ai-agent-use-cases.md)
+  - [/hire-an-ai-agent-checklist.md](https://www.innovatorsaihub.com/hire-an-ai-agent-checklist.md)
+  - [/linkedin-automation-limits.md](https://www.innovatorsaihub.com/linkedin-automation-limits.md)
+  - [/ai-agent-for-real-estate.md](https://www.innovatorsaihub.com/ai-agent-for-real-estate.md)
+  - [/ai-agent-for-clinics.md](https://www.innovatorsaihub.com/ai-agent-for-clinics.md)
 
 ## Primary Contacts & Links
 
