@@ -643,6 +643,38 @@ const PRERENDER_STYLE = `<style id="seo-prerender-style">
 const inlineLinks = (text) =>
   text.replace(/\[([^\]]+)\]\((\/[a-z0-9\-/]*)\)/g, '<a href="$2">$1</a>');
 
+/** Markdown siblings for the nine guides: the same copy the shell serves, as
+ *  plain text an AI assistant can read without parsing HTML. Written into dist
+ *  after the build so one source (content/articles.json) feeds both. */
+const mdLinks = (text) =>
+  text.replace(/\[([^\]]+)\]\((\/[a-z0-9\-/]*)\)/g, (_, label, href) => `[${label}](${SITE}${href})`);
+
+function articleMarkdown(slug, article) {
+  const url = `${SITE}/${slug}`;
+  const out = [`# ${article.h1}`, '', mdLinks(article.answer), '', `Canonical: ${url}`, ''];
+  for (const section of article.sections) {
+    out.push(`## ${section.h2}`, '');
+    for (const paragraph of section.paragraphs ?? []) out.push(mdLinks(paragraph), '');
+    if (section.list) {
+      for (const item of section.list) out.push(`- ${mdLinks(item)}`);
+      out.push('');
+    }
+    if (section.table) {
+      out.push(`| ${section.table.head.join(' | ')} |`);
+      out.push(`| ${section.table.head.map(() => '---').join(' | ')} |`);
+      for (const row of section.table.rows) out.push(`| ${row.join(' | ')} |`);
+      out.push('');
+    }
+    for (const paragraph of section.after ?? []) out.push(mdLinks(paragraph), '');
+  }
+  out.push('## Frequently asked questions', '');
+  for (const item of article.faq) out.push(`### ${item.q}`, '', item.a, '');
+  out.push('## Where to go next', '');
+  for (const link of article.related) out.push(`- [${link.label}](${SITE}${link.href}) — ${link.text}`);
+  out.push('', `Services: ${SITE}/services`, `Pricing: ${SITE}/pricing`, `Contact: ${SITE}/contact`, '');
+  return out.join('\n');
+}
+
 const CTA = `<p><a href="${SITE}/services">Rent an AI co-worker agent</a> · <a href="${SITE}/pricing">See pricing</a> · <a href="${SITE}/contact">Contact us</a></p>`;
 
 /** Full article body: one h1, real h2 sections, lists, optional table, rendered FAQ. */
@@ -799,6 +831,13 @@ for (const [key, meta] of Object.entries(ROUTES)) {
     'description',
   );
   set(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${url}">`, 'canonical');
+  if (meta.article) {
+    set(
+      /<link rel="canonical" href="[^"]*">/,
+      `<link rel="canonical" href="${url}">\n  <link rel="alternate" type="text/markdown" href="${url}.md" title="Markdown version">`,
+      'markdown alternate',
+    );
+  }
   set(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${url}">`, 'og:url');
   set(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${title}">`, 'og:title');
   set(
@@ -910,5 +949,14 @@ writeFileSync(
     '\n',
   )}\n</urlset>\n`,
 );
+
+// Markdown siblings for every guide route (batch 4 plumbing): /<slug>.md is
+// the same article as text, declared from the HTML via rel=alternate.
+const markdownWritten = [];
+for (const [slug, article] of Object.entries(ARTICLES)) {
+  writeFileSync(join(DIST, `${slug}.md`), articleMarkdown(slug, article));
+  markdownWritten.push(`/${slug}.md`);
+}
+console.log(`route-shells: wrote ${markdownWritten.length} markdown siblings -> ${markdownWritten.join(', ')}`);
 
 console.log(`route-shells: wrote ${written.length} shells -> ${written.join(', ')}, plus /404.html, ${sitemapEntries.length} sitemap urls`);
