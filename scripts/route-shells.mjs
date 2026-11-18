@@ -675,6 +675,30 @@ function articleMarkdown(slug, article) {
   return out.join('\n');
 }
 
+/** Short labels for the nine guides, used by the site-wide "Guides" nav that
+ *  every shell carries. Same links the React footer shows, so the crawler copy
+ *  and what a visitor sees cannot disagree. */
+const GUIDE_NAV_LABELS = {
+  'whatsapp-ai-agent-guide': 'WhatsApp AI agent guide',
+  'ai-agent-cost-in-india': 'What an AI agent costs in India',
+  'ai-agent-vs-chatbot': 'AI agent vs chatbot',
+  'whatsapp-business-api-approval': 'WhatsApp Business API approval',
+  'voice-ai-agent-use-cases': 'Voice AI agent use cases',
+  'hire-an-ai-agent-checklist': 'How to hire an AI agent',
+  'linkedin-automation-limits': 'LinkedIn automation limits',
+  'ai-agent-for-real-estate': 'AI agent for real estate',
+  'ai-agent-for-clinics': 'AI agent for clinics',
+};
+
+/** Site-wide guide links; the current page is dropped so no shell links to itself. */
+function guideNavHtml(key) {
+  const anchors = Object.entries(GUIDE_NAV_LABELS)
+    .filter(([slug]) => slug !== key)
+    .map(([slug, label]) => `<a href="${SITE}/${slug}">${label}</a>`)
+    .join(' · ');
+  return `        <p class="seo-related"><strong>Guides:</strong> ${anchors}</p>`;
+}
+
 const CTA = `<p><a href="${SITE}/services">Rent an AI co-worker agent</a> · <a href="${SITE}/pricing">See pricing</a> · <a href="${SITE}/contact">Contact us</a></p>`;
 
 /** Full article body: one h1, real h2 sections, lists, optional table, rendered FAQ. */
@@ -762,9 +786,12 @@ function relatedHtml(key) {
 }
 
 function injectContent(html, meta, key) {
+  // Every shell ends with the same guide nav, so a crawler that lands on any one
+  // route can reach all nine guides in a single hop.
+  const nav = guideNavHtml(key);
   const paragraphs = meta.article
-    ? articleHtml(meta.article)
-    : `${shellBody(meta, key)}\n${relatedHtml(key) ? relatedHtml(key) + '\n' : ''}        ${CTA}`;
+    ? `${articleHtml(meta.article)}\n${nav}`
+    : `${shellBody(meta, key)}\n${relatedHtml(key) ? relatedHtml(key) + '\n' : ''}        ${CTA}\n${nav}`;
   const block = `<div id="root"><div class="seo-static">
         ${meta.article ? '' : `<h1>${meta.h1}</h1>`}
 ${paragraphs}
