@@ -239,6 +239,17 @@ for (const [slug, article] of Object.entries(ARTICLES)) {
  * route: the build throws if either direction is wrong, so a new page cannot
  * ship without a sitemap decision.
  */
+/**
+ * The date the shared shell chrome last changed — the head meta block, the CTA +
+ * "Guides:" blocks every body ends with, and the footer links. A change here edits
+ * EVERY shell's HTML on the same day, so it is a floor for every route's lastmod,
+ * whether or not that route's own copy changed (the site-wide guide nav shipped
+ * 2026-11-18, which quietly left all 18 sitemap dates a week or more stale).
+ * Bump this line whenever shared chrome changes; per-route `updated` stays the
+ * date that route's own copy changed, and is never lowered by it.
+ */
+const SHELL_CHROME_DATE = '2026-11-18';
+
 const SITEMAP = {
   '': { priority: '1.0', changefreq: 'weekly', updated: '2026-11-16' },
   'whatsapp-ai-agent': { priority: '0.9', changefreq: 'weekly', updated: '2026-11-12' },
@@ -299,7 +310,11 @@ function routeUpdated(key) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(entry.updated)) {
     throw new Error(`route-shells: SITEMAP date for "${key || 'home'}" is not YYYY-MM-DD: ${entry.updated}`);
   }
-  return entry.updated;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(SHELL_CHROME_DATE)) {
+    throw new Error(`route-shells: SHELL_CHROME_DATE is not YYYY-MM-DD: ${SHELL_CHROME_DATE}`);
+  }
+  // Latest of "this route's copy changed" and "the shared chrome changed".
+  return entry.updated > SHELL_CHROME_DATE ? entry.updated : SHELL_CHROME_DATE;
 }
 
 /**
@@ -964,7 +979,7 @@ const sitemapEntries = Object.entries(SITEMAP)
     return [
       '  <url>',
       `    <loc>${loc}</loc>`,
-      `    <lastmod>${meta.updated}</lastmod>`,
+      `    <lastmod>${routeUpdated(route)}</lastmod>`,
       `    <changefreq>${meta.changefreq}</changefreq>`,
       `    <priority>${meta.priority}</priority>`,
       '  </url>',
